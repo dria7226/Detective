@@ -1,0 +1,50 @@
+https://urban-barbarian.deviantart.com/gallery/39011288/Mad-Men
+
+"Mad Men"
+
+- pale color wide strokes used on Don's hand are used to show skin folds. 
+	Implementation:
+	Might be possible to simulate this by using light, mesh color and cartoon shader.
+  
+- thin zigzag on Don's temple used to show rare hair and direction of hair.
+	Implementation?
+	
+- darker reds on Joan used to show lighting
+	Implementation:
+	Obviously use light, mesh color, cartoon shader
+		
+- smoke created through negative space. Works well with dark, non-lit backgrounds. 
+	Implementation:
+	Three different color buffers: black, gray and color; displacement map applied on the gray buffer. 
+	Gray buffer generated from black buffer and other gray sources
+	
+- daylight smoke?
+	Implementation?
+	
+- contour lines on Joan are used to separate her from the light background. It is needed due to her light colored skin.
+	Implementation: ?
+	Need a rule that applies across all cases of color matching meshes in different z planes.
+	Could be random frame to frame?
+	
+	Generate edge map, generate mask from final color buffer and depth map to determine same colors. 
+	Apply mask on edge map.
+	Randomness could be determined through a noise map.
+	
+	Note: Contour lines not present between Don and the couch. Why?
+	
+- brush bleed in between objects (necessary for handpainted authenticity)
+	Implementation?
+	Refer to smoke implementation.
+	
+- brush texture is a result of the texture of the paper
+	Implementation:
+	paper-texture height map with blend value texture. (similar to burning paper effect) 
+	
+- some brush textures are a result of the brush itself. (grass like textures)
+	Implementation?
+	
+"Joan and Frank"
+
+- classic dotted shading technique used for early comic books.
+	Implementation:
+	Mask generated from shadow buffer, used over a dotted texture
