@@ -25,31 +25,34 @@ shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
 var occlusion_groups = tags[Occlusion_Group, 0];
 for(;occlusion_groups != 0;)
 {
-	draw_clear(c_white);
 	//draw occlusion groups
 	surface_set_target(surfaces[OCCLUSION]);
+draw_clear(c_white);
+
 	for(var i = 0; i < array_length_1d(occlusion_groups); i++)
 	{
 		var vbo_tag = Game.identities[|occlusion_groups[i]];
 		vbo_tag = vbo_tag.tag_list[|0];
 		vbo_tag = Game.tags[VBO, vbo_tag[1]];
+        //encode index into color
+        shader_set_uniform_f(shader_get_uniform(standard, “color”), i);
 		vertex_submit(vbo_tag, pr_trianglelist, -1);
 	}
 	surface_reset_target();
 	
 	//search occlusion map for visibility
-	var visible_groups = [[1.0,1.0,1.0]];
-	for(var X = 0; X < surface_get_width(surfaces[OCCLUSION]); X++)
-	{
-		for(var Y = 0; Y < surface_get_height(surfaces[OCCLUSION]); Y++)
-		{
-			for(var i = 0; i < array_length_1d(visible_groups); i++)
-			{
-				var visible_color = surface_getpixel(surfaces[OCCLUSION], X, Y);
-				if(	visible_color[0] != visible_groups[i]) visible_groups[array_length_1d(visible_groups)] = visible_color;
-			}	
-		}
-	}
+shader_set_uniform_i(shader_get_uniform(standard, “mode”), 2);
+
+vertex_submit(fullscreen_mesh, pr_trianglelist, -1);
+
+var visible_indices = 0;
+var occlusion_witdh = surfaces_get_width(surfaces[OCCLUSION]);
+var occlusion_height = surfaces_get_height(surfaces[OCCLUSION]);
+for(var i = 0; i < occlusion_width*occlusion_height; i++)
+{
+    visible_indices[i] = surface_getpixel(surfaces[OCCLUSION], i % occlusion_width, i / occlusion_width);
+
+}
 	
 	//add leaves and prepare next occlusion group
 	occlusion_groups = 0;
