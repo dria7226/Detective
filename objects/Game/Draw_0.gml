@@ -1,5 +1,5 @@
 surface_set_target(surfaces[RGB]);
-draw_clear(c_white);
+draw_clear(c_black);
 surface_reset_target();
 surface_set_target(surfaces[DEPTH]);
 draw_clear(c_white);
@@ -15,68 +15,72 @@ shader_set_uniform_f(shader_get_uniform(standard, "screen_ratio"), window_get_he
 
 var position = tags[Position, 0];
 var rotation = tags[Rotation, 0];
-shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.X, position.Y, position.Z);
+shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.X-4.0, position.Y, position.Z);
 shader_set_uniform_f(shader_get_uniform(standard, "camera_pitch"), rotation.pitch);
 shader_set_uniform_f(shader_get_uniform(standard, "camera_yaw"), rotation.yaw);
 shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll);
 shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
 
-//occlusion
-var occlusion_groups = tags[Occlusion_Group, 0];
-for(;occlusion_groups != 0;)
-{
-	//draw occlusion groups
-	surface_set_target(surfaces[OCCLUSION]);
-draw_clear(c_white);
-
-	for(var i = 0; i < array_length_1d(occlusion_groups); i++)
-	{
-		var vbo_tag = Game.identities[|occlusion_groups[i]];
-		vbo_tag = vbo_tag.tag_list[|0];
-		vbo_tag = Game.tags[VBO, vbo_tag[1]];
-        //encode index into color
-        shader_set_uniform_f(shader_get_uniform(standard, “color”), i);
-		vertex_submit(vbo_tag, pr_trianglelist, -1);
-	}
-	surface_reset_target();
-	
-	//search occlusion map for visibility
-shader_set_uniform_i(shader_get_uniform(standard, “mode”), 2);
-
-vertex_submit(fullscreen_mesh, pr_trianglelist, -1);
-
-var visible_indices = 0;
-var occlusion_witdh = surfaces_get_width(surfaces[OCCLUSION]);
-var occlusion_height = surfaces_get_height(surfaces[OCCLUSION]);
-for(var i = 0; i < occlusion_width*occlusion_height; i++)
-{
-    visible_indices[i] = surface_getpixel(surfaces[OCCLUSION], i % occlusion_width, i / occlusion_width);
-
-}
-	
-	//add leaves and prepare next occlusion group
-	occlusion_groups = 0;
-	
-}
-
-//color
 surface_set_target(surfaces[RGB]);
-shader_set_uniform_i(shader_get_uniform(standard, "draw_mode"), 0);
-for(var i = 0; i < array_length_2d(tags, Visible); i++)
-{
-	var identity = identities[|tags[Visible, i]];
-	var tag = search_tags(identity, [Position, Rotation,VBO]);
-	shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
-	shader_set_uniform_f(shader_get_uniform(standard, "offset"),tag[0].X, tag[0].Y, tag[0].Z);
-	shader_set_uniform_f(shader_get_uniform(standard, "object_pitch"), tag[1].pitch);
-	shader_set_uniform_f(shader_get_uniform(standard, "object_yaw"), tag[1].yaw);
-	if(tag[2] != -1)
-	{
-		var vbo = tags[VBO,tag[2]];
-		vertex_submit(vbo, pr_trianglelist, -1);
-	}
-}
+vertex_submit(Game.test_vbo, pr_trianglelist, -1);
 surface_reset_target();
+
+////occlusion
+//var occlusion_groups = tags[Occlusion_Group, 0];
+//for(;occlusion_groups != 0;)
+//{
+//	//draw occlusion groups
+//	surface_set_target(surfaces[OCCLUSION]);
+//draw_clear(c_white);
+
+//	for(var i = 0; i < array_length_1d(occlusion_groups); i++)
+//	{
+//		var vbo_tag = Game.identities[|occlusion_groups[i]];
+//		vbo_tag = vbo_tag.tag_list[|0];
+//		vbo_tag = Game.tags[VBO, vbo_tag[1]];
+//        //encode index into color
+//        shader_set_uniform_f(shader_get_uniform(standard, “color”), i);
+//		vertex_submit(vbo_tag, pr_trianglelist, -1);
+//	}
+//	surface_reset_target();
+	
+//	//search occlusion map for visibility
+//shader_set_uniform_i(shader_get_uniform(standard, “mode”), 2);
+
+//vertex_submit(fullscreen_mesh, pr_trianglelist, -1);
+
+//var visible_indices = 0;
+//var occlusion_witdh = surfaces_get_width(surfaces[OCCLUSION]);
+//var occlusion_height = surfaces_get_height(surfaces[OCCLUSION]);
+//for(var i = 0; i < occlusion_width*occlusion_height; i++)
+//{
+//    visible_indices[i] = surface_getpixel(surfaces[OCCLUSION], i % occlusion_width, i / occlusion_width);
+
+//}
+	
+//	//add leaves and prepare next occlusion group
+//	occlusion_groups = 0;
+	
+//}
+
+////color
+//surface_set_target(surfaces[RGB]);
+//shader_set_uniform_i(shader_get_uniform(standard, "draw_mode"), 0);
+//for(var i = 0; i < array_length_2d(tags, Visible); i++)
+//{
+//	var identity = identities[|tags[Visible, i]];
+//	var tag = search_tags(identity, [Position, Rotation,VBO]);
+//	shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
+//	shader_set_uniform_f(shader_get_uniform(standard, "offset"),tag[0].X, tag[0].Y, tag[0].Z);
+//	shader_set_uniform_f(shader_get_uniform(standard, "object_pitch"), tag[1].pitch);
+//	shader_set_uniform_f(shader_get_uniform(standard, "object_yaw"), tag[1].yaw);
+//	if(tag[2] != -1)
+//	{
+//		var vbo = tags[VBO,tag[2]];
+//		vertex_submit(vbo, pr_trianglelist, -1);
+//	}
+//}
+//surface_reset_target();
 
 gpu_set_ztestenable(false);
 

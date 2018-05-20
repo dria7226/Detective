@@ -3,35 +3,29 @@
 //load main camera
 var identity = create_identity([Camera, Position, Rotation]);
 
-var tags = search_tags(Game.identities[|identity], [Position, Rotation]);
-
-tags[0].Z = 1.0;
-tags[1].pitch = -pi/2;
+identity[2].Z = 1.0;
+//tags[2].pitch = -pi/2;
 
 //load level
 
 	//create room
-var wall_segment = buffer_create(0, buffer_grow, 4);
+var wall_segment = buffer_create(1, buffer_grow, 4);
 
 identity = create_identity(["wall_deco.dat"]);
 
-tags = search_tags(Game.identities[|identity], [Model]);
-
-add_buffer_to_buffer(wall_segment, tags[0].buffer,[0,0,0]);
+add_buffer_to_buffer(wall_segment, identity[1].buffer,[0,0,4.5]);
 
 identity = create_identity(["wall_bumper_med_class.dat"]);
 
-tags = search_tags(Game.identities[|identity], [Model]);
-
-add_buffer_to_buffer(wall_segment, tags[0].buffer,[0,0,0]);
+add_buffer_to_buffer(wall_segment, identity[1].buffer,[0,0,0]);
 
 identity = create_identity(["wall_cover_med_class.dat"]);
 
-tags = search_tags(Game.identities[|identity], [Model]);
+add_buffer_to_buffer(wall_segment, identity[1].buffer,[0,0,0]);
 
-add_buffer_to_buffer(wall_segment, tags[0].buffer,[0,0,0]);
+//identity = create_identity([VBO]);
 
-identity = create_identity([VBO]);
+//Game.test_vbo = vertex_create_buffer_from_buffer(wall_segment, Game.format);
 
 identity = create_identity(["floor.dat"]);
 
@@ -59,9 +53,9 @@ tag_combo_list = tag_combo_list.tag_list;
 
 var tag_combo = tag_combo_list[|1];
 
-Game.tags[tag_combo[0], tag_combo[1]] = Game.tags[VBO, 0];
-tag_combo = tag_combo_list[|3];
-Game.tags[tag_combo[0], tag_combo[1]] = ;
+//Game.tags[tag_combo[0], tag_combo[1]] = Game.tags[VBO, 0];
+//tag_combo = tag_combo_list[|3];
+//Game.tags[tag_combo[0], tag_combo[1]] = ;
 
 //load song
 

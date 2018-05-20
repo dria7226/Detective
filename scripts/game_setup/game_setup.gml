@@ -6,6 +6,8 @@ var occlusion_cube = create_identity(["cube.dat", VBO]);
 
 var model = Game.tags[Model, occlusion_cube];
 
+Game.test_vbo = vertex_create_buffer_from_buffer(model.buffer, Game.format);
+
 Game.tags[VBO, 0] = vertex_create_buffer_from_buffer(model.buffer, Game.format);
 
 load_intro();
