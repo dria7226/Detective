@@ -3,31 +3,55 @@
 //load main camera
 var identity = create_identity([Camera, Position, Rotation]);
 
-identity[2].Z = 1.0;
-//tags[2].pitch = -pi/2;
+identity[2].Z = 4.0;
+identity[2].Y = -9.0;
+identity[3].pitch = pi/2;
 
 //load level
 
 	//create room
-var wall_segment = buffer_create(1, buffer_grow, 4);
+identity = create_identity(["wall_cover_med_class.dat"]);
 
-identity = create_identity(["wall_deco.dat"]);
+var wall_segment = buffer_create(1, buffer_grow, 1);
 
-add_buffer_to_buffer(wall_segment, identity[1].buffer,[0,0,4.5]);
+buffer_copy(identity[1], 0, buffer_get_size(identity[1] ), wall_segment, 0);
 
 identity = create_identity(["wall_bumper_med_class.dat"]);
 
-add_buffer_to_buffer(wall_segment, identity[1].buffer,[0,0,0]);
+add_buffer_to_buffer(wall_segment, identity[1] , [0,-0.05,0]);
 
-identity = create_identity(["wall_cover_med_class.dat"]);
+identity = create_identity(["wall_deco.dat"]);
 
-add_buffer_to_buffer(wall_segment, identity[1].buffer,[0,0,0]);
+add_buffer_to_buffer(wall_segment, identity[1] ,[0,0,4.5]);
 
-//identity = create_identity([VBO]);
+var wall = buffer_create(1, buffer_grow, 1);
 
-//Game.test_vbo = vertex_create_buffer_from_buffer(wall_segment, Game.format);
+buffer_copy(wall_segment, 0, buffer_get_size(wall_segment), wall, 0);
+
+for(var i = 1; i < 3; i++)
+	add_buffer_to_buffer(wall, wall_segment, [3.0*i, 0,0]);
+
+identity = create_identity([VBO, Position, Rotation, Color, Grayscale, Visible]);
+
+identity[1] = vertex_create_buffer_from_buffer(wall, Game.format);
+
+Game.test_vbo = vertex_create_buffer_from_buffer(wall, Game.format);
+
+var a = identity[1];
+
+identity[2].Y = 0.5;
+
+identity[4].r = 0.2; identity[4].g = 0.4; identity[4].b = 0.2;
+
+identity[6] = identity;
+
+var Floor = buffer_create(1, buffer_grow, 1);
 
 identity = create_identity(["floor.dat"]);
+
+buffer_copy(identity[1], 0, buffer_get_size(identity[1]), Floor, 0);
+
+var ceiling = buffer_create(1, buffer_grow, 1);
 
 identity = create_identity(["ceiling.dat"]);
 
@@ -48,14 +72,7 @@ identity = create_identity(["office_lamp.dat", VBO]);
 //load occlusion groups
 identity = create_identity([Occlusion_Group, VBO, Position, Scale, List]);
 
-var tag_combo_list = Game.identities[|identity];
-tag_combo_list = tag_combo_list.tag_list;
-
-var tag_combo = tag_combo_list[|1];
-
-//Game.tags[tag_combo[0], tag_combo[1]] = Game.tags[VBO, 0];
-//tag_combo = tag_combo_list[|3];
-//Game.tags[tag_combo[0], tag_combo[1]] = ;
+//identity[1] = Game.tags[VBO, 0];
 
 //load song
 

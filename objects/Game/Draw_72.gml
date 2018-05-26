@@ -9,3 +9,5 @@ for(var i = 0; i < NO_OF_SURFACES; i++)
 		surfaces[i] = surface_create(window_get_width(), window_get_height());
 	}
 }
+
+alpha += delta_time/10000000;

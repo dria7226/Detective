@@ -9,9 +9,7 @@ if(!file_exists(argument0))
 	return -1;
 }
 
-var model = instance_create_layer(0,0,0,Model);
-
-model.buffer = buffer_load(argument0);
+var model = buffer_load(argument0);
 
 
 //bounding box

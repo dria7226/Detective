@@ -7,11 +7,13 @@ attribute vec4 in_Color;					// (r,g,b)
 varying float depth;
 varying vec4 out_Color;
 
-uniform vec3 offset, stretch;
+uniform vec3 offset;
+//uniform vec3 scale;
 uniform vec3 camera_position;
 uniform float camera_yaw, camera_pitch, camera_roll;
 uniform float object_yaw, object_pitch;
 uniform float grayscale;
+uniform vec3  color;
 uniform float near_clip;
 uniform float far_clip;
 uniform float screen_ratio;
@@ -20,7 +22,7 @@ void rotate(inout vec2 point, float angle);
 
 void main()
 {
-		vec3 local = in_Position*stretch;
+		vec3 local = in_Position;//*scale;
 		
 		rotate(local.xy, object_pitch);
 		rotate(local.xz, object_yaw);
@@ -53,6 +55,11 @@ void main()
 		{
 			vec3 intensity = (in_Color.rgb + in_Color.gbr + in_Color.bgr)/3.0;
 			out_Color = vec4(intensity + (in_Color.rgb - intensity)*grayscale, 1.0) ;
+		}
+		
+		if(out_Color == vec4(1.0))
+		{
+			out_Color *= vec4(color, 1.0);
 		}
 }
 

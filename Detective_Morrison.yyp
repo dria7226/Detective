@@ -159,6 +159,14 @@
             }
         },
         {
+            "Key": "2c38ff20-4beb-42db-a4f3-657540258b7f",
+            "Value": {
+                "id": "073e8631-264f-469a-9761-3a78a6e760b5",
+                "resourcePath": "datafiles_yy\\wall_deco.dat.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "2ec3c327-0dac-4863-bf7a-916169f16780",
             "Value": {
                 "id": "dc209c7e-e3d7-4e20-93e8-b5f65ee7634b",
@@ -407,14 +415,6 @@
             }
         },
         {
-            "Key": "7c58798c-5984-429b-93a9-e03c0e157f43",
-            "Value": {
-                "id": "77f19276-a08e-46b4-9746-23323b5a4104",
-                "resourcePath": "datafiles_yy\\wall_deco.dat.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "7d6568ef-6a15-4aa0-af8a-08a625323aa9",
             "Value": {
                 "id": "fff0fe2a-0c11-4134-9e37-8b4bd1b0789e",
@@ -583,6 +583,14 @@
             }
         },
         {
+            "Key": "b17eaa82-9ba3-4357-8274-c6c918dcfc21",
+            "Value": {
+                "id": "9e213c68-f3ef-46b8-9a54-fc49ed9241d9",
+                "resourcePath": "datafiles_yy\\wall_bumper_med_class.dat.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "b2519cfc-bf7d-452a-bbc2-934f51f58ed4",
             "Value": {
                 "id": "60740be7-b806-449b-8c5b-a8441993253b",
@@ -679,6 +687,14 @@
             }
         },
         {
+            "Key": "cb840edc-3d44-41a9-8545-c47d87355233",
+            "Value": {
+                "id": "2e5df617-f45e-4959-9ecf-ee1224e10b34",
+                "resourcePath": "objects\\Animation\\Animation.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "cc87e5bc-a89f-4567-9154-f1c1848369a7",
             "Value": {
                 "id": "b70d5ca9-843c-40ef-a0d2-aff9b39d8bae",
@@ -756,14 +772,6 @@
                 "id": "bc130bbd-be50-4d7f-ac83-4a8eb2a5a05e",
                 "resourcePath": "views\\d6ca2187-5aa0-4852-ae69-f6b538729c12.yy",
                 "resourceType": "GMFolder"
-            }
-        },
-        {
-            "Key": "d97a356c-e9e2-4e09-aa13-85f3b6d31ad3",
-            "Value": {
-                "id": "5cfce7d5-ce67-4b78-b5df-21a43c6542d5",
-                "resourcePath": "datafiles_yy\\wall_bumper_med_class.dat.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {

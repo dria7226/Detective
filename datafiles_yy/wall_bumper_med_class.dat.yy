@@ -1,5 +1,5 @@
 {
-    "id": "d97a356c-e9e2-4e09-aa13-85f3b6d31ad3",
+    "id": "b17eaa82-9ba3-4357-8274-c6c918dcfc21",
     "modelName": "GMIncludedFile",
     "mvc": "1.0",
     "name": "wall_bumper_med_class.dat",

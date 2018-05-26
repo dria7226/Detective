@@ -4,11 +4,9 @@ Game.identities = ds_list_create();
 
 var occlusion_cube = create_identity(["cube.dat", VBO]);
 
-var model = Game.tags[Model, occlusion_cube];
+Game.tags[VBO, 0] = vertex_create_buffer_from_buffer(occlusion_cube[1] , Game.format);
 
-Game.test_vbo = vertex_create_buffer_from_buffer(model.buffer, Game.format);
-
-Game.tags[VBO, 0] = vertex_create_buffer_from_buffer(model.buffer, Game.format);
+Game.alpha = 0;
 
 load_intro();
 

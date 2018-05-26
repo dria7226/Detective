@@ -1,7 +1,7 @@
 Game.format_size = 0;
 vertex_format_begin();
 vertex_format_add_position_3d(); Game.format_size += 3;
-vertex_format_add_color(); Game.format_size += 4;
+vertex_format_add_color(); Game.format_size += 1;
 Game.format = vertex_format_end();
 
 gpu_set_blendenable(false);

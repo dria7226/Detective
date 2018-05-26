@@ -5,8 +5,8 @@ var array = argument0;
 
 var answer = array_create(array_length_1d(array) + 1, -1);
 
-ds_list_add(Game.identities, instance_create_layer(0,0,0,Identity));
-var identity = Game.identities[|ds_list_size(Game.identities)];
+var identity = instance_create_layer(0,0,0,Identity);
+ds_list_add(Game.identities, identity);
 
 answer[0] = identity;
 
@@ -21,11 +21,11 @@ for(var i = 0; i < array_length_1d(array); i++)
 		if(	string_char_at(model_name, string_length(model_name)-3) == "." &&
 			string_char_at(model_name, string_length(model_name)-2) == "d" &&
 			string_char_at(model_name, string_length(model_name)-1) == "a" &&
-			string_char_at(model_name, string_length(model_name)) == "t")
+			string_char_at(model_name, string_length(model_name)  ) == "t")
 		{
-			
-			ds_list_add(identity.tag_list, [Model, load_model(model_name)]);
-			answer[1 + i] = Game.tags[Model, array_length_2d(Game.tags, Model)-1];
+			var model = load_model(model_name);
+			ds_list_add(identity.tag_list, [Model, model]);
+			answer[i+1] = Game.tags[Model, model];
 		}
 	}
 	else
@@ -41,6 +41,5 @@ for(var i = 0; i < array_length_1d(array); i++)
 		Game.tags[array[i], array_length_2d(Game.tags, array[i])] = answer[i+1];
 	}
 }
-
 
 return answer;

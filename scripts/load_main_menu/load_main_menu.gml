@@ -19,7 +19,7 @@ for(var i = 0; i < ds_list_size(Game.model_list); i++)
 	ds_list_add(Game.object_list, object)
 	ds_list_add(Game.occlusion_list, i);
 	var model = object.model;
-	ds_list_add(Game.vbo_list, vertex_create_buffer_from_buffer(model.buffer, Game.format));
+	ds_list_add(Game.vbo_list, vertex_create_buffer_from_buffer(model , Game.format));
 }
 
 var lamp = Game.object_list[|4];
