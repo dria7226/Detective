@@ -175,6 +175,14 @@
             }
         },
         {
+            "Key": "2f62e9e4-3bc5-4309-b167-9129f1af2e21",
+            "Value": {
+                "id": "e06ed3f6-21cb-4d85-91a3-d8c1333ab92b",
+                "resourcePath": "datafiles_yy\\wall_wainscoting.dat.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "2fb4ead8-ac09-4b80-b982-1533a80f4ac3",
             "Value": {
                 "id": "c3431b60-6180-4b73-bc1b-6219677fefca",
@@ -196,6 +204,14 @@
                 "id": "47c5d8ea-5e5f-43d5-83cd-b3de4f99bd35",
                 "resourcePath": "objects\\Clue\\Clue.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "37065907-2e3f-4e8a-8033-8baa7464c860",
+            "Value": {
+                "id": "163cd1b1-9869-4a2b-9ed1-08a14d237397",
+                "resourcePath": "datafiles_yy\\floor.dat.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -423,14 +439,6 @@
             }
         },
         {
-            "Key": "834cbea6-46fb-4c9a-a59b-4dc14e48c7fb",
-            "Value": {
-                "id": "42ef9d8e-6310-4b2e-bb66-b35cff0ef8a6",
-                "resourcePath": "datafiles_yy\\floor.dat.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "84af4756-8fd7-4cd5-9152-02fa33e9fe56",
             "Value": {
                 "id": "225b7157-defe-4f56-8d07-e720893ac34d",
@@ -580,14 +588,6 @@
                 "id": "4fefb7ad-2e66-4da4-9e21-8f9f0c77c632",
                 "resourcePath": "scripts\\add_buffer_to_vbo\\add_buffer_to_vbo.yy",
                 "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "b17eaa82-9ba3-4357-8274-c6c918dcfc21",
-            "Value": {
-                "id": "9e213c68-f3ef-46b8-9a54-fc49ed9241d9",
-                "resourcePath": "datafiles_yy\\wall_bumper_med_class.dat.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -748,14 +748,6 @@
                 "id": "d26697ce-a1e5-44cd-b83f-35b520fbd38c",
                 "resourcePath": "views\\d24b7034-e62e-4260-bf65-080a0ab5bb45.yy",
                 "resourceType": "GMFolder"
-            }
-        },
-        {
-            "Key": "d3879ff7-49db-4933-8fa2-40b70f4801bd",
-            "Value": {
-                "id": "9f52c760-dbc6-4741-ba43-d546f909469f",
-                "resourcePath": "datafiles_yy\\wall_cover_med_class.dat.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {

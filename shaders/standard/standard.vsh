@@ -8,7 +8,7 @@ varying float depth;
 varying vec4 out_Color;
 
 uniform vec3 offset;
-//uniform vec3 scale;
+uniform vec3 scale;
 uniform vec3 camera_position;
 uniform float camera_yaw, camera_pitch, camera_roll;
 uniform float object_yaw, object_pitch;
@@ -22,7 +22,7 @@ void rotate(inout vec2 point, float angle);
 
 void main()
 {
-		vec3 local = in_Position;//*scale;
+		vec3 local = in_Position*scale;
 		
 		rotate(local.xy, object_pitch);
 		rotate(local.xz, object_yaw);

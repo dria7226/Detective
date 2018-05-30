@@ -1,28 +1,26 @@
 //NOTE: EVERYTHING NEEDS TO BE TAGGED AS DELETE PROTECTED
 
 //load main camera
-var identity = create_identity([Camera, Position, Rotation]);
+var query = [Camera, Position, Rotation];
 
-identity[2].Z = 4.0;
-identity[2].Y = -9.0;
-identity[3].pitch = pi/2;
+var index = create_identity(query);
+
+Game.tags[query[1], index[1]].Z = 4.0;
+Game.tags[query[1], index[1]].Y = -9.0;
+Game.tags[query[2], index[2]].pitch = pi/2;
 
 //load level
 
 	//create room
-identity = create_identity(["wall_cover_med_class.dat"]);
+index = create_identity(["wall_wainscoting.dat"]);
 
 var wall_segment = buffer_create(1, buffer_grow, 1);
 
-buffer_copy(identity[1], 0, buffer_get_size(identity[1] ), wall_segment, 0);
+buffer_copy(Game.tags[Model, index[0]], 0, buffer_get_size(Game.tags[Model, index[0]]), wall_segment, 0);
 
-identity = create_identity(["wall_bumper_med_class.dat"]);
+index = create_identity(["wall_deco.dat"]);
 
-add_buffer_to_buffer(wall_segment, identity[1] , [0,-0.05,0]);
-
-identity = create_identity(["wall_deco.dat"]);
-
-add_buffer_to_buffer(wall_segment, identity[1] ,[0,0,4.5]);
+add_buffer_to_buffer(wall_segment, Game.tags[Model, index[0]], [0,0,4.5]);
 
 var wall = buffer_create(1, buffer_grow, 1);
 
@@ -31,51 +29,103 @@ buffer_copy(wall_segment, 0, buffer_get_size(wall_segment), wall, 0);
 for(var i = 1; i < 3; i++)
 	add_buffer_to_buffer(wall, wall_segment, [3.0*i, 0,0]);
 
-identity = create_identity([VBO, Position, Rotation, Color, Grayscale, Visible]);
+query = [VBO, Position, Rotation, Color, Grayscale, Visible];
 
-identity[1] = vertex_create_buffer_from_buffer(wall, Game.format);
+index = create_identity(query);
 
-Game.test_vbo = vertex_create_buffer_from_buffer(wall, Game.format);
+wall = vertex_create_buffer_from_buffer(wall, Game.format);
 
-var a = identity[1];
+Game.tags[query[0], index[0]] = wall;
 
-identity[2].Y = 0.5;
+Game.tags[query[3], index[3]].r = 0.2;
+Game.tags[query[3], index[3]].g = 0.4;
+Game.tags[query[3], index[3]].b = 0.2;
 
-identity[4].r = 0.2; identity[4].g = 0.4; identity[4].b = 0.2;
+Game.tags[query[4], index[4]] = 1.0;
 
-identity[6] = identity;
+Game.tags[query[5], index[5]] = index[6];
+//
+index = create_identity(query);
+
+Game.tags[query[0], index[0]] = wall;
+
+Game.tags[query[1], index[1]].X = 3*3;
+
+Game.tags[query[3], index[3]].r = 0.2;
+Game.tags[query[3], index[3]].g = 0.4;
+Game.tags[query[3], index[3]].b = 0.2;
+
+Game.tags[query[4], index[4]] = 1.0;
+
+Game.tags[query[5], index[5]] = index[6];
+//
+index = create_identity(query);
+
+Game.tags[query[0], index[0]] = wall;
+
+Game.tags[query[1], index[1]].Y = 3*3;
+
+Game.tags[query[2], index[2]].pitch = -pi/2;
+
+Game.tags[query[3], index[3]].r = 0.2;
+Game.tags[query[3], index[3]].g = 0.4;
+Game.tags[query[3], index[3]].b = 0.2;
+
+Game.tags[query[4], index[4]] = 1.0;
+
+Game.tags[query[5], index[5]] = index[6];
+
+	//floor
+index = create_identity(["floor.dat"]);
 
 var Floor = buffer_create(1, buffer_grow, 1);
 
-identity = create_identity(["floor.dat"]);
+buffer_copy(Game.tags[Model, index[0]], 0, buffer_get_size(Game.tags[Model, index[0]]), Floor, 0);
 
-buffer_copy(identity[1], 0, buffer_get_size(identity[1]), Floor, 0);
+for(var i = 0; i < 6; i++)
+{
+	for(var j = 1; j < 3; j++)
+	{
+		add_buffer_to_buffer(Floor, Game.tags[Model, index[0]], [i*3, -j*3 - 1.5, 0]);
+	}
+}
 
+index = create_identity(query);
+
+Game.tags[query[0], index[0]] = vertex_create_buffer_from_buffer(Floor, Game.format);
+
+Game.tags[query[4], index[4]] = 1.0;
+
+Game.tags[query[5], index[5]] = index[6];
+
+	//ceiling
 var ceiling = buffer_create(1, buffer_grow, 1);
 
-identity = create_identity(["ceiling.dat"]);
+index = create_identity(["ceiling.dat"]);
 
 
 	//add items inside
 
-identity = create_identity(["vinyl_player.dat", VBO]);
+index = create_identity(["vinyl_player.dat", VBO]);
 
-identity = create_identity(["vinyl.dat", VBO]);
+index = create_identity(["vinyl.dat", VBO]);
 
-identity = create_identity(["vinyl_highlights.dat", VBO]);
+index = create_identity(["vinyl_highlights.dat", VBO]);
 
-identity = create_identity(["desk_med_class.dat", VBO]);
+index = create_identity(["desk_med_class.dat", VBO]);
 
-identity = create_identity(["office_lamp.dat", VBO]);
+index = create_identity(["office_lamp.dat", VBO]);
 
 
 //load occlusion groups
-identity = create_identity([Occlusion_Group, VBO, Position, Scale, List]);
 
-//identity[1] = Game.tags[VBO, 0];
+query = [Occlusion_Group, VBO, Position, Scale, List];
+index = create_identity(query);
+
+//index[1] = Game.tags[VBO, 0];
 
 //load song
 
 //setup animation loop
 
-identity = create_identity([Path]);
+index = create_identity([Path]);

@@ -16,7 +16,7 @@ shader_set_uniform_f(shader_get_uniform(standard, "screen_ratio"), window_get_he
 var position = tags[Position, 0];
 var rotation = tags[Rotation, 0];
 shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.X, position.Y, position.Z);
-shader_set_uniform_f(shader_get_uniform(standard, "camera_pitch"), rotation.pitch);
+shader_set_uniform_f(shader_get_uniform(standard, "camera_pitch"), rotation.pitch + alpha);
 shader_set_uniform_f(shader_get_uniform(standard, "camera_yaw"), rotation.yaw);
 shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll);
 
@@ -31,9 +31,9 @@ shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll)
 
 //	for(var i = 0; i < array_length_1d(occlusion_groups); i++)
 //	{
-//		var vbo_tag = Game.identities[|occlusion_groups[i]];
+//		var vbo_tag =  identities[|occlusion_groups[i]];
 //		vbo_tag = vbo_tag.tag_list[|0];
-//		vbo_tag = Game.tags[VBO, vbo_tag[1]];
+//		vbo_tag =  tags[VBO, vbo_tag[1]];
 //        //encode index into color
 //        shader_set_uniform_f(shader_get_uniform(standard, “color”), i);
 //		vertex_submit(vbo_tag, pr_trianglelist, -1);
@@ -63,21 +63,23 @@ shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll)
 surface_set_target(surfaces[RGB]);
 shader_set_uniform_i(shader_get_uniform(standard, "draw_mode"), 0);
 
-//for(var i = 0; i < array_length_2d(tags, Visible); i++)
-//{
-	var identity = tags[Visible, 0];
-	var tag = search_tags(identity, [Position, Rotation, Grayscale, Color, VBO]);
-	shader_set_uniform_f(shader_get_uniform(standard, "offset"),tag[0].X, tag[0].Y, tag[0].Z);
-	shader_set_uniform_f(shader_get_uniform(standard, "object_pitch"), alpha);
-	//shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, 1.0, 1.0);
-	shader_set_uniform_f(shader_get_uniform(standard, "object_yaw"), tag[1].yaw);
-	shader_set_uniform_f(shader_get_uniform(standard, "color"), tag[3].r, tag[3].g, tag[3].b);
+var query = [Position, Rotation, Grayscale, Color, VBO];
+
+for(var i = 0; i < array_length_2d(tags, Visible); i++)
+{
+	var identity = tags[Visible, i];
+	var index = search_tags(identity, query);
+	shader_set_uniform_f(shader_get_uniform(standard, "offset"), tags[query[0], index[0]].X, tags[query[0], index[0]].Y, tags[query[0], index[0]].Z);
+	shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, 1.0, 1.0);
+	shader_set_uniform_f(shader_get_uniform(standard, "object_pitch"), tags[query[1], index[1]].pitch);
+	shader_set_uniform_f(shader_get_uniform(standard, "object_yaw"), tags[query[1], index[1]].yaw);
+	shader_set_uniform_f(shader_get_uniform(standard, "color"), tags[query[3], index[3]].r, tags[query[3], index[3]].g, tags[query[3], index[3]].b);
 	shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
-	if(tag[2] != -1)
+	if(tags[query[4], index[4]] != -1)
 	{
-		vertex_submit(test_vbo, pr_trianglelist, -1);
+		vertex_submit(tags[query[4], index[4]], pr_trianglelist, -1);
 	}
-//}
+}
 surface_reset_target();
 
 gpu_set_ztestenable(false);

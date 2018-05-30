@@ -3,4 +3,3 @@ Crashes
 
 Bugs
 - Depth buffer encoding in standard shader
-- Fix vbo missassignment

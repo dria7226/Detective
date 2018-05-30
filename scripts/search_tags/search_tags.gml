@@ -12,7 +12,8 @@ for(var i = 0; i < array_length_1d(argument1); i++)
 		var tag_combo = argument0.tag_list[|j];
 		if(tag_combo[0] == argument1[i])
 		{
-			answer[i] = Game.tags[tag_combo[0], tag_combo[1]];
+			answer[i] = tag_combo[1];
+			break;
 		}
 	}
 }
