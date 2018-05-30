@@ -82,17 +82,19 @@ var Floor = buffer_create(1, buffer_grow, 1);
 
 buffer_copy(Game.tags[Model, index[0]], 0, buffer_get_size(Game.tags[Model, index[0]]), Floor, 0);
 
-for(var i = 0; i < 6; i++)
+for(var i = 1; i < 6; i++)
 {
-	for(var j = 1; j < 3; j++)
+	for(var j = 0; j < 3; j++)
 	{
-		add_buffer_to_buffer(Floor, Game.tags[Model, index[0]], [i*3, -j*3 - 1.5, 0]);
+		add_buffer_to_buffer(Floor, Game.tags[Model, index[0]], [i*3, -j*3, 0]);
 	}
 }
 
 index = create_identity(query);
 
 Game.tags[query[0], index[0]] = vertex_create_buffer_from_buffer(Floor, Game.format);
+
+Game.tags[query[1], index[1]].Y = -1.5;
 
 Game.tags[query[4], index[4]] = 1.0;
 
