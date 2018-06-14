@@ -1,8 +1,12 @@
 attribute vec3 in_Position;                 // (x,y,z)
 attribute vec4 in_Color;					// (r,g,b)
 
-#define COLOR_MODE 1.0
-#define DEPTH_MODE 2.0
+uniform int draw_mode;
+#define COLOR_MODE 0
+#define DEPTH_MODE 1
+#define OCCLUSION_MODE 2
+#define OCCLUSION_DEBUG_MODE 3
+#define pi 3.1415926535897932384626433832795
 
 varying float depth;
 varying vec4 out_Color;
@@ -30,11 +34,27 @@ void main()
 		local += offset;
 
 		//camera transformation
+		if(draw_mode == OCCLUSION_DEBUG_MODE)
+		{
+			vec3 debug_offset = vec3(10.0, 0.0, 0.0);
+			debug_offset.z = debug_offset.x/2.0;
+			rotate(debug_offset.xy, camera_pitch - pi/2.0);
+			local -= debug_offset;
+		}
 		local -= camera_position;
-
+		
 		rotate(local.xy, -camera_pitch);
+		if(draw_mode == OCCLUSION_DEBUG_MODE)
+			rotate(local.xy, -3.0*pi/8.0);
+			
 		rotate(local.xz, -camera_yaw);
-		rotate(local.yz, -camera_roll);
+		if(draw_mode == OCCLUSION_DEBUG_MODE)
+			rotate(local.xz, 0.46);
+		
+		if(draw_mode != OCCLUSION_DEBUG_MODE)
+			rotate(local.yz, -camera_roll);
+		
+		
 
 		//project
 		gl_Position.z = length(local.xyz)/far_clip;
@@ -44,7 +64,7 @@ void main()
 		else
 		gl_Position.xy = local.yz/local.x*near_clip;
 	
-		gl_Position.x *= screen_ratio;
+		gl_Position.x *= -screen_ratio;
 
 		gl_Position.w = 1.0;
 
@@ -65,7 +85,7 @@ void main()
 
 void rotate(inout vec2 point, float angle)
 {
-  float X = sin(angle)*point.y - cos(angle)*point.x;
+  float X = cos(angle)*point.x - sin(angle)*point.y;
   point.y = cos(angle)*point.y + sin(angle)*point.x;
   point.x = X;
 }

@@ -10,4 +10,4 @@ for(var i = 0; i < NO_OF_SURFACES; i++)
 	}
 }
 
-alpha += delta_time/10000000;
+alpha += delta_time/5000000;

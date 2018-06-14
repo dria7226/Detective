@@ -6,7 +6,6 @@ Game.format = vertex_format_end();
 
 gpu_set_blendenable(false);
 
-#macro OCCLUSION 8
 #macro DIFFUSE 0
 #macro DEPTH 1
 #macro NORMAL 2
@@ -15,7 +14,11 @@ gpu_set_blendenable(false);
 #macro BLACK 5
 #macro GRAY 6
 #macro RGB 7
-#macro NO_OF_SURFACES 9
+#macro OCCLUSION 8
+#macro OCCLUSION_DEBUG 9
+#macro NO_OF_SURFACES 10
+
+occlusion_debug = true;
 
 #macro OCCLUSION_RATIO 1/10
 

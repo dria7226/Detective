@@ -3,3 +3,4 @@ Crashes
 
 Bugs
 - Depth buffer encoding in standard shader
+- a rotation of 0 degrees in the shader causes x ndc coordinate to be flipped

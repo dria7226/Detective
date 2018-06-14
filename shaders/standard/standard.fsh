@@ -5,12 +5,14 @@ uniform int draw_mode;
 
 #define COLOR_MODE 0
 #define DEPTH_MODE 1
+#define OCCLUSION_MODE 2
+#define OCCLUSION_DEBUG_MODE 3
 
 #define byte 256.0
 
 void main()
 {	
-	if(draw_mode == COLOR_MODE)
+	if(draw_mode == COLOR_MODE || draw_mode == OCCLUSION_DEBUG_MODE)
 	{
 		gl_FragColor = out_Color;
 		return;
