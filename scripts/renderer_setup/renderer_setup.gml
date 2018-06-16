@@ -29,3 +29,5 @@ for(var i = 0; i < NO_OF_SURFACES; i++)
 	else
 	Game.surfaces[i] = surface_create(window_get_width(), window_get_height());
 }
+
+var occlusion_buffer = buffer_create(1, buffer_grow, 1);

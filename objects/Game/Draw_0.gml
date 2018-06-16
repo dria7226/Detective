@@ -25,42 +25,111 @@ shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll)
 
 
 ////occlusion
+//var to_draw = ds_list_create();
 //var occlusion_groups = tags[Occlusion_Group, 0];
-//for(;occlusion_groups != 0;)
+//occlusion_groups = search_tags(occlusion_groups, [List]);
+//occlusion_groups = occlusion_groups[0];
+//occlusion_groups = tags[List, occlusion_groups[1]]
+//surface_set_target(surfaces[OCCLUSION]);
+
+//while(!ds_list_empty(occlusion_groups))
 //{
 //	//draw occlusion groups
-//	surface_set_target(surfaces[OCCLUSION]);
-//draw_clear(c_white);
+//	draw_clear(c_white);
 
-//	for(var i = 0; i < array_length_1d(occlusion_groups); i++)
+//	for(var i = 0; i < ds_list_size(occlusion_groups); i++)
 //	{
-//		var vbo_tag =  identities[|occlusion_groups[i]];
-//		vbo_tag = vbo_tag.tag_list[|0];
-//		vbo_tag =  tags[VBO, vbo_tag[1]];
-//        //encode index into color
-//        shader_set_uniform_f(shader_get_uniform(standard, “color”), i);
+//		var tags =  identities[|occlusion_groups[|i]];
+//		var query = [VBO, Position, Rotation, Scale];
+//		tags = search_tags(tags, query);
+
+//		var vbo_tag = tags[0];
+//		if(vbo_tag == -1)
+//			continue;
+//		else
+//			vbo_tag = tags[VBO, vbo_tag];
+
+//		var position_tag = tags[1];
+//		if(position_tag == -1)
+//			continue;
+//		else
+//		{
+//			position_tag = tags[Position, position_tag];
+//			shader_set_uniform_f(shader_get_uniform(standard, “offset”), position_tag.X, position_tag.Y, position_tag.Z);
+//		}
+
+//		var rotation_tag = tags[2];
+//		if(rotation_tag == -1)
+//		{
+//			shader_set_uniform_f(shader_get_uniform(standard, “object_yaw”), 0.0);
+//			shader_set_uniform_f(shader_get_uniform(standard, “object_pitch”), 0.0);
+//			shader_set_uniform_f(shader_get_uniform(standard, “object_roll”), 0.0);
+//		}
+//		else
+//		{
+//			rotation_tag = tags[Position, rotation_tag];
+//			shader_set_uniform_f(shader_get_uniform(standard, “object_yaw”), rotation_tag.yaw);
+//			shader_set_uniform_f(shader_get_uniform(standard, “object_pitch”), rotation_tag.pitch);
+//			shader_set_uniform_f(shader_get_uniform(standard, “object_roll”), rotation_tag.roll);
+//		}
+
+//		var scale_tag = tags[3];
+//		if(scale_tag == -1)
+//			shader_set_uniform_f(shader_get_uniform(standard, “scale”), 1.0, 1.0, 1.0);
+//		else
+//		{
+//			scale_tag = tags[Scale, scale_tag];
+//			shader_set_uniform_f(shader_get_uniform(standard, “scale”), scale_tag.X, scale_tag.Y, scale_tag.Z);
+//		}
+
+//      //pass index and render
+//      shader_set_uniform_f(shader_get_uniform(standard, “id”), i);
 //		vertex_submit(vbo_tag, pr_trianglelist, -1);
 //	}
-//	surface_reset_target();
 	
 //	//search occlusion map for visibility
-//shader_set_uniform_i(shader_get_uniform(standard, “mode”), 2);
+//	shader_set_uniform_i(shader_get_uniform(standard, “mode”), 2);
 
-//vertex_submit(fullscreen_mesh, pr_trianglelist, -1);
+//	draw_primitive_begin(pr_trianglelist);
+//	draw_vertex(0.0, 0.0);
+//	draw_vertex(2.0, 0.0);
+//	draw_vertex(0.0, 2.0);
+//	draw_primitive_end();
 
-//var visible_indices = 0;
-//var occlusion_witdh = surfaces_get_width(surfaces[OCCLUSION]);
-//var occlusion_height = surfaces_get_height(surfaces[OCCLUSION]);
-//for(var i = 0; i < occlusion_width*occlusion_height; i++)
-//{
-//    visible_indices[i] = surface_getpixel(surfaces[OCCLUSION], i % occlusion_width, i / occlusion_width);
+//	buffer_get_surface(occlusion_buffer, surfaces[OCCLUSION], 0, 0, 0); //formatted as BGRA
+//	var occlusion_buffer_size = buffer_get_size(occlusion_buffer)/4;
+//	ds_list_clear(occlusion_groups);
 
+//	for(var i = 0; i < occlusion_buffer_size; i++)
+//	{
+//		var visible_index[0] = buffer_read(occlusion_buffer, buffer_f8);
+//		visible_index[1] = buffer_read(occlusion_buffer, buffer_f8);
+//		visible_index[2] = buffer_read(occlusion_buffer, buffer_f8);	//formatted as BGRA
+
+//		if(	visible_index[0] == 1.0 &&
+//			visible_index[1] == 1.0 &&
+//			visible_index[2] == 1.0)
+//			break;
+//		else
+//		{
+//			//decode visible index
+//			var index = visible_index[0] + visible_index[1]*256 + visible_index[2]*256*256;
+
+//			//add leaves and prepare next occlusion group
+//			var group = tags[Occlusion_Group, index];
+//			var query = [VBO, List];
+//			group = search_tags(identities[|group], query);
+//			if(group[1] == -1)
+//				ds_list_add(to_draw, tags[VBO, group[0]]);
+//			else
+//				for(var j = 0; j < ds_list_size(tags[List, group[1]]); j++)
+//				{ var list = tags[List, group[1]]; ds_list_add(occlusion_groups, list[|j]); }
+//		}
+//	}
 //}
-	
-//	//add leaves and prepare next occlusion group
-//	occlusion_groups = 0;
-	
-//}
+//surface_reset_target();
+
+//render to_draw list
 
 ////color
 surface_set_target(surfaces[RGB]);

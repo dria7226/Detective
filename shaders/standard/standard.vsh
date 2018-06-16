@@ -15,7 +15,7 @@ uniform vec3 offset;
 uniform vec3 scale;
 uniform vec3 camera_position;
 uniform float camera_yaw, camera_pitch, camera_roll;
-uniform float object_yaw, object_pitch;
+uniform float object_yaw, object_pitch, object_roll;
 uniform float grayscale;
 uniform vec3  color;
 uniform float near_clip;
@@ -28,8 +28,9 @@ void main()
 {
 		vec3 local = in_Position*scale;
 		
-		rotate(local.xy, object_pitch);
-		rotate(local.xz, object_yaw);
+		rotate(local.xy, object_yaw);
+		rotate(local.xz, object_pitch);
+		rotate(local.yz, object_roll);
 		
 		local += offset;
 
@@ -43,11 +44,11 @@ void main()
 		}
 		local -= camera_position;
 		
-		rotate(local.xy, -camera_pitch);
+		rotate(local.xy, -camera_yaw);
 		if(draw_mode == OCCLUSION_DEBUG_MODE)
 			rotate(local.xy, -3.0*pi/8.0);
 			
-		rotate(local.xz, -camera_yaw);
+		rotate(local.xz, -camera_pitch);
 		if(draw_mode == OCCLUSION_DEBUG_MODE)
 			rotate(local.xz, 0.46);
 		

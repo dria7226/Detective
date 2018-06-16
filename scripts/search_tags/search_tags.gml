@@ -1,7 +1,7 @@
 //search_tags(identity, tag list)
 //return array
 //	if not found: -1
-//	if     found: corresponding tag
+//	if     found: corresponding tag combo
 
 var answer = array_create(array_length_1d(argument1), -1);
 
