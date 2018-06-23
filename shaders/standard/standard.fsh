@@ -29,7 +29,9 @@ void main()
 	
 	if(draw_mode == OCCLUSION_MODE)
 	{
-		gl_FragColor = vec4(id/(byte*byte) - id/byte, id/byte - id%byte, id%byte, 1.0);
+		//vec4 d = vec4((float)id/(byte*byte) - (float)id/byte, (float)id/byte - id%byte, id%byte, 1.0);
+		
+		//gl_FragColor = d;
 		return;
 	}
 }

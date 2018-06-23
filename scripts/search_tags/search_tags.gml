@@ -1,4 +1,4 @@
-//search_tags(identity, tag list)
+//search_tags(identity, tags)
 //return array
 //	if not found: -1
 //	if     found: corresponding tag combo

@@ -15,7 +15,7 @@ uniform vec3 offset;
 uniform vec3 scale;
 uniform vec3 camera_position;
 uniform float camera_yaw, camera_pitch, camera_roll;
-uniform float object_yaw, object_pitch, object_roll;
+uniform float yaw, pitch, roll;
 uniform float grayscale;
 uniform vec3  color;
 uniform float near_clip;
@@ -28,9 +28,9 @@ void main()
 {
 		vec3 local = in_Position*scale;
 		
-		rotate(local.xy, object_yaw);
-		rotate(local.xz, object_pitch);
-		rotate(local.yz, object_roll);
+		rotate(local.xy, yaw);
+		rotate(local.xz, pitch);
+		rotate(local.yz, roll);
 		
 		local += offset;
 

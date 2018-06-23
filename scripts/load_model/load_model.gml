@@ -31,8 +31,9 @@ var model = buffer_load(argument0);
 
 //load animations 
 
-var index = array_length_2d(Game.tags, Model);
+var index = ds_list_size(Game.tags[|Model]);
 
-Game.tags[Model, index] = model;
+var tag = Game.tags[|Model];
+tag[|index] = model;
 
 return index;

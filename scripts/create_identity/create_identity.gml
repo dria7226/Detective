@@ -31,11 +31,13 @@ for(var i = 0; i < array_length_1d(array); i++)
 	else
 	{
 		//simple tag
-		var index = array_length_2d(Game.tags, array[i]);
+		var index = ds_list_size(Game.tags[|array[i]]);
 		
 		if(Game.tag_types[array[i]] == OBJECT_TYPE)
-			Game.tags[array[i], index] = instance_create_layer(0,0,0,array[i]);
-			
+		{
+			ds_list_add(Game.tags[|array[i]], instance_create_layer(0,0,0,array[i]));
+		}
+		
 		ds_list_add(identity.tag_list, [array[i], index]);
 	
 		answer[i] = index;

@@ -1,26 +1,35 @@
 //NOTE: EVERYTHING NEEDS TO BE TAGGED AS DELETE PROTECTED
 
 //load main camera
-var query = [Camera, Position, Rotation];
+var query = [Camera, Position, Rotation, "Objects/movie_camera.dat", VBO];
 
 var index = create_identity(query);
 
-Game.tags[query[1], index[1]].X = 4.5;
-Game.tags[query[1], index[1]].Y = -9.0;
-Game.tags[query[1], index[1]].Z = 4.0;
+var vbo = Game.tags[|query[4]]; vbo = vbo[|index[4]];
+var model = Game.tags[|Model]; model = model[|index[3]];
+vbo = vertex_create_buffer_from_buffer(model, Game.format);
+
+var position = Game.tags[|query[1]]; position = position[|index[1]];
+position.X = 4.5;
+position.Y = -9.0;
+position.Z = 4.0;
 
 //load level
 
 	//create room
 index = create_identity(["Level Building/wall_wainscoting.dat"]);
 
-var wall_segment = buffer_create(1, buffer_grow, 1);
+var wall_segment = buffer_create(1, buffer_grow, 1); 
 
-buffer_copy(Game.tags[Model, index[0]], 0, buffer_get_size(Game.tags[Model, index[0]]), wall_segment, 0);
+model = Game.tags[|Model]; model = model[|index[0]];
+
+buffer_copy(model, 0, buffer_get_size(model), wall_segment, 0);
 
 index = create_identity(["Level Building/wall_deco.dat"]);
 
-add_buffer_to_buffer(wall_segment, Game.tags[Model, index[0]], [0,0,4.5]);
+model = Game.tags[|Model]; model = model[|index[0]];
+
+add_buffer_to_buffer(wall_segment, model, [0,0,4.5]);
 
 var wall = buffer_create(1, buffer_grow, 1);
 
@@ -35,70 +44,76 @@ index = create_identity(query);
 
 wall = vertex_create_buffer_from_buffer(wall, Game.format);
 
-Game.tags[query[0], index[0]] = wall;
+var identity = Game.tags[|query[0]]; identity = identity[|index[0]]; identity = wall;
 
-Game.tags[query[3], index[3]].r = 0.2;
-Game.tags[query[3], index[3]].g = 0.4;
-Game.tags[query[3], index[3]].b = 0.2;
+identity = Game.tags[| query[3]]; identity = identity[|index[3]];
+identity.r = 0.2;
+identity.g = 0.4;
+identity.b = 0.2;
 
-Game.tags[query[4], index[4]] = 1.0;
+identity = Game.tags[|query[4]]; identity = identity[|index[4]]; identity = 1.0;
 
-Game.tags[query[5], index[5]] = index[6];
+identity = Game.tags[|query[5]]; identity = identity[|index[5]]; identity = index[6];
 //
 index = create_identity(query);
 
-Game.tags[query[0], index[0]] = wall;
+identity = Game.tags[|query[0]]; identity = identity[|index[0]]; identity = wall;
 
-Game.tags[query[1], index[1]].X = 3*3;
+identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.X = 3*3;
 
-Game.tags[query[3], index[3]].r = 0.2;
-Game.tags[query[3], index[3]].g = 0.4;
-Game.tags[query[3], index[3]].b = 0.2;
+identity = Game.tags[|query[3]]; identity = identity[|index[3]];
+identity.r = 0.2;
+identity.g = 0.4;
+identity.b = 0.2;
 
-Game.tags[query[4], index[4]] = 1.0;
+identity = Game.tags[|query[4]]; identity = identity[|index[4]]; identity = 1.0;
 
-Game.tags[query[5], index[5]] = index[6];
+identity = Game.tags[|query[5]]; identity = identity[|index[5]]; identity = index[6];
 //
 index = create_identity(query);
 
-Game.tags[query[0], index[0]] = wall;
+identity = Game.tags[|query[0]]; identity = identity[|index[0]]; identity = wall;
 
-Game.tags[query[1], index[1]].Y = -3*3;
+identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Y = -3*3;
 
-Game.tags[query[2], index[2]].pitch = pi/2;
+identity = Game.tags[|query[2]]; identity = identity[|index[2]]; identity.yaw = pi/2;
 
-Game.tags[query[3], index[3]].r = 0.2;
-Game.tags[query[3], index[3]].g = 0.4;
-Game.tags[query[3], index[3]].b = 0.2;
+identity = Game.tags[|query[3]]; identity = identity[|index[3]];
+identity.r = 0.2;
+identity.g = 0.4;
+identity.b = 0.2;
 
-Game.tags[query[4], index[4]] = 1.0;
+identity = Game.tags[|query[4]]; identity = identity[|index[4]]; identity = 1.0;
 
-Game.tags[query[5], index[5]] = index[6];
+identity = Game.tags[|query[5]]; identity = identity[|index[5]]; identity = index[6];
 
 	//floor
 index = create_identity(["Level Building/floor.dat"]);
 
+model = Game.tags[|Model]; model = model[|index[0]];
+
 var Floor = buffer_create(1, buffer_grow, 1);
 
-buffer_copy(Game.tags[Model, index[0]], 0, buffer_get_size(Game.tags[Model, index[0]]), Floor, 0);
+buffer_copy(model, 0, buffer_get_size(model), Floor, 0);
 
 for(var i = 1; i < 6; i++)
 {
 	for(var j = 0; j < 3; j++)
 	{
-		add_buffer_to_buffer(Floor, Game.tags[Model, index[0]], [i*3, -j*3, 0]);
+		add_buffer_to_buffer(Floor, model, [i*3, -j*3, 0]);
 	}
 }
 
 index = create_identity(query);
 
-Game.tags[query[0], index[0]] = vertex_create_buffer_from_buffer(Floor, Game.format);
+identity = Game.tags[|query[0]]; identity = identity[|index[0]];
+identity = vertex_create_buffer_from_buffer(Floor, Game.format);
 
-Game.tags[query[1], index[1]].Y = -1.5;
+identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Y = -1.5;
 
-Game.tags[query[4], index[4]] = 1.0;
+identity = Game.tags[|query[4]]; identity = identity[|index[4]]; identity = 1.0;
 
-Game.tags[query[5], index[5]] = index[6];
+identity = Game.tags[|query[5]]; identity = identity[|index[5]]; identity = index[6];
 
 	//ceiling
 var ceiling = buffer_create(1, buffer_grow, 1);

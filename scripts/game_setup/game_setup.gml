@@ -4,7 +4,9 @@ Game.identities = ds_list_create();
 
 var occlusion_cube = create_identity(["cube.dat", VBO]);
 
-Game.tags[VBO, 0] = vertex_create_buffer_from_buffer(occlusion_cube[0] , Game.format);
+var vbo = Game.tags[|VBO];
+
+vbo[|0] = vertex_create_buffer_from_buffer(occlusion_cube[0] , Game.format);
 
 Game.alpha = 0;
 

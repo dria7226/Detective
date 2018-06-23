@@ -1,4 +1,4 @@
-//remove_tags(identity, tag, method)
+//remove_tags(identity, tags, method)
 
 #macro REMOVE_REFERENCE 0
 #macro REMOVE_REFERENCE_AND_TAG 1

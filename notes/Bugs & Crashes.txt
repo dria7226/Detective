@@ -3,4 +3,6 @@ Crashes
 
 Bugs
 - Depth buffer encoding in standard shader
-- a rotation of 0 degrees in the shader causes x ndc coordinate to be flipped
+- switch unnecessary for loops to while loops
+- switch from to_draw list to Visible tag system (also figure out how to include identity information in occlusion_groups)
+	- switch "Game.tags" from array to ds_list of ds_lists

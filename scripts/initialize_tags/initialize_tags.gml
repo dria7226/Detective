@@ -17,4 +17,9 @@ for(var i = 0; i < array_length_1d(object_types); i++)
 	Game.tag_types[object_types[i]] = OBJECT_TYPE;
 }
 
-Game.tags[array_length_1d(Game.tag_types), 0] = 0;
+Game.tags = ds_list_create();
+
+for(var i = 0; i < array_length_1d(Game.tag_types); i++)
+{
+	Game.tags[|i] = ds_list_create();
+}

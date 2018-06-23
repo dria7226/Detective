@@ -11,13 +11,13 @@ surface_reset_target();
 gpu_set_ztestenable(true);
 
 shader_set(standard);
-var camera_tag = tags[Camera, 0];
+var camera_tag = tags[|Camera]; camera_tag = camera_tag[|0];
 shader_set_uniform_f(shader_get_uniform(standard, "near_clip"), camera_tag.near_clip);
 shader_set_uniform_f(shader_get_uniform(standard, "far_clip"), 100.0);
 shader_set_uniform_f(shader_get_uniform(standard, "screen_ratio"), window_get_height()/window_get_width());
 
-var position = tags[Position, 0];
-var rotation = tags[Rotation, 0];
+var position = tags[|Position]; position = position[|0];
+var rotation = tags[|Rotation]; rotation = rotation[|0];
 shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.X, position.Y, position.Z);
 shader_set_uniform_f(shader_get_uniform(standard, "camera_pitch"), rotation.pitch + alpha);
 shader_set_uniform_f(shader_get_uniform(standard, "camera_yaw"), rotation.yaw);
@@ -26,10 +26,8 @@ shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll)
 
 ////occlusion
 //var to_draw = ds_list_create();
-//var occlusion_groups = tags[Occlusion_Group, 0];
-//occlusion_groups = search_tags(occlusion_groups, [List]);
-//occlusion_groups = occlusion_groups[0];
-//occlusion_groups = tags[List, occlusion_groups[1]]
+//var occlusion_groups = tags[|Occlusion_Group]; occlusion_groups = [|0];
+//occlusion_groups = tags[|List]; occlusion_groups = occlusion_groups[|combo[0]];
 //surface_set_target(surfaces[OCCLUSION]);
 
 //while(!ds_list_empty(occlusion_groups))
@@ -39,46 +37,42 @@ shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll)
 
 //	for(var i = 0; i < ds_list_size(occlusion_groups); i++)
 //	{
-//		var tags =  identities[|occlusion_groups[|i]];
+//		var id_tags =  identities[|occlusion_groups[|i]];
 //		var query = [VBO, Position, Rotation, Scale];
-//		tags = search_tags(tags, query);
+//		id_tags = search_tags(id_tags, query);
 
-//		var vbo_tag = tags[0];
-//		if(vbo_tag == -1)
+//		if(id_tags[0] == -1)
 //			continue;
 //		else
-//			vbo_tag = tags[VBO, vbo_tag];
+//			vbo_tag = tags[|VBO]; vbo_tag = vbo_tag[|id_tags[0]];
 
-//		var position_tag = tags[1];
-//		if(position_tag == -1)
+//		if(id_tags[1] == -1)
 //			continue;
 //		else
 //		{
-//			position_tag = tags[Position, position_tag];
+//			var position_tag = tags[|Position]; position_tag = position_tag[|id_tags[1]];
 //			shader_set_uniform_f(shader_get_uniform(standard, “offset”), position_tag.X, position_tag.Y, position_tag.Z);
 //		}
 
-//		var rotation_tag = tags[2];
-//		if(rotation_tag == -1)
+//		if(id_tags[2] == -1)
 //		{
-//			shader_set_uniform_f(shader_get_uniform(standard, “object_yaw”), 0.0);
-//			shader_set_uniform_f(shader_get_uniform(standard, “object_pitch”), 0.0);
-//			shader_set_uniform_f(shader_get_uniform(standard, “object_roll”), 0.0);
+//			shader_set_uniform_f(shader_get_uniform(standard, “yaw”), 0.0);
+//			shader_set_uniform_f(shader_get_uniform(standard, “pitch”), 0.0);
+//			shader_set_uniform_f(shader_get_uniform(standard, “roll”), 0.0);
 //		}
 //		else
 //		{
-//			rotation_tag = tags[Position, rotation_tag];
-//			shader_set_uniform_f(shader_get_uniform(standard, “object_yaw”), rotation_tag.yaw);
-//			shader_set_uniform_f(shader_get_uniform(standard, “object_pitch”), rotation_tag.pitch);
-//			shader_set_uniform_f(shader_get_uniform(standard, “object_roll”), rotation_tag.roll);
+//			var rotation_tag = tags[|Rotation]; rotation_tag = rotation_tag[|id_tags[2]];
+//			shader_set_uniform_f(shader_get_uniform(standard, “yaw”), rotation_tag.yaw);
+//			shader_set_uniform_f(shader_get_uniform(standard, “pitch”), rotation_tag.pitch);
+//			shader_set_uniform_f(shader_get_uniform(standard, “roll”), rotation_tag.roll);
 //		}
 
-//		var scale_tag = tags[3];
-//		if(scale_tag == -1)
+//		if(id_tags[3] == -1)
 //			shader_set_uniform_f(shader_get_uniform(standard, “scale”), 1.0, 1.0, 1.0);
 //		else
 //		{
-//			scale_tag = tags[Scale, scale_tag];
+//			scale_tag = tags[|Scale]; scale_tag = scale_tag[|id_tags[3]];
 //			shader_set_uniform_f(shader_get_uniform(standard, “scale”), scale_tag.X, scale_tag.Y, scale_tag.Z);
 //		}
 
@@ -116,14 +110,16 @@ shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll)
 //			var index = visible_index[0] + visible_index[1]*256 + visible_index[2]*256*256;
 
 //			//add leaves and prepare next occlusion group
-//			var group = tags[Occlusion_Group, index];
-//			var query = [VBO, List];
-//			group = search_tags(identities[|group], query);
+//			var group = tags[|Occlusion_Group]; group = group[|index];
+//			group = search_tags(identities[|group], [VBO, List]);
 //			if(group[1] == -1)
-//				ds_list_add(to_draw, tags[VBO, group[0]]);
+//			{
+//				var vbo = tags[|VBO]; vbo = vbo[|group[0]];
+//				ds_list_add(to_draw, vbo);
+//			}
 //			else
 //				for(var j = 0; j < ds_list_size(tags[List, group[1]]); j++)
-//				{ var list = tags[List, group[1]]; ds_list_add(occlusion_groups, list[|j]); }
+//				{ var list = tags[|List]; list = list[|group[1]]; ds_list_add(occlusion_groups, list[|j]); }
 //		}
 //	}
 //}
@@ -135,19 +131,40 @@ shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll)
 surface_set_target(surfaces[RGB]);
 shader_set_uniform_i(shader_get_uniform(standard, "draw_mode"), 0);
 
-var query = [Position, Rotation, Grayscale, Color, VBO];
+var query = [Position, Rotation, Scale, Grayscale, Color, VBO];
 
 for(var i = 0; i < array_length_2d(tags, Visible); i++)
 {
-	var identity = tags[Visible, i];
+	var identity = tags[|Visible]; identity = identity[|i];
 	var index = search_tags(identity, query);
-	shader_set_uniform_f(shader_get_uniform(standard, "offset"), tags[query[0], index[0]].X, tags[query[0], index[0]].Y, tags[query[0], index[0]].Z);
-	shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, 1.0, 1.0);
-	shader_set_uniform_f(shader_get_uniform(standard, "object_pitch"), tags[query[1], index[1]].pitch);
-	shader_set_uniform_f(shader_get_uniform(standard, "object_yaw"), tags[query[1], index[1]].yaw);
-	shader_set_uniform_f(shader_get_uniform(standard, "color"), tags[query[3], index[3]].r, tags[query[3], index[3]].g, tags[query[3], index[3]].b);
-	shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
-	if(tags[query[4], index[4]] != -1)
+	
+	var id_tag = tags[|query[0]]; id_tag = id_tag[|index[0]]; 
+	shader_set_uniform_f(shader_get_uniform(standard, "offset"), id_tag.X, id_tag.Y, id_tag.Z);
+	
+	id_tag = tags[|query[1]]; id_tag = id_tag[|index[1]];
+	shader_set_uniform_f(shader_get_uniform(standard, "yaw"), id_tag.yaw);
+	shader_set_uniform_f(shader_get_uniform(standard, "pitch"), id_tag.pitch);
+	shader_set_uniform_f(shader_get_uniform(standard, "roll"), id_tag.roll);
+	
+	if(index[2] == -1)
+		shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, 1.0, 1.0);
+	else
+	{
+		id_tag = tags[|query[2]]; id_tag = id_tag[|index[2]];
+	}
+	
+	if(index[3] == -1)
+		shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
+	else
+	{
+		id_tag = tags[|query[3]]; id_tag = id_tag[|index[2]];
+		shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), id_tag);
+	}
+	
+	id_tag = tags[|query[4]]; id_tag = id_tag[|index[3]];
+	shader_set_uniform_f(shader_get_uniform(standard, "color"), id_tag.r, id_tag.g, id_tag.b);
+	
+	if(index[5] != -1)
 	{
 		vertex_submit(tags[query[4], index[4]], pr_trianglelist, -1);
 	}
@@ -161,19 +178,40 @@ if(occlusion_debug)
 	surface_set_target(surfaces[OCCLUSION_DEBUG]);
 	shader_set_uniform_i(shader_get_uniform(standard, "draw_mode"), 3);
 
-	var query = [Position, Rotation, Grayscale, Color, VBO];
+	var query = [Position, Rotation, Scale, Grayscale, Color, VBO];
 
 	for(var i = 0; i < array_length_2d(tags, Visible); i++)
 	{
 		var identity = tags[Visible, i];
 		var index = search_tags(identity, query);
-		shader_set_uniform_f(shader_get_uniform(standard, "offset"), tags[query[0], index[0]].X, tags[query[0], index[0]].Y, tags[query[0], index[0]].Z);
-		shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, 1.0, 1.0);
-		shader_set_uniform_f(shader_get_uniform(standard, "object_pitch"), tags[query[1], index[1]].pitch);
-		shader_set_uniform_f(shader_get_uniform(standard, "object_yaw"), tags[query[1], index[1]].yaw);
-		shader_set_uniform_f(shader_get_uniform(standard, "color"), tags[query[3], index[3]].r, tags[query[3], index[3]].g, tags[query[3], index[3]].b);
-		shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
-		if(tags[query[4], index[4]] != -1)
+		
+		var id_tag = tags[|query[0]]; id_tag = id_tag[|index[0]]; 
+		shader_set_uniform_f(shader_get_uniform(standard, "offset"), id_tag.X, id_tag.Y, id_tag.Z);
+	
+		id_tag = tags[|query[1]]; id_tag = id_tag[|index[1]];
+		shader_set_uniform_f(shader_get_uniform(standard, "yaw"), id_tag.yaw);
+		shader_set_uniform_f(shader_get_uniform(standard, "pitch"), id_tag.pitch);
+		shader_set_uniform_f(shader_get_uniform(standard, "roll"), id_tag.roll);
+	
+		if(index[2] == -1)
+			shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, 1.0, 1.0);
+		else
+		{
+			id_tag = tags[|query[2]]; id_tag = id_tag[|index[2]];
+		}
+	
+		if(index[3] == -1)
+			shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
+		else
+		{
+			id_tag = tags[|query[3]]; id_tag = id_tag[|index[2]];
+			shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), id_tag);
+		}
+	
+		id_tag = tags[|query[4]]; id_tag = id_tag[|index[3]];
+		shader_set_uniform_f(shader_get_uniform(standard, "color"), id_tag.r, id_tag.g, id_tag.b);
+	
+		if(index[5] != -1)
 		{
 			vertex_submit(tags[query[4], index[4]], pr_trianglelist, -1);
 		}
@@ -182,11 +220,12 @@ if(occlusion_debug)
 	//draw camera and frustrum
 	shader_set_uniform_f(shader_get_uniform(standard, "offset"), position.X, position.Y, position.Z);
 	shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, 1.0, 1.0);
-	shader_set_uniform_f(shader_get_uniform(standard, "object_pitch"), rotation.pitch);
-	shader_set_uniform_f(shader_get_uniform(standard, "object_yaw"), rotation.yaw);
+	shader_set_uniform_f(shader_get_uniform(standard, "yaw"), rotation.yaw);
+	shader_set_uniform_f(shader_get_uniform(standard, "pitch"), rotation.pitch);
 	shader_set_uniform_f(shader_get_uniform(standard, "color"), 0.9, 0.9, 0.9);
 	shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
-	vertex_submit(tags[VBO, 0], pr_trianglelist, -1);
+	var cube = tags[|VBO];
+	vertex_submit(cube[|0], pr_trianglelist, -1);
 	
 	surface_reset_target();
 }
