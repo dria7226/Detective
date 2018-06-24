@@ -19,8 +19,8 @@ shader_set_uniform_f(shader_get_uniform(standard, "screen_ratio"), window_get_he
 var position = tags[|Position]; position = position[|0];
 var rotation = tags[|Rotation]; rotation = rotation[|0];
 shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.X, position.Y, position.Z);
-shader_set_uniform_f(shader_get_uniform(standard, "camera_pitch"), rotation.pitch + alpha);
-shader_set_uniform_f(shader_get_uniform(standard, "camera_yaw"), rotation.yaw);
+shader_set_uniform_f(shader_get_uniform(standard, "camera_yaw"), rotation.yaw + alpha);
+shader_set_uniform_f(shader_get_uniform(standard, "camera_pitch"), rotation.pitch);
 shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll);
 
 
@@ -125,15 +125,13 @@ shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll)
 //}
 //surface_reset_target();
 
-//render to_draw list
-
-////color
+//color
 surface_set_target(surfaces[RGB]);
 shader_set_uniform_i(shader_get_uniform(standard, "draw_mode"), 0);
 
 var query = [Position, Rotation, Scale, Grayscale, Color, VBO];
 
-for(var i = 0; i < array_length_2d(tags, Visible); i++)
+for(var i = 0; i < ds_list_size(tags[|Visible]); i++)
 {
 	var identity = tags[|Visible]; identity = identity[|i];
 	var index = search_tags(identity, query);
@@ -157,16 +155,17 @@ for(var i = 0; i < array_length_2d(tags, Visible); i++)
 		shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
 	else
 	{
-		id_tag = tags[|query[3]]; id_tag = id_tag[|index[2]];
+		id_tag = tags[|query[3]]; id_tag = id_tag[|index[3]];
 		shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), id_tag);
 	}
 	
-	id_tag = tags[|query[4]]; id_tag = id_tag[|index[3]];
+	id_tag = tags[|query[4]]; id_tag = id_tag[|index[4]];
 	shader_set_uniform_f(shader_get_uniform(standard, "color"), id_tag.r, id_tag.g, id_tag.b);
 	
 	if(index[5] != -1)
 	{
-		vertex_submit(tags[query[4], index[4]], pr_trianglelist, -1);
+		id_tag = tags[|query[5]]; id_tag = id_tag[|index[5]];
+		vertex_submit(id_tag, pr_trianglelist, -1);
 	}
 }
 surface_reset_target();
@@ -180,9 +179,9 @@ if(occlusion_debug)
 
 	var query = [Position, Rotation, Scale, Grayscale, Color, VBO];
 
-	for(var i = 0; i < array_length_2d(tags, Visible); i++)
+	for(var i = 0; i < ds_list_size(tags[|Visible]); i++)
 	{
-		var identity = tags[Visible, i];
+		var identity = tags[|Visible]; identity = identity[|i];
 		var index = search_tags(identity, query);
 		
 		var id_tag = tags[|query[0]]; id_tag = id_tag[|index[0]]; 
@@ -204,16 +203,17 @@ if(occlusion_debug)
 			shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
 		else
 		{
-			id_tag = tags[|query[3]]; id_tag = id_tag[|index[2]];
+			id_tag = tags[|query[3]]; id_tag = id_tag[|index[3]];
 			shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), id_tag);
 		}
 	
-		id_tag = tags[|query[4]]; id_tag = id_tag[|index[3]];
+		id_tag = tags[|query[4]]; id_tag = id_tag[|index[4]];
 		shader_set_uniform_f(shader_get_uniform(standard, "color"), id_tag.r, id_tag.g, id_tag.b);
 	
 		if(index[5] != -1)
 		{
-			vertex_submit(tags[query[4], index[4]], pr_trianglelist, -1);
+			id_tag = tags[|query[5]]; id_tag = id_tag[|index[5]];
+			vertex_submit(id_tag, pr_trianglelist, -1);
 		}
 	}
 	

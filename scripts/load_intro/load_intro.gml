@@ -44,20 +44,21 @@ index = create_identity(query);
 
 wall = vertex_create_buffer_from_buffer(wall, Game.format);
 
-var identity = Game.tags[|query[0]]; identity = identity[|index[0]]; identity = wall;
+var identity = Game.tags[|query[0]]; identity[|index[0]] = wall;
 
-identity = Game.tags[| query[3]]; identity = identity[|index[3]];
+identity = Game.tags[|query[3]]; identity = identity[|index[3]];
 identity.r = 0.2;
 identity.g = 0.4;
 identity.b = 0.2;
 
-identity = Game.tags[|query[4]]; identity = identity[|index[4]]; identity = 1.0;
+identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
-identity = Game.tags[|query[5]]; identity = identity[|index[5]]; identity = index[6];
+identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
+
 //
 index = create_identity(query);
 
-identity = Game.tags[|query[0]]; identity = identity[|index[0]]; identity = wall;
+identity = Game.tags[|query[0]]; identity[|index[0]] = wall;
 
 identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.X = 3*3;
 
@@ -66,13 +67,13 @@ identity.r = 0.2;
 identity.g = 0.4;
 identity.b = 0.2;
 
-identity = Game.tags[|query[4]]; identity = identity[|index[4]]; identity = 1.0;
+identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
-identity = Game.tags[|query[5]]; identity = identity[|index[5]]; identity = index[6];
+identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 //
 index = create_identity(query);
 
-identity = Game.tags[|query[0]]; identity = identity[|index[0]]; identity = wall;
+identity = Game.tags[|query[0]]; identity[|index[0]] = wall;
 
 identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Y = -3*3;
 
@@ -83,9 +84,9 @@ identity.r = 0.2;
 identity.g = 0.4;
 identity.b = 0.2;
 
-identity = Game.tags[|query[4]]; identity = identity[|index[4]]; identity = 1.0;
+identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
-identity = Game.tags[|query[5]]; identity = identity[|index[5]]; identity = index[6];
+identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
 	//floor
 index = create_identity(["Level Building/floor.dat"]);
@@ -106,14 +107,13 @@ for(var i = 1; i < 6; i++)
 
 index = create_identity(query);
 
-identity = Game.tags[|query[0]]; identity = identity[|index[0]];
-identity = vertex_create_buffer_from_buffer(Floor, Game.format);
+identity = Game.tags[|query[0]]; identity[|index[0]] = vertex_create_buffer_from_buffer(Floor, Game.format);
 
 identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Y = -1.5;
 
-identity = Game.tags[|query[4]]; identity = identity[|index[4]]; identity = 1.0;
+identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
-identity = Game.tags[|query[5]]; identity = identity[|index[5]]; identity = index[6];
+identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
 	//ceiling
 var ceiling = buffer_create(1, buffer_grow, 1);

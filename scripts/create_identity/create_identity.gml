@@ -3,7 +3,7 @@
 
 var array = argument0;
 
-var answer = array_create(array_length_1d(array) + 1, 0);
+var answer = array_create(array_length_1d(array), 0);
 
 var identity = instance_create_layer(0,0,0,Identity);
 ds_list_add(Game.identities, identity);
@@ -36,6 +36,10 @@ for(var i = 0; i < array_length_1d(array); i++)
 		if(Game.tag_types[array[i]] == OBJECT_TYPE)
 		{
 			ds_list_add(Game.tags[|array[i]], instance_create_layer(0,0,0,array[i]));
+		}
+		else
+		{
+			ds_list_add(Game.tags[|array[i]], 0);
 		}
 		
 		ds_list_add(identity.tag_list, [array[i], index]);
