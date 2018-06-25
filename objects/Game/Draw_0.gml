@@ -25,10 +25,12 @@ shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll)
 
 
 ////occlusion
-//var to_draw = ds_list_create();
-//var occlusion_groups = tags[|Occlusion_Group]; occlusion_groups = [|0];
-//occlusion_groups = tags[|List]; occlusion_groups = occlusion_groups[|combo[0]];
 //surface_set_target(surfaces[OCCLUSION]);
+//ds_list_clear(tags[|Visible]);
+//var occlusion_groups = tags[|Occlusion_Group]; occlusion_groups = occlusion_groups[|0];
+
+//occlusion_groups = search_tags(occlusion_groups, [List]);
+//var list = tags[|List]; occlusion_groups = list[|occlusion_groups[0]];
 
 //while(!ds_list_empty(occlusion_groups))
 //{
@@ -115,7 +117,7 @@ shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll)
 //			if(group[1] == -1)
 //			{
 //				var vbo = tags[|VBO]; vbo = vbo[|group[0]];
-//				ds_list_add(to_draw, vbo);
+//				ds_list_add(tags[|Visible], vbo);
 //			}
 //			else
 //				for(var j = 0; j < ds_list_size(tags[List, group[1]]); j++)

@@ -39,7 +39,7 @@ void main()
 		{
 			vec3 debug_offset = vec3(10.0, 0.0, 0.0);
 			debug_offset.z = debug_offset.x/2.0;
-			rotate(debug_offset.xy, camera_pitch - pi/2.0);
+			rotate(debug_offset.xy, camera_yaw - pi/2.0);
 			local -= debug_offset;
 		}
 		local -= camera_position;
