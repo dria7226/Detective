@@ -1,0 +1,11 @@
+- implement task system
+	- implement tas system data structure
+	- rewrite load_intro into separate, reusable scripts
+	- rewrite load_intro as sub-task ds_list
+- implement occlusion generation as part of load_intro
+	- 
+- implement log system
+- implement occlusion in shader
+- implement grayscale in shader
+- implement back-referenced tags
+- create_identity() with tag reference OR new tag
