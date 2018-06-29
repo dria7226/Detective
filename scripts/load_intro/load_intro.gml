@@ -67,7 +67,7 @@ identity.r = 0.2;
 identity.g = 0.4;
 identity.b = 0.2;
 
-identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
+identity = Game.tags[|query[4]]; identity[|index[4]] = 0.5;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 //
@@ -84,7 +84,7 @@ identity.r = 0.2;
 identity.g = 0.4;
 identity.b = 0.2;
 
-identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
+identity = Game.tags[|query[4]]; identity[|index[4]] = 0.0;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 

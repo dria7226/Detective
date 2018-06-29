@@ -70,17 +70,18 @@ void main()
 		gl_Position.w = 1.0;
 
 		depth = gl_Position.z;
-		if(grayscale == 1.0)
-			out_Color = in_Color;
-		else
-		{
-			vec3 intensity = (in_Color.rgb + in_Color.gbr + in_Color.bgr)/3.0;
-			out_Color = vec4(intensity + (in_Color.rgb - intensity)*grayscale, 1.0) ;
-		}
+		
+		out_Color = in_Color;
 		
 		if(out_Color == vec4(1.0))
 		{
 			out_Color *= vec4(color, 1.0);
+		}
+		
+		if(grayscale != 1.0)
+		{
+			vec3 intensity = (out_Color.rgb + out_Color.gbr + out_Color.brg)/3.0;
+			out_Color = vec4(intensity + (out_Color.rgb - intensity)*grayscale, 1.0);
 		}
 }
 

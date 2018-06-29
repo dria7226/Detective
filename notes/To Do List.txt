@@ -1,11 +1,14 @@
-- implement task system
-	- implement tas system data structure
+- implement task system and finish occlusion system
+	- implement occlusion in shader
+	- finish arranging the scene
+	- decide what the occlusion tree will look like
+		- 
+	- create one occlusion group with all the objects in it
+	- create multiple occlusion grroups
+	- implement task system data structure (ds_list of task objects, each object has two ds_lists, one for variables other for scripts)
 	- rewrite load_intro into separate, reusable scripts
 	- rewrite load_intro as sub-task ds_list
 - implement occlusion generation as part of load_intro
-	- 
-- implement log system
-- implement occlusion in shader
-- implement grayscale in shader
+	-  
 - implement back-referenced tags
-- create_identity() with tag reference OR new tag
+- create_identity() with tag reference OR new tag (add another argument, an array of reffered tag indices, -1 meaning to create a new tag)
