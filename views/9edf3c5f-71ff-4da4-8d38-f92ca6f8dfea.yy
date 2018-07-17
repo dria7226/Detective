@@ -4,13 +4,13 @@
     "mvc": "1.1",
     "name": "9edf3c5f-71ff-4da4-8d38-f92ca6f8dfea",
     "children": [
-        "bc194b1c-bbcc-4fb6-9ae1-430700b90064",
-        "fd98386b-0437-4379-8305-070a5da24802",
-        "74d9b0f8-31f4-4d4f-8f27-275c5de63732",
-        "20c96ad1-0968-4f5b-9d64-584735d8df06",
-        "627abd2a-3434-455a-b21a-e28c8dbdcc3c",
-        "bce0311d-934e-4cd3-b09c-eb3365fac3a8",
-        "af4ef6c8-2909-4107-bc64-93c8b94e47ea"
+        "34b03684-ef9e-4617-a19f-0a4aaae0bf41",
+        "2c11dfb7-1120-4919-a30a-4f6c9f20b8bf",
+        "67b26765-91d4-491f-873f-d94ffb4d1108",
+        "7a4355e5-4aa1-4e1b-93ce-d6d47e634cf8",
+        "796b0e46-3239-4744-b49b-09c43a24efae",
+        "e5cd56b2-19c4-4ab5-b944-041f32ee01d0",
+        "d2f58b76-749f-4084-b1b1-a737c2836f2b"
     ],
     "filterType": "GMIncludedFile",
     "folderName": "Objects",

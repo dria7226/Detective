@@ -37,6 +37,8 @@ buffer_copy(wall_segment, 0, buffer_get_size(wall_segment), wall, 0);
 
 for(var i = 1; i < 3; i++)
 	add_buffer_to_buffer(wall, wall_segment, [3.0*i, 0,0]);
+	
+buffer_delete(wall_segment);
 
 query = [VBO, Position, Rotation, Color, Grayscale, Visible];
 
@@ -116,27 +118,42 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
 	//ceiling
-var ceiling = buffer_create(1, buffer_grow, 1);
+//var ceiling = buffer_create(1, buffer_grow, 1);
 
-index = create_identity(["Level Building/ceiling.dat"]);
+//index = create_identity(["Level Building/ceiling.dat"]);
 
 
 	//add items inside
 
-index = create_identity(["Objects/vinyl_player.dat", VBO]);
+//index = create_identity(["Objects/vinyl_player.dat", VBO]);
 
-index = create_identity(["Objects/vinyl.dat", VBO]);
+//index = create_identity(["Objects/vinyl.dat", VBO]);
 
-index = create_identity(["Objects/vinyl_highlights.dat", VBO]);
+//index = create_identity(["Objects/vinyl_highlights.dat", VBO]);
 
-index = create_identity(["Objects/desk_med_class.dat", VBO]);
+index = create_identity(["Objects/desk_med_class.dat"]);
 
-index = create_identity(["Objects/office_lamp.dat", VBO]);
+model = Game.tags[|Model]; model = model[|index[0]];
+
+index = create_identity(query);
+
+identity = Game.tags[|query[0]]; identity[|index[0]] = vertex_create_buffer_from_buffer(model, Game.format);
+
+identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.X = 3;
+identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Y = -1.5;
+
+identity = Game.tags[|query[2]]; identity = identity[|index[2]]; identity.yaw = pi;
+
+identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
+
+identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
+
+//index = create_identity(["Objects/office_lamp.dat", VBO]);
 
 
 //load occlusion groups
 
-query = [Occlusion_Group, VBO, Position, Scale, List];
+query = [Occlusion_Group, VBO, Position, Scale];
 index = create_identity(query);
 
 //index[1] = Game.tags[VBO, 0];

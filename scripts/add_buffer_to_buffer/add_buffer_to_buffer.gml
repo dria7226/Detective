@@ -6,7 +6,7 @@ buffer_seek(argument1, buffer_seek_start,0);
 var no_of_vertices = buffer_get_size(argument1)/(Game.format_size*4);
 
 repeat(no_of_vertices)
-{
+{	
 	//Position 3x4 bytes
 	buffer_write(argument0, buffer_f32, buffer_read(argument1, buffer_f32) + argument2[0]);
 	buffer_write(argument0, buffer_f32, buffer_read(argument1, buffer_f32) + argument2[1]);
@@ -17,4 +17,8 @@ repeat(no_of_vertices)
 	buffer_write(argument0, buffer_u8, buffer_read(argument1, buffer_u8));
 	buffer_write(argument0, buffer_u8, buffer_read(argument1, buffer_u8));
 	buffer_write(argument0, buffer_u8, buffer_read(argument1, buffer_u8));
+	
+	//Texture Coordinates 2x4 bytes
+	buffer_write(argument0, buffer_f32, buffer_read(argument1, buffer_f32));
+	buffer_write(argument0, buffer_f32, buffer_read(argument1, buffer_f32));
 }

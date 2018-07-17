@@ -10,7 +10,6 @@ surface_reset_target();
 
 gpu_set_ztestenable(true);
 
-shader_set(standard);
 var camera_tag = tags[|Camera]; camera_tag = camera_tag[|0];
 shader_set_uniform_f(shader_get_uniform(standard, "near_clip"), camera_tag.near_clip);
 shader_set_uniform_f(shader_get_uniform(standard, "far_clip"), 100.0);
@@ -22,7 +21,6 @@ shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.X
 shader_set_uniform_f(shader_get_uniform(standard, "camera_yaw"), rotation.yaw + alpha);
 shader_set_uniform_f(shader_get_uniform(standard, "camera_pitch"), rotation.pitch);
 shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll);
-
 
 ////occlusion
 //surface_set_target(surfaces[OCCLUSION]);
@@ -129,7 +127,7 @@ shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll)
 
 //color
 surface_set_target(surfaces[RGB]);
-shader_set_uniform_i(shader_get_uniform(standard, "draw_mode"), 0);
+shader_set_uniform_i(shader_get_uniform(standard, "mode"), 0);
 
 var query = [Position, Rotation, Scale, Grayscale, Color, VBO];
 
@@ -177,7 +175,7 @@ surface_reset_target();
 if(occlusion_debug)
 {
 	surface_set_target(surfaces[OCCLUSION_DEBUG]);
-	shader_set_uniform_i(shader_get_uniform(standard, "draw_mode"), 3);
+	shader_set_uniform_i(shader_get_uniform(standard, "mode"), 20);
 
 	var query = [Position, Rotation, Scale, Grayscale, Color, VBO];
 
@@ -234,18 +232,18 @@ if(occlusion_debug)
 
 gpu_set_ztestenable(false);
 
-//normals from depth buffer
-surface_set_target(surfaces[NORMAL]);
-shader_set(normal_detection);
-draw_surface(surfaces[DEPTH],0,0);
-surface_reset_target();
+//shader_set(post_process);
+////normals from depth buffer
+//surface_set_target(surfaces[NORMAL]);
+//shader_set_uniform_i(shader_get_uniform(standard, "mode"), 3);
+//draw_surface(surfaces[DEPTH],0,0);
+//surface_reset_target();
 
-//edges from normal buffer
-surface_set_target(surfaces[EDGE]);
-shader_set(edge_detection);
-draw_surface(surfaces[DEPTH],0,0);
-surface_reset_target();
-shader_reset();
+////edges from normal buffer
+//surface_set_target(surfaces[EDGE]);
+//shader_set_uniform_i(shader_get_uniform(standard, "mode"), 4);
+//draw_surface(surfaces[DEPTH],0,0);
+//surface_reset_target();
 
 //shadow map
 
@@ -255,12 +253,24 @@ shader_reset();
 //color map
 
 //final compositing
-//shader_set(compositing);
+
 var width = surface_get_width(surfaces[NORMAL]);
 var height = surface_get_height(surfaces[NORMAL]);
-draw_surface_part(surfaces[RGB], 0, height/4, width, height/2, 0, 0);
-draw_surface_part(surfaces[OCCLUSION_DEBUG], 0, height/4, width, height/2, 0, height/2);
+if(occlusion_debug)
+{
+	draw_surface_part(surfaces[RGB], 0, height/4, width, height/2, 0, 0);
+	draw_surface_part(surfaces[OCCLUSION_DEBUG], 0, height/4, width, height/2, 0, height/2);
 
-draw_line(0, height/2, width, height/2);
-draw_line(width/4, 5*height/8, width/4, 7*height/8);
-draw_line(3*width/4, 5*height/8, 3*width/4, 7*height/8);
+	draw_line(0, height/2, width, height/2);
+	draw_line(width/4, 5*height/8, width/4, 7*height/8);
+	draw_line(3*width/4, 5*height/8, 3*width/4, 7*height/8);
+}
+else
+{
+	//vertex submit plane with proper scale, rotation and texture
+	
+	shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), 0.0, 0.0, 0.0);
+	
+	var vbo = tags[|VBO];
+	vertex_submit(vbo[|1], pr_trianglelist, surfaces[RGB]);
+}
