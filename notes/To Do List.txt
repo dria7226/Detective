@@ -1,8 +1,7 @@
-- figure out uv setting in blender (perhaps custom script?)
+- figure out uv setting in blender
 - add camera_offset uniform
  - rewrite occlusion debug using camera_offset
 - modify standard shader to include texture capability (needs testing)
-- figure out memory leak
 - implement task system and finish occlussion system
 	- implement occlusion in shader
 	- finish arranging the scene
@@ -16,5 +15,5 @@
 - implement occlusion generation as part of load_intro
 	-  
 - implement back-referenced tags
-- create_identity() with tag reference OR new tag (add another argument, an array of reffered tag indices, -1 meaning to create a new tag)
+- create_identity() with tag reference OR new tag (add another argument: an array of reffered tag indices, -1 meaning to create a new tag)
 - implement occlusion debug draw through tag system

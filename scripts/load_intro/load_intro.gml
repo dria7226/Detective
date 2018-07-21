@@ -163,3 +163,22 @@ index = create_identity(query);
 //setup animation loop
 
 index = create_identity([Path]);
+
+//debugging
+for(var j = 0; j < ds_list_size(tags[|VBO]); j++)
+{
+	vbo = tags[|VBO];
+	show_debug_message("VBO: " + string(j) + " Size: " + string(buffer_get_size(vbo[|j])) + " Number of vertices: " + string(buffer_get_size(vbo[|j])/24));
+	//for(var i = 0; i < buffer_get_size(vbo[|j])/24; i++)
+	//{
+	//	show_debug_message("      X      Y      color      U      V   ");
+	//	show_debug_message(	"  # " + string(i) + 
+	//						"     " + string(buffer_read(vbo[|j], buffer_f32)) +
+	//						"     " + string(buffer_read(vbo[|j], buffer_f32)) +
+	//						"     " + string(buffer_read(vbo[|j], buffer_f32)) +
+	//						"     " + string(buffer_read(vbo[|j], buffer_f32)) +
+	//						"     " + string(buffer_read(vbo[|j], buffer_f32)) +
+	//						"     " + string(buffer_read(vbo[|j], buffer_f32)));
+	//	show_debug_message(" ");
+	//}
+}

@@ -33,7 +33,6 @@ var model = buffer_load(argument0);
 
 var index = ds_list_size(Game.tags[|Model]);
 
-var tag = Game.tags[|Model];
-tag[|index] = model;
+ds_list_add(Game.tags[|Model], model);
 
 return index;

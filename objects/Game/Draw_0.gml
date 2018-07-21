@@ -12,15 +12,11 @@ gpu_set_ztestenable(true);
 
 var camera_tag = tags[|Camera]; camera_tag = camera_tag[|0];
 shader_set_uniform_f(shader_get_uniform(standard, "near_clip"), camera_tag.near_clip);
-shader_set_uniform_f(shader_get_uniform(standard, "far_clip"), 100.0);
-shader_set_uniform_f(shader_get_uniform(standard, "screen_ratio"), window_get_height()/window_get_width());
 
 var position = tags[|Position]; position = position[|0];
 var rotation = tags[|Rotation]; rotation = rotation[|0];
 shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.X, position.Y, position.Z);
-shader_set_uniform_f(shader_get_uniform(standard, "camera_yaw"), rotation.yaw + alpha);
-shader_set_uniform_f(shader_get_uniform(standard, "camera_pitch"), rotation.pitch);
-shader_set_uniform_f(shader_get_uniform(standard, "camera_roll"), rotation.roll);
+shader_set_uniform_f(shader_get_uniform(standard, "camera_angle"), rotation.roll ,rotation.pitch ,rotation.yaw + alpha);
 
 ////occlusion
 //surface_set_target(surfaces[OCCLUSION]);
@@ -140,15 +136,14 @@ for(var i = 0; i < ds_list_size(tags[|Visible]); i++)
 	shader_set_uniform_f(shader_get_uniform(standard, "offset"), id_tag.X, id_tag.Y, id_tag.Z);
 	
 	id_tag = tags[|query[1]]; id_tag = id_tag[|index[1]];
-	shader_set_uniform_f(shader_get_uniform(standard, "yaw"), id_tag.yaw);
-	shader_set_uniform_f(shader_get_uniform(standard, "pitch"), id_tag.pitch);
-	shader_set_uniform_f(shader_get_uniform(standard, "roll"), id_tag.roll);
+	shader_set_uniform_f(shader_get_uniform(standard, "angle"), id_tag.roll, id_tag.pitch, id_tag.yaw);
 	
 	if(index[2] == -1)
 		shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, 1.0, 1.0);
 	else
 	{
 		id_tag = tags[|query[2]]; id_tag = id_tag[|index[2]];
+		shader_set_uniform_f(shader_get_uniform(standard, "scale"), id_tag.X, id_tag.Y, id_tag.Z);
 	}
 	
 	if(index[3] == -1)
@@ -159,8 +154,13 @@ for(var i = 0; i < ds_list_size(tags[|Visible]); i++)
 		shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), id_tag);
 	}
 	
-	id_tag = tags[|query[4]]; id_tag = id_tag[|index[4]];
-	shader_set_uniform_f(shader_get_uniform(standard, "color"), id_tag.r, id_tag.g, id_tag.b);
+	if(index[4] == -1)
+		shader_set_uniform_f(shader_get_uniform(standard, "color"), 0.0, 0.0, 0.0);
+	else
+	{
+		id_tag = tags[|query[4]]; id_tag = id_tag[|index[4]];
+		shader_set_uniform_f(shader_get_uniform(standard, "color"), id_tag.r, id_tag.g, id_tag.b);
+	}
 	
 	if(index[5] != -1)
 	{
@@ -188,15 +188,14 @@ if(occlusion_debug)
 		shader_set_uniform_f(shader_get_uniform(standard, "offset"), id_tag.X, id_tag.Y, id_tag.Z);
 	
 		id_tag = tags[|query[1]]; id_tag = id_tag[|index[1]];
-		shader_set_uniform_f(shader_get_uniform(standard, "yaw"), id_tag.yaw);
-		shader_set_uniform_f(shader_get_uniform(standard, "pitch"), id_tag.pitch);
-		shader_set_uniform_f(shader_get_uniform(standard, "roll"), id_tag.roll);
+		shader_set_uniform_f(shader_get_uniform(standard, "angle"), id_tag.roll, id_tag.pitch, id_tag.yaw);
 	
 		if(index[2] == -1)
 			shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, 1.0, 1.0);
 		else
 		{
 			id_tag = tags[|query[2]]; id_tag = id_tag[|index[2]];
+		shader_set_uniform_f(shader_get_uniform(standard, "scale"), id_tag.X, id_tag.Y, id_tag.Z);
 		}
 	
 		if(index[3] == -1)
@@ -207,8 +206,13 @@ if(occlusion_debug)
 			shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), id_tag);
 		}
 	
-		id_tag = tags[|query[4]]; id_tag = id_tag[|index[4]];
-		shader_set_uniform_f(shader_get_uniform(standard, "color"), id_tag.r, id_tag.g, id_tag.b);
+		if(index[4] == -1)
+		shader_set_uniform_f(shader_get_uniform(standard, "color"), 0.0, 0.0, 0.0);
+		else
+		{
+			id_tag = tags[|query[4]]; id_tag = id_tag[|index[4]];
+			shader_set_uniform_f(shader_get_uniform(standard, "color"), id_tag.r, id_tag.g, id_tag.b);
+		}
 	
 		if(index[5] != -1)
 		{
@@ -220,8 +224,7 @@ if(occlusion_debug)
 	//draw camera and frustrum
 	shader_set_uniform_f(shader_get_uniform(standard, "offset"), position.X, position.Y, position.Z);
 	shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, 1.0, 1.0);
-	shader_set_uniform_f(shader_get_uniform(standard, "yaw"), rotation.yaw);
-	shader_set_uniform_f(shader_get_uniform(standard, "pitch"), rotation.pitch);
+	shader_set_uniform_f(shader_get_uniform(standard, "angle"), rotation.roll, rotation.pitch, rotation.yaw);
 	shader_set_uniform_f(shader_get_uniform(standard, "color"), 0.9, 0.9, 0.9);
 	shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
 	var cube = tags[|VBO];
@@ -270,6 +273,11 @@ else
 	//vertex submit plane with proper scale, rotation and texture
 	
 	shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), 0.0, 0.0, 0.0);
+	shader_set_uniform_f(shader_get_uniform(standard, "camera_offset"), 0.0, 0.0, 0.0);
+	shader_set_uniform_f(shader_get_uniform(standard, "camera_angle"), 0.0, 0.0, 0.0);
+	shader_set_uniform_f(shader_get_uniform(standard, "offset"), camera_tag.near_clip, 0.0, 0.0);
+	shader_set_uniform_f(shader_get_uniform(standard, "angle"), 0.0, pi/2, 0.0);
+	shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, window_get_width()/window_get_height(), 1.0);
 	
 	var vbo = tags[|VBO];
 	vertex_submit(vbo[|1], pr_trianglelist, surfaces[RGB]);

@@ -33,4 +33,7 @@ for(var i = 0; i < NO_OF_SURFACES; i++)
 
 var occlusion_buffer = buffer_create(1, buffer_grow, 1);
 
+#macro MAXIMUM_VIEW_DISTANCE 100.0
 shader_set(standard);
+shader_set_uniform_f(shader_get_uniform(standard, "far_clip"), MAXIMUM_VIEW_DISTANCE);
+shader_set_uniform_f(shader_get_uniform(standard, "screen_ratio"), window_get_height()/window_get_width());

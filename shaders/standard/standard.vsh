@@ -15,16 +15,19 @@ varying vec2 out_TexCoord;
 
 uniform int id;
 
-uniform vec3 offset;
-uniform vec3 scale;
 uniform vec3 camera_position;
-uniform float camera_yaw, camera_pitch, camera_roll;
-uniform float yaw, pitch, roll;
-uniform float grayscale;
-uniform vec3  color;
+uniform vec3 camera_offset;
+uniform vec3 camera_angle;
+uniform vec3 camera_angle_offset;
 uniform float near_clip;
 uniform float far_clip;
 uniform float screen_ratio;
+
+uniform vec3 offset;
+uniform vec3 angle;
+uniform vec3 scale;
+uniform float grayscale;
+uniform vec3  color;
 
 void rotate(inout vec2 point, float angle);
 
@@ -32,9 +35,9 @@ void main()
 {
 	vec3 local = in_Position*scale;
 		
-	rotate(local.xy, yaw);
-	rotate(local.xz, pitch);
-	rotate(local.yz, roll);
+	rotate(local.xy, angle.z);
+	rotate(local.xz, angle.y);
+	rotate(local.yz, angle.x);
 		
 	local += offset;
 
@@ -43,21 +46,21 @@ void main()
 	{
 		vec3 debug_offset = vec3(10.0, 0.0, 0.0);
 		debug_offset.z = debug_offset.x/2.0;
-		rotate(debug_offset.xy, camera_yaw - pi/2.0);
+		rotate(debug_offset.xy, camera_angle.z - pi/2.0);
 		local -= debug_offset;
 	}
-	local -= camera_position;
+	local -= camera_position + camera_offset;
 		
-	rotate(local.xy, -camera_yaw);
+	rotate(local.xy, -camera_angle.z-camera_angle_offset.z);
 	if(mode == OCCLUSION_DEBUG_MODE)
 		rotate(local.xy, -3.0*pi/8.0);
 			
-	rotate(local.xz, -camera_pitch);
+	rotate(local.xz, -camera_angle.y-camera_angle_offset.y);
 	if(mode == OCCLUSION_DEBUG_MODE)
 		rotate(local.xz, 0.46);
 		
 	if(mode != OCCLUSION_DEBUG_MODE)
-		rotate(local.yz, -camera_roll);
+		rotate(local.yz, -camera_angle.x-camera_angle_offset.x);
 
 	//project
 	gl_Position.z = length(local.xyz)/far_clip;
