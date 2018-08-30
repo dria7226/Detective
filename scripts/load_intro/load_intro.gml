@@ -148,7 +148,25 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-//index = create_identity(["Objects/office_lamp.dat", VBO]);
+//
+
+index = create_identity(["Objects/office_lamp.dat"]);
+
+model = Game.tags[|Model]; model = model[|index[0]];
+
+index = create_identity(query);
+
+identity = Game.tags[|query[0]]; identity[|index[0]] = vertex_create_buffer_from_buffer(model, Game.format);
+
+identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.X = 3;
+identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Y = -1.5;
+identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Z = 3;
+
+identity = Game.tags[|query[2]]; identity = identity[|index[2]]; identity.yaw = 0;
+
+identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
+
+identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
 
 //load occlusion groups
@@ -162,23 +180,4 @@ index = create_identity(query);
 
 //setup animation loop
 
-index = create_identity([Path]);
-
-//debugging
-for(var j = 0; j < ds_list_size(tags[|VBO]); j++)
-{
-	vbo = tags[|VBO];
-	show_debug_message("VBO: " + string(j) + " Size: " + string(buffer_get_size(vbo[|j])) + " Number of vertices: " + string(buffer_get_size(vbo[|j])/24));
-	//for(var i = 0; i < buffer_get_size(vbo[|j])/24; i++)
-	//{
-	//	show_debug_message("      X      Y      color      U      V   ");
-	//	show_debug_message(	"  # " + string(i) + 
-	//						"     " + string(buffer_read(vbo[|j], buffer_f32)) +
-	//						"     " + string(buffer_read(vbo[|j], buffer_f32)) +
-	//						"     " + string(buffer_read(vbo[|j], buffer_f32)) +
-	//						"     " + string(buffer_read(vbo[|j], buffer_f32)) +
-	//						"     " + string(buffer_read(vbo[|j], buffer_f32)) +
-	//						"     " + string(buffer_read(vbo[|j], buffer_f32)));
-	//	show_debug_message(" ");
-	//}
-}
+//index = create_identity([Path]);

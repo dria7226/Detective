@@ -327,14 +327,6 @@
             }
         },
         {
-            "Key": "5877155b-f098-4d96-8983-6a894ef5c50c",
-            "Value": {
-                "id": "98e97674-a35b-4297-bce7-aceced541364",
-                "resourcePath": "datafiles_yy\\Level Building\\wall_wainscoting.dat.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "5988462a-2106-43ac-b9f9-197228780943",
             "Value": {
                 "id": "fde5131d-820c-4c91-b9c8-2e906e24e01d",
@@ -476,6 +468,14 @@
                 "id": "fd345291-bd0e-44b0-a403-77579ca33c76",
                 "resourcePath": "objects\\Delete_Protected\\Delete_Protected.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "76c6fcb3-96cd-48ea-957d-e35231d6772f",
+            "Value": {
+                "id": "ed3a56f9-c797-4e05-84a6-6b8f2644560e",
+                "resourcePath": "datafiles_yy\\Level Building\\wall_wainscoting.dat.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -647,6 +647,14 @@
             }
         },
         {
+            "Key": "b126f8db-ea0f-46d5-8a03-d8e4f96ddc11",
+            "Value": {
+                "id": "5ebe72c9-924b-4b62-ab58-7b5b7181c3a3",
+                "resourcePath": "datafiles_yy\\Objects\\office_lamp.dat.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "b2519cfc-bf7d-452a-bbc2-934f51f58ed4",
             "Value": {
                 "id": "60740be7-b806-449b-8c5b-a8441993253b",
@@ -799,14 +807,6 @@
             }
         },
         {
-            "Key": "d2f58b76-749f-4084-b1b1-a737c2836f2b",
-            "Value": {
-                "id": "ff762e5b-0263-42af-924e-8490aa2ddde5",
-                "resourcePath": "datafiles_yy\\Objects\\office_lamp.dat.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "d64b0ace-2ab9-4ba5-9c99-91294e68ec44",
             "Value": {
                 "id": "fa720ee8-7cc1-47d9-98c5-adb16a645f51",
@@ -887,6 +887,14 @@
             }
         },
         {
+            "Key": "ebdda05d-94d2-4a91-8eb5-2e8ff708e830",
+            "Value": {
+                "id": "1da52286-c304-4282-b1c3-48782503df4d",
+                "resourcePath": "scripts\\rotate_vertex\\rotate_vertex.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "f1df0ddb-2821-4ca7-96c8-124d9c61e38f",
             "Value": {
                 "id": "7f69d5aa-b432-4884-8c55-4a4f93e0ad94",
@@ -916,6 +924,14 @@
                 "id": "13c13812-688d-4f60-a525-9038b710c361",
                 "resourcePath": "views\\f86bb125-f7b3-44e9-a7f0-ef489410275a.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "f95226f2-e552-4ed0-a4c6-492dd059fbea",
+            "Value": {
+                "id": "23ea9370-68c3-4c08-b9d7-4c26d2053150",
+                "resourcePath": "datafiles_yy\\Level Building\\wall_bumper.dat.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -962,6 +978,7 @@
         "3ba61e43-72d2-4582-96f2-985095bef73e",
         "e6943e4e-bb2d-436c-a563-4b50f5f3871f",
         "7161caec-5c8e-4b92-a920-55ce729a2c98",
+        "ebdda05d-94d2-4a91-8eb5-2e8ff708e830",
         "916fca90-9587-43ed-addb-f0bbfa30aa9f",
         "75858ae6-e8e6-4cec-9253-b535dcfc50d7",
         "2ec3c327-0dac-4863-bf7a-916169f16780",

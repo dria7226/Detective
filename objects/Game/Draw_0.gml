@@ -1,14 +1,14 @@
-surface_set_target(surfaces[RGB]);
-draw_clear(c_gray);
-surface_reset_target();
-surface_set_target(surfaces[OCCLUSION_DEBUG]);
-draw_clear(c_gray);
-surface_reset_target();
-surface_set_target(surfaces[DEPTH]);
-draw_clear(c_white);
-surface_reset_target();
+//draw background
+//surface_set_target(surfaces[RGB]);
+//draw_clear(c_gray);
+//surface_reset_target();
+//surface_set_target(surfaces[OCCLUSION_DEBUG]);
+//draw_clear(c_gray);
+//surface_reset_target();
+//surface_set_target(surfaces[DEPTH]);
+//draw_clear(c_white);
+//surface_reset_target();
 
-gpu_set_ztestenable(true);
 
 var camera_tag = tags[|Camera]; camera_tag = camera_tag[|0];
 shader_set_uniform_f(shader_get_uniform(standard, "near_clip"), camera_tag.near_clip);
@@ -123,7 +123,9 @@ shader_set_uniform_f(shader_get_uniform(standard, "camera_angle"), rotation.roll
 
 //color
 surface_set_target(surfaces[RGB]);
-shader_set_uniform_i(shader_get_uniform(standard, "mode"), 0);
+draw_clear(c_white);
+shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 0);
+shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 0);
 
 var query = [Position, Rotation, Scale, Grayscale, Color, VBO];
 
@@ -132,7 +134,7 @@ for(var i = 0; i < ds_list_size(tags[|Visible]); i++)
 	var identity = tags[|Visible]; identity = identity[|i];
 	var index = search_tags(identity, query);
 	
-	var id_tag = tags[|query[0]]; id_tag = id_tag[|index[0]]; 
+	var id_tag = tags[|query[0]]; id_tag = id_tag[|index[0]];
 	shader_set_uniform_f(shader_get_uniform(standard, "offset"), id_tag.X, id_tag.Y, id_tag.Z);
 	
 	id_tag = tags[|query[1]]; id_tag = id_tag[|index[1]];
@@ -170,12 +172,15 @@ for(var i = 0; i < ds_list_size(tags[|Visible]); i++)
 }
 surface_reset_target();
 
-
 //occlusion_debug
 if(occlusion_debug)
 {
 	surface_set_target(surfaces[OCCLUSION_DEBUG]);
-	shader_set_uniform_i(shader_get_uniform(standard, "mode"), 20);
+	
+	var offset = rotate_vertex([10,0], rotation.yaw - pi/2.0);
+	shader_set_uniform_f(shader_get_uniform(standard, "camera_offset"), offset[0], offset[1], 10/2);
+	
+	shader_set_uniform_f(shader_get_uniform(standard, "camera_angle_offset"), 0, 0.46, -3.0*pi/8.0);
 
 	var query = [Position, Rotation, Scale, Grayscale, Color, VBO];
 
@@ -233,7 +238,7 @@ if(occlusion_debug)
 	surface_reset_target();
 }
 
-gpu_set_ztestenable(false);
+//gpu_set_ztestenable(false);
 
 //shader_set(post_process);
 ////normals from depth buffer
@@ -257,6 +262,9 @@ gpu_set_ztestenable(false);
 
 //final compositing
 
+shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
+shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
+
 var width = surface_get_width(surfaces[NORMAL]);
 var height = surface_get_height(surfaces[NORMAL]);
 if(occlusion_debug)
@@ -269,16 +277,4 @@ if(occlusion_debug)
 	draw_line(3*width/4, 5*height/8, 3*width/4, 7*height/8);
 }
 else
-{
-	//vertex submit plane with proper scale, rotation and texture
-	
-	shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), 0.0, 0.0, 0.0);
-	shader_set_uniform_f(shader_get_uniform(standard, "camera_offset"), 0.0, 0.0, 0.0);
-	shader_set_uniform_f(shader_get_uniform(standard, "camera_angle"), 0.0, 0.0, 0.0);
-	shader_set_uniform_f(shader_get_uniform(standard, "offset"), camera_tag.near_clip, 0.0, 0.0);
-	shader_set_uniform_f(shader_get_uniform(standard, "angle"), 0.0, pi/2, 0.0);
-	shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, window_get_width()/window_get_height(), 1.0);
-	
-	var vbo = tags[|VBO];
-	vertex_submit(vbo[|1], pr_trianglelist, surfaces[RGB]);
-}
+	draw_surface(surfaces[RGB], 0, 0);
