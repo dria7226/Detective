@@ -1,280 +1,135 @@
-//draw background
-//surface_set_target(surfaces[RGB]);
-//draw_clear(c_gray);
-//surface_reset_target();
-//surface_set_target(surfaces[OCCLUSION_DEBUG]);
-//draw_clear(c_gray);
-//surface_reset_target();
-//surface_set_target(surfaces[DEPTH]);
-//draw_clear(c_white);
-//surface_reset_target();
-
-
 var camera_tag = tags[|Camera]; camera_tag = camera_tag[|0];
-shader_set_uniform_f(shader_get_uniform(standard, "near_clip"), camera_tag.near_clip);
+SET_UNIFORM_F("near_clip", camera_tag.near_clip)
 
 var position = tags[|Position]; position = position[|0];
 var rotation = tags[|Rotation]; rotation = rotation[|0];
-shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.X, position.Y, position.Z);
-shader_set_uniform_f(shader_get_uniform(standard, "camera_angle"), rotation.roll ,rotation.pitch ,rotation.yaw + alpha);
 
-////occlusion
-//surface_set_target(surfaces[OCCLUSION]);
-//ds_list_clear(tags[|Visible]);
-//var occlusion_groups = tags[|Occlusion_Group]; occlusion_groups = occlusion_groups[|0];
-
-//occlusion_groups = search_tags(occlusion_groups, [List]);
-//var list = tags[|List]; occlusion_groups = list[|occlusion_groups[0]];
-
-//while(!ds_list_empty(occlusion_groups))
-//{
-//	//draw occlusion groups
-//	draw_clear(c_white);
-
-//	for(var i = 0; i < ds_list_size(occlusion_groups); i++)
-//	{
-//		var id_tags =  identities[|occlusion_groups[|i]];
-//		var query = [VBO, Position, Rotation, Scale];
-//		id_tags = search_tags(id_tags, query);
-
-//		if(id_tags[0] == -1)
-//			continue;
-//		else
-//			vbo_tag = tags[|VBO]; vbo_tag = vbo_tag[|id_tags[0]];
-
-//		if(id_tags[1] == -1)
-//			continue;
-//		else
-//		{
-//			var position_tag = tags[|Position]; position_tag = position_tag[|id_tags[1]];
-//			shader_set_uniform_f(shader_get_uniform(standard, “offset”), position_tag.X, position_tag.Y, position_tag.Z);
-//		}
-
-//		if(id_tags[2] == -1)
-//		{
-//			shader_set_uniform_f(shader_get_uniform(standard, “yaw”), 0.0);
-//			shader_set_uniform_f(shader_get_uniform(standard, “pitch”), 0.0);
-//			shader_set_uniform_f(shader_get_uniform(standard, “roll”), 0.0);
-//		}
-//		else
-//		{
-//			var rotation_tag = tags[|Rotation]; rotation_tag = rotation_tag[|id_tags[2]];
-//			shader_set_uniform_f(shader_get_uniform(standard, “yaw”), rotation_tag.yaw);
-//			shader_set_uniform_f(shader_get_uniform(standard, “pitch”), rotation_tag.pitch);
-//			shader_set_uniform_f(shader_get_uniform(standard, “roll”), rotation_tag.roll);
-//		}
-
-//		if(id_tags[3] == -1)
-//			shader_set_uniform_f(shader_get_uniform(standard, “scale”), 1.0, 1.0, 1.0);
-//		else
-//		{
-//			scale_tag = tags[|Scale]; scale_tag = scale_tag[|id_tags[3]];
-//			shader_set_uniform_f(shader_get_uniform(standard, “scale”), scale_tag.X, scale_tag.Y, scale_tag.Z);
-//		}
-
-//      //pass index and render
-//      shader_set_uniform_f(shader_get_uniform(standard, “id”), i);
-//		vertex_submit(vbo_tag, pr_trianglelist, -1);
-//	}
-	
-//	//search occlusion map for visibility
-//	shader_set_uniform_i(shader_get_uniform(standard, “mode”), 2);
-
-//	draw_primitive_begin(pr_trianglelist);
-//	draw_vertex(0.0, 0.0);
-//	draw_vertex(2.0, 0.0);
-//	draw_vertex(0.0, 2.0);
-//	draw_primitive_end();
-
-//	buffer_get_surface(occlusion_buffer, surfaces[OCCLUSION], 0, 0, 0); //formatted as BGRA
-//	var occlusion_buffer_size = buffer_get_size(occlusion_buffer)/4;
-//	ds_list_clear(occlusion_groups);
-
-//	for(var i = 0; i < occlusion_buffer_size; i++)
-//	{
-//		var visible_index[0] = buffer_read(occlusion_buffer, buffer_f8);
-//		visible_index[1] = buffer_read(occlusion_buffer, buffer_f8);
-//		visible_index[2] = buffer_read(occlusion_buffer, buffer_f8);	//formatted as BGRA
-
-//		if(	visible_index[0] == 1.0 &&
-//			visible_index[1] == 1.0 &&
-//			visible_index[2] == 1.0)
-//			break;
-//		else
-//		{
-//			//decode visible index
-//			var index = visible_index[0] + visible_index[1]*256 + visible_index[2]*256*256;
-
-//			//add leaves and prepare next occlusion group
-//			var group = tags[|Occlusion_Group]; group = group[|index];
-//			group = search_tags(identities[|group], [VBO, List]);
-//			if(group[1] == -1)
-//			{
-//				var vbo = tags[|VBO]; vbo = vbo[|group[0]];
-//				ds_list_add(tags[|Visible], vbo);
-//			}
-//			else
-//				for(var j = 0; j < ds_list_size(tags[List, group[1]]); j++)
-//				{ var list = tags[|List]; list = list[|group[1]]; ds_list_add(occlusion_groups, list[|j]); }
-//		}
-//	}
-//}
-//surface_reset_target();
-
-//color
-surface_set_target(surfaces[RGB]);
-draw_clear(c_white);
-shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 0);
-shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 0);
-
-var query = [Position, Rotation, Scale, Grayscale, Color, VBO];
-
-for(var i = 0; i < ds_list_size(tags[|Visible]); i++)
+SET_UNIFORM_F("camera_position", position.X, position.Y, position.Z)
+SET_UNIFORM_F("camera_angle", rotation.roll, rotation.pitch, rotation.yaw+alpha)
+visible_models = 0;
+//iterate down hierarchy
+  //#include "frustrum_test.txt"
+if(occlusion_culling_enabled)
 {
-	var identity = tags[|Visible]; identity = identity[|i];
-	var index = search_tags(identity, query);
-	
-	var id_tag = tags[|query[0]]; id_tag = id_tag[|index[0]];
-	shader_set_uniform_f(shader_get_uniform(standard, "offset"), id_tag.X, id_tag.Y, id_tag.Z);
-	
-	id_tag = tags[|query[1]]; id_tag = id_tag[|index[1]];
-	shader_set_uniform_f(shader_get_uniform(standard, "angle"), id_tag.roll, id_tag.pitch, id_tag.yaw);
-	
-	if(index[2] == -1)
-		shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, 1.0, 1.0);
-	else
-	{
-		id_tag = tags[|query[2]]; id_tag = id_tag[|index[2]];
-		shader_set_uniform_f(shader_get_uniform(standard, "scale"), id_tag.X, id_tag.Y, id_tag.Z);
-	}
-	
-	if(index[3] == -1)
-		shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
-	else
-	{
-		id_tag = tags[|query[3]]; id_tag = id_tag[|index[3]];
-		shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), id_tag);
-	}
-	
-	if(index[4] == -1)
-		shader_set_uniform_f(shader_get_uniform(standard, "color"), 0.0, 0.0, 0.0);
-	else
-	{
-		id_tag = tags[|query[4]]; id_tag = id_tag[|index[4]];
-		shader_set_uniform_f(shader_get_uniform(standard, "color"), id_tag.r, id_tag.g, id_tag.b);
-	}
-	
-	if(index[5] != -1)
-	{
-		id_tag = tags[|query[5]]; id_tag = id_tag[|index[5]];
-		vertex_submit(id_tag, pr_trianglelist, -1);
-	}
+SET_UNIFORM_I("vertex_mode", 3);
+SET_UNIFORM_I("fragment_mode", 0);
+surface_set_target(occlusion);
+draw_clear(c_white);
+SET_UNIFORM_F("scale", 0.62408,0.5436,0.62796);
+//draw bounding volumes
+for(var i = 0; i < array_size*array_size; i++)
+{
+  var position = model_array[i];
+  SET_UNIFORM_F("offset", position[0], position[1], position[2] + 0.62796);
+  SET_UNIFORM_F("id", i%256/255, floor(i/256)%256/255, floor(i/(256*256))/255);
+  vertex_submit(cube, pr_trianglelist, -1);
 }
 surface_reset_target();
-
-//occlusion_debug
-if(occlusion_debug)
+//post processing
+surface_set_target(occlusion_first_pass);
+draw_clear(c_white);
+SET_UNIFORM_I("vertex_mode", 1);
+SET_UNIFORM_I("fragment_mode", 3);
+draw_surface(occlusion, 0, 0);
+surface_reset_target();
+surface_set_target(occlusion_second_pass);
+draw_clear(c_white);
+SET_UNIFORM_I("fragment_mode", 4);
+draw_surface(occlusion_first_pass, 0, 0);
+surface_reset_target();
+//read surface and build visible array
+var occlusion_buffer = buffer_create(surface_get_width(occlusion)*surface_get_height(occlusion)*4, buffer_grow, 1);
+buffer_get_surface(occlusion_buffer, occlusion_second_pass, 0, 0, 0); //formatted as BGRA
+var occlusion_buffer_size = buffer_get_size(occlusion_buffer)/4;
+//refresh visibles
+for(var i = 0; i < occlusion_buffer_size; i++)
 {
-	surface_set_target(surfaces[OCCLUSION_DEBUG]);
-	
-	var offset = rotate_vertex([10,0], rotation.yaw - pi/2.0);
-	shader_set_uniform_f(shader_get_uniform(standard, "camera_offset"), offset[0], offset[1], 10/2);
-	
-	shader_set_uniform_f(shader_get_uniform(standard, "camera_angle_offset"), 0, 0.46, -3.0*pi/8.0);
+  var visible_index = [0,0,0];
+  visible_index[2] = buffer_read(occlusion_buffer, buffer_u8);
+  visible_index[1] = buffer_read(occlusion_buffer, buffer_u8);
+  visible_index[0] = buffer_read(occlusion_buffer, buffer_u8); //formatted as BGRA
+  buffer_read(occlusion_buffer, buffer_u8);
+  //show_debug_message("r: " + string(visible_index[2]) + ", g: " + string(visible_index[1]) + ", b: " + string(visible_index[0]));
+  if( visible_index[0] == 255 &&
+    visible_index[1] == 255 &&
+    visible_index[2] == 255)
+    break;
+  else
+  {
+    //decode visible index
+    visible_models[i] = visible_index[2] + visible_index[1]*256 + visible_index[0]*256*256;
+  }
 
-	var query = [Position, Rotation, Scale, Grayscale, Color, VBO];
-
-	for(var i = 0; i < ds_list_size(tags[|Visible]); i++)
-	{
-		var identity = tags[|Visible]; identity = identity[|i];
-		var index = search_tags(identity, query);
-		
-		var id_tag = tags[|query[0]]; id_tag = id_tag[|index[0]]; 
-		shader_set_uniform_f(shader_get_uniform(standard, "offset"), id_tag.X, id_tag.Y, id_tag.Z);
-	
-		id_tag = tags[|query[1]]; id_tag = id_tag[|index[1]];
-		shader_set_uniform_f(shader_get_uniform(standard, "angle"), id_tag.roll, id_tag.pitch, id_tag.yaw);
-	
-		if(index[2] == -1)
-			shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, 1.0, 1.0);
-		else
-		{
-			id_tag = tags[|query[2]]; id_tag = id_tag[|index[2]];
-		shader_set_uniform_f(shader_get_uniform(standard, "scale"), id_tag.X, id_tag.Y, id_tag.Z);
-		}
-	
-		if(index[3] == -1)
-			shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
-		else
-		{
-			id_tag = tags[|query[3]]; id_tag = id_tag[|index[3]];
-			shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), id_tag);
-		}
-	
-		if(index[4] == -1)
-		shader_set_uniform_f(shader_get_uniform(standard, "color"), 0.0, 0.0, 0.0);
-		else
-		{
-			id_tag = tags[|query[4]]; id_tag = id_tag[|index[4]];
-			shader_set_uniform_f(shader_get_uniform(standard, "color"), id_tag.r, id_tag.g, id_tag.b);
-		}
-	
-		if(index[5] != -1)
-		{
-			id_tag = tags[|query[5]]; id_tag = id_tag[|index[5]];
-			vertex_submit(id_tag, pr_trianglelist, -1);
-		}
-	}
-	
-	//draw camera and frustrum
-	shader_set_uniform_f(shader_get_uniform(standard, "offset"), position.X, position.Y, position.Z);
-	shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1.0, 1.0, 1.0);
-	shader_set_uniform_f(shader_get_uniform(standard, "angle"), rotation.roll, rotation.pitch, rotation.yaw);
-	shader_set_uniform_f(shader_get_uniform(standard, "color"), 0.9, 0.9, 0.9);
-	shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
-	var cube = tags[|VBO];
-	vertex_submit(cube[|0], pr_trianglelist, -1);
-	
-	surface_reset_target();
+  //show_debug_message(string(i) + " : " + string(visible_models[i]));
 }
-
-//gpu_set_ztestenable(false);
-
-//shader_set(post_process);
-////normals from depth buffer
-//surface_set_target(surfaces[NORMAL]);
-//shader_set_uniform_i(shader_get_uniform(standard, "mode"), 3);
-//draw_surface(surfaces[DEPTH],0,0);
-//surface_reset_target();
-
-////edges from normal buffer
-//surface_set_target(surfaces[EDGE]);
-//shader_set_uniform_i(shader_get_uniform(standard, "mode"), 4);
-//draw_surface(surfaces[DEPTH],0,0);
-//surface_reset_target();
-
-//shadow map
-
-
-//black map
-//gray map
-//color map
-
-//final compositing
-
-shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
-shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
-
-var width = surface_get_width(surfaces[NORMAL]);
-var height = surface_get_height(surfaces[NORMAL]);
-if(occlusion_debug)
-{
-	draw_surface_part(surfaces[RGB], 0, height/4, width, height/2, 0, 0);
-	draw_surface_part(surfaces[OCCLUSION_DEBUG], 0, height/4, width, height/2, 0, height/2);
-
-	draw_line(0, height/2, width, height/2);
-	draw_line(width/4, 5*height/8, width/4, 7*height/8);
-	draw_line(3*width/4, 5*height/8, 3*width/4, 7*height/8);
 }
 else
-	draw_surface(surfaces[RGB], 0, 0);
+{
+ for(var i = 0; i < array_size*array_size; i++) visible_models[i] = i;
+}
+ITERATE_VISIBLES
+{
+surface_set_target(DIFFUSE_SURFACE);
+draw_clear(c_white);
+SET_UNIFORM_I("vertex_mode", VERTEX_REGULAR)
+SET_UNIFORM_I("fragment_mode", FRAGMENT_REGULAR)
+//SET_UNIFORM_F("camera_offset", -25, 0, 10);
+//SET_UNIFORM_F("camera_angle", 0, -pi/4, 0);
+SET_UNIFORM_F("scale", 1.0, 1.0, 1.0)
+SET_UNIFORM_F("grayscale", 1.0)
+SET_UNIFORM_F("color", 0.2, 0.6, 0.2)
+for(var i = 0; i < array_length_1d(visible_models); i++)
+{
+ var position = visible_models[i];
+ if(position != -1)
+ {
+  position = model_array[position];
+  SET_UNIFORM_F("offset", position[0], position[1], position[2])
+  SET_UNIFORM_F("id",i%256/255, floor(i/256)%256/255, floor(i/(256*256))/255)
+  vertex_submit(model, pr_trianglelist, texture);
+ }
+}
+surface_reset_target();
+surface_set_target(surfaces[PLAYER_ONE]);
+draw_surface(DIFFUSE_SURFACE, 0,0);
+surface_reset_target();
+}
+if(IS_SPLITSCREEN)
+{
+  ITERATE_VISIBLES
+  {
+surface_set_target(DIFFUSE_SURFACE);
+draw_clear(c_white);
+SET_UNIFORM_I("vertex_mode", VERTEX_REGULAR)
+SET_UNIFORM_I("fragment_mode", FRAGMENT_REGULAR)
+//SET_UNIFORM_F("camera_offset", -25, 0, 10);
+//SET_UNIFORM_F("camera_angle", 0, -pi/4, 0);
+SET_UNIFORM_F("scale", 1.0, 1.0, 1.0)
+SET_UNIFORM_F("grayscale", 1.0)
+SET_UNIFORM_F("color", 0.2, 0.6, 0.2)
+for(var i = 0; i < array_length_1d(visible_models); i++)
+{
+ var position = visible_models[i];
+ if(position != -1)
+ {
+  position = model_array[position];
+  SET_UNIFORM_F("offset", position[0], position[1], position[2])
+  SET_UNIFORM_F("id",i%256/255, floor(i/256)%256/255, floor(i/(256*256))/255)
+  vertex_submit(model, pr_trianglelist, texture);
+ }
+}
+surface_reset_target();
+surface_set_target(surfaces[PLAYER_TWO]);
+draw_surface(DIFFUSE_SURFACE, 0,0);
+surface_reset_target();
+  }
+}
+SET_UNIFORM_I("vertex_mode", VERTEX_FLAT);
+SET_UNIFORM_I("fragment_mode", FRAGMENT_FLAT);
+if(IS_SPLITSCREEN)
+{
+  draw_surface_part(surfaces[PLAYER_ONE],);
+  draw_surface_part(surface[PLAYER_TWO],);
+}
+else
+  draw_surface(surfaces[PLAYER_ONE], 0, 0);

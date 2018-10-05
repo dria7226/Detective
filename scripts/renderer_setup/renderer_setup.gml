@@ -17,7 +17,9 @@ gpu_set_blendenable(false);
 #macro RGB 7
 #macro OCCLUSION 8
 #macro OCCLUSION_DEBUG 9
-#macro NO_OF_SURFACES 10
+#macro PLAYER_ONE 10
+#macro PLAYER_TWO 11
+#macro NO_OF_SURFACES 12
 
 occlusion_debug = false;
 
