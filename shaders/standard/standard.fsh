@@ -1,116 +1,95 @@
+varying highp float depth;
+varying vec4 out_Color;
+varying vec2 out_TexCoord;
 
+uniform vec2 a_pixel;
+uniform sampler2D sampler_a;
 
+varying float gs;
+varying vec3 col;
+
+uniform int fragment_mode;
+
+float packColor(vec4 color);
+vec4 unpackColor(float f);
+void rotate(inout vec2 point, float angle);
 void main()
 {
-if(fragment_mode == FLAT)
+if(fragment_mode == 1)
 {
   gl_FragColor = out_Color * texture2D( gm_BaseTexture, out_TexCoord);
   return;
 }
-if(fragment_mode == DIFFUSE)
+if(fragment_mode == 0)
 {
   vec4 c = out_Color;
-  if(out_TexCoord != vec2(0.0))
+  if(mod(gl_FragCoord.x - 0.5, 2.0) == 0.0)
   {
-    c = texture2D(gm_BaseTexture, out_TexCoord);
-    //color
-    if(c == vec4(1.0))
-      c = vec4(col, 1.0);
-    //grayscale
-    if(gs != 1.0)
+    //DIFFUSE
+    if(out_TexCoord != vec2(0.0))
     {
-      vec4 intensity = (c.rgba + c.gbra + c.brga)/3.0;
-      c = mix(intensity, c, gs);
-    }
-  }
-  gl_FragColor = c;
-  //gl_FragColor = vec4(vec3(depth), 1.0);
-  return;
-}
-if(fragment_mode == DEPTH_MODE)
-{
-  //alternative
-  //return vec3( floor( depth * 255.0 ) / 255.0,
-    //         fract( depth * 255.0 ),
-  //		 fract( depth * 255.0 * 255.0 ) );
-  vec4 d = fract(gl_FragCoord.z*(255.0*255.0*255.0*255.0 - 1.0)/(255.0*255.0*255.0*255.0)*vec4(1.0, 255.0, 255.0*255.0, 255.0*255.0*255.0));
-  gl_FragColor = d;
-  return;
-}
-if(fragment_mode == OCCLUSION_FIRST_PASS)
-{
-  gl_FragColor = texture2D(gm_BaseTexture, out_TexCoord);
-  if(gl_FragColor != vec4(1.0))
-  for(vec2 leading_coord = out_TexCoord + vec2(a_pixel.x,0.0); leading_coord.y <= 1.0;)
-  {
-    if(texture2D(gm_BaseTexture, leading_coord) == gl_FragColor)
-    {
-      gl_FragColor = vec4(1.0);
-      return;
-    }
-    leading_coord.x += a_pixel.x;
-    if(leading_coord.x > 1.0) leading_coord = vec2(0.0, leading_coord.y + a_pixel.y);
-  }
-  return;
-}
-if(fragment_mode == OCCLUSION_SECOND_PASS)
-{
-  gl_FragColor = vec4(1.0);
-  vec2 pixel = a_pixel*2.0;
-  //float target_index = (out_TexCoord.y/pixel.y - 0.5 + pixel.x + out_TexCoord.x)/pixel.x;
-  float target_index = (gl_FragCoord.y - 0.5) * 32.0 + gl_FragCoord.x + 0.5;
-  //target_index = floor(target_index);
-  if(target_index >= 20.0*20.0) return;
-  float current_index = 0.0;
-  for(vec2 leading_coord = vec2(1.0); leading_coord.y >= 0.0;)
-  {
-    vec4 leading_color = texture2D(gm_BaseTexture, leading_coord);
-    if(leading_color != vec4(1.0))
-    {
-      current_index += 1.0;
-      if(current_index == target_index)
+      c = texture2D(gm_BaseTexture, out_TexCoord);
+      //color
+      if(c == vec4(1.0))
+        c = vec4(col, 1.0);
+      //grayscale
+      if(gs != 1.0)
       {
-        gl_FragColor = leading_color; return;
+        vec4 intensity = (c.rgba + c.gbra + c.brga)/3.0;
+        c = mix(intensity, c, gs);
       }
     }
-    //next leading coord
-    leading_coord.x -= a_pixel.x;
-    if(leading_coord.x < 0.0) leading_coord = vec2(1.0, leading_coord.y - a_pixel.y);
   }
-}
-if(fragment_mode == NORMAL_DETECTION)
-{
-  //vec3 normal = vec3(	unpack(vec2(0.0, 0.0)) -
-  //					unpack(vec2(FRAG_WIDTH, 0.0)),
-  //					unpack(vec2(0.0, 0.0)) -
-  //					unpack(vec2(0.0, FRAG_WIDTH)),
-  //					0.0);
-  //normal.xy /= FRAG_WIDTH;
-  //normal.z = pow(1.0 - pow(length(normal), 2.0), 0.5);
-  //normal.xy = normal.xy/2.0 + vec2(0.5);
-    //gl_FragColor = vec4(normal, 1.0);
-  //float depth = unpack(vec2(0.0,0.0));
-  //gl_FragColor = vec4(vec3(depth*10.0),1.0);
-}
-if(fragment_mode == EDGE_DETECTION)
-{
-  vec2 offsets[4];
-  offsets[0] = vec2(0.0, 1.0);
-  offsets[1] = vec2(1.0,-1.0);
-  offsets[2] = vec2(1.0, 0.0);
-  offsets[3] = vec2(1.0, 0.0);
-  for(int i = 0; i < 4; i++)
+  else
   {
-    vec3 delta = abs(
-          texture2D(gm_BaseTexture, out_TexCoord + FRAG_WIDTH*offsets[i])
-          -
-          texture2D(gm_BaseTexture, out_TexCoord - FRAG_WIDTH*offsets[i])).rgb/4.0;
-    if(delta.r > 0.5) delta.rgb = vec3(0.25);
-    gl_FragColor.rgb += delta;
+    //DEPTH
+    c = unpackColor(depth);
   }
-  gl_FragColor = 1.0 - gl_FragColor;
+  gl_FragColor = c;
+  return;
 }
-if(fragment_mode == COMPOSITING)
+if(fragment_mode == 4)
 {
+  vec2 offsets[2];
+  offsets[0] = vec2(2.0 * a_pixel.x,0.0);
+  offsets[1] = vec2(0.0,a_pixel.y);
+  float result[2];
+  float current_depth = packColor(texture2D(gm_BaseTexture, out_TexCoord));
+  for(int i = 0; i < 2; i++)
+  {
+    result[i] = packColor(texture2D(gm_BaseTexture, out_TexCoord + offsets[i])) - current_depth;
+    float other = current_depth - packColor(texture2D(gm_BaseTexture, out_TexCoord - offsets[i]));
+    if(abs(other) < abs(result[i])) result[i] = other;
+  }
+  vec3 normal = vec3(result[0], 0.0, 0.0);
+  //normal *= MAXIMUM_VIEW_DISTANCE;
+  //normal.xy /= a_pixel.xy;
+  //normal.z = pow(1.0 - pow(length(normal), 2.0), 0.5);
+  //normal.x = 0.5 + normal.x/2.0;
+  //gl_FragColor = texture2D(gm_BaseTexture, out_TexCoord - vec2(a_pixel.x,0));
+  gl_FragColor = vec4(normal, 1.0);
 }
+  // #include "occlusion_first_pass.txt"
+  //
+  // #include "occlusion_second_pass.txt"
+  //
+  // #include "post_processing_fragment.txt"
+}
+void rotate(inout vec2 point, float angle)
+{
+  float X = cos(angle)*point.x - sin(angle)*point.y;
+  point.y = cos(angle)*point.y + sin(angle)*point.x;
+  point.x = X;
+}
+float packColor(vec4 color)
+{
+    return dot( color, vec4(1.0, 1.0/255.0, 1.0/(255.0*255.0), 1.0/(255.0*255.0*255.0)) );
+}
+vec4 unpackColor(float f)
+{
+  f /= 300.0;
+  vec4 enc = f * vec4(1.0, 255.0, 255.0*255.0, 255.0*255.0*255.0);
+  enc = fract(enc);
+  enc.rgb -= enc.gba/vec3(255.0);
+  return enc;
 }

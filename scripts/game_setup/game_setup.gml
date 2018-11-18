@@ -1,24 +1,26 @@
 initialize_tags();
 
-Game.identities = ds_list_create();
+identities = ds_list_create();
+
+visibles = array_create(0);
 
 //
 var cube = create_identity(["cube.dat", VBO]);
 
-var model = Game.tags[|Model];
+var model = tags[|Model];
 
-var vbo = Game.tags[|VBO];
+var vbo = tags[|VBO];
 
 vbo[|cube[1]] = vertex_create_buffer_from_buffer(model[|cube[0]] , Game.format);
 //
 var plane = create_identity(["plane.dat", VBO]);
 
-vbo = Game.tags[|VBO];
+vbo = tags[|VBO];
 
-vbo[|plane[1]] = vertex_create_buffer_from_buffer(model[|plane[0]] , Game.format);
+vbo[|plane[1]] = vertex_create_buffer_from_buffer(model[|plane[0]] , format);
 //
 
-Game.alpha = 0;
+alpha = 0;
 
 load_intro();
 

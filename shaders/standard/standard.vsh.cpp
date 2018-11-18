@@ -1,8 +1,10 @@
 #include "vertex_definitions.txt"
 
+#include "vertex_declarations.txt"
+
 void main()
 {
-	if(vertex_mode == FLAT)
+	if(vertex_mode == VERTEX_FLAT)
 	{
 		#include "flat_projection.txt"
 	}

@@ -1,135 +1,98 @@
-var camera_tag = tags[|Camera]; camera_tag = camera_tag[|0];
-SET_UNIFORM_F("near_clip", camera_tag.near_clip)
-
 var position = tags[|Position]; position = position[|0];
+shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.X, position.Y, position.Z);
 var rotation = tags[|Rotation]; rotation = rotation[|0];
+shader_set_uniform_f(shader_get_uniform(standard, "camera_angle"), rotation.roll, rotation.pitch, rotation.yaw+alpha);
 
-SET_UNIFORM_F("camera_position", position.X, position.Y, position.Z)
-SET_UNIFORM_F("camera_angle", rotation.roll, rotation.pitch, rotation.yaw+alpha)
-visible_models = 0;
-//iterate down hierarchy
-  //#include "frustrum_test.txt"
-if(occlusion_culling_enabled)
-{
-SET_UNIFORM_I("vertex_mode", 3);
-SET_UNIFORM_I("fragment_mode", 0);
-surface_set_target(occlusion);
-draw_clear(c_white);
-SET_UNIFORM_F("scale", 0.62408,0.5436,0.62796);
-//draw bounding volumes
-for(var i = 0; i < array_size*array_size; i++)
-{
-  var position = model_array[i];
-  SET_UNIFORM_F("offset", position[0], position[1], position[2] + 0.62796);
-  SET_UNIFORM_F("id", i%256/255, floor(i/256)%256/255, floor(i/(256*256))/255);
-  vertex_submit(cube, pr_trianglelist, -1);
-}
-surface_reset_target();
-//post processing
-surface_set_target(occlusion_first_pass);
-draw_clear(c_white);
-SET_UNIFORM_I("vertex_mode", 1);
-SET_UNIFORM_I("fragment_mode", 3);
-draw_surface(occlusion, 0, 0);
-surface_reset_target();
-surface_set_target(occlusion_second_pass);
-draw_clear(c_white);
-SET_UNIFORM_I("fragment_mode", 4);
-draw_surface(occlusion_first_pass, 0, 0);
-surface_reset_target();
-//read surface and build visible array
-var occlusion_buffer = buffer_create(surface_get_width(occlusion)*surface_get_height(occlusion)*4, buffer_grow, 1);
-buffer_get_surface(occlusion_buffer, occlusion_second_pass, 0, 0, 0); //formatted as BGRA
-var occlusion_buffer_size = buffer_get_size(occlusion_buffer)/4;
-//refresh visibles
-for(var i = 0; i < occlusion_buffer_size; i++)
-{
-  var visible_index = [0,0,0];
-  visible_index[2] = buffer_read(occlusion_buffer, buffer_u8);
-  visible_index[1] = buffer_read(occlusion_buffer, buffer_u8);
-  visible_index[0] = buffer_read(occlusion_buffer, buffer_u8); //formatted as BGRA
-  buffer_read(occlusion_buffer, buffer_u8);
-  //show_debug_message("r: " + string(visible_index[2]) + ", g: " + string(visible_index[1]) + ", b: " + string(visible_index[0]));
-  if( visible_index[0] == 255 &&
-    visible_index[1] == 255 &&
-    visible_index[2] == 255)
-    break;
-  else
-  {
-    //decode visible index
-    visible_models[i] = visible_index[2] + visible_index[1]*256 + visible_index[0]*256*256;
-  }
 
-  //show_debug_message(string(i) + " : " + string(visible_models[i]));
-}
+//#include "visibility_culling.txt"
+//#include "mirrors.txt"
+for(var i = 0; i < array_length_1d(visibles); i++)
+{
+surface_set_target(surfaces[0]);
+//NOTES
+//account for animation as well
+//account for mirrors
+shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 0);
+shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 0);
+var query = [Position, Rotation, Scale, Color, VBO];
+var index = search_tags(visibles[i], query);
+if(index[0] != -1)
+{
+  var id_tag = tags[|query[0]]; id_tag = id_tag[|index[0]];
+  shader_set_uniform_f(shader_get_uniform(standard, "offset"), id_tag.X, id_tag.Y, id_tag.Z);
 }
 else
+  shader_set_uniform_f(shader_get_uniform(standard, "offset"), 0,0,0);
+if(index[1] != -1)
 {
- for(var i = 0; i < array_size*array_size; i++) visible_models[i] = i;
-}
-ITERATE_VISIBLES
-{
-surface_set_target(DIFFUSE_SURFACE);
-draw_clear(c_white);
-SET_UNIFORM_I("vertex_mode", VERTEX_REGULAR)
-SET_UNIFORM_I("fragment_mode", FRAGMENT_REGULAR)
-//SET_UNIFORM_F("camera_offset", -25, 0, 10);
-//SET_UNIFORM_F("camera_angle", 0, -pi/4, 0);
-SET_UNIFORM_F("scale", 1.0, 1.0, 1.0)
-SET_UNIFORM_F("grayscale", 1.0)
-SET_UNIFORM_F("color", 0.2, 0.6, 0.2)
-for(var i = 0; i < array_length_1d(visible_models); i++)
-{
- var position = visible_models[i];
- if(position != -1)
- {
-  position = model_array[position];
-  SET_UNIFORM_F("offset", position[0], position[1], position[2])
-  SET_UNIFORM_F("id",i%256/255, floor(i/256)%256/255, floor(i/(256*256))/255)
-  vertex_submit(model, pr_trianglelist, texture);
- }
-}
-surface_reset_target();
-surface_set_target(surfaces[PLAYER_ONE]);
-draw_surface(DIFFUSE_SURFACE, 0,0);
-surface_reset_target();
-}
-if(IS_SPLITSCREEN)
-{
-  ITERATE_VISIBLES
-  {
-surface_set_target(DIFFUSE_SURFACE);
-draw_clear(c_white);
-SET_UNIFORM_I("vertex_mode", VERTEX_REGULAR)
-SET_UNIFORM_I("fragment_mode", FRAGMENT_REGULAR)
-//SET_UNIFORM_F("camera_offset", -25, 0, 10);
-//SET_UNIFORM_F("camera_angle", 0, -pi/4, 0);
-SET_UNIFORM_F("scale", 1.0, 1.0, 1.0)
-SET_UNIFORM_F("grayscale", 1.0)
-SET_UNIFORM_F("color", 0.2, 0.6, 0.2)
-for(var i = 0; i < array_length_1d(visible_models); i++)
-{
- var position = visible_models[i];
- if(position != -1)
- {
-  position = model_array[position];
-  SET_UNIFORM_F("offset", position[0], position[1], position[2])
-  SET_UNIFORM_F("id",i%256/255, floor(i/256)%256/255, floor(i/(256*256))/255)
-  vertex_submit(model, pr_trianglelist, texture);
- }
-}
-surface_reset_target();
-surface_set_target(surfaces[PLAYER_TWO]);
-draw_surface(DIFFUSE_SURFACE, 0,0);
-surface_reset_target();
-  }
-}
-SET_UNIFORM_I("vertex_mode", VERTEX_FLAT);
-SET_UNIFORM_I("fragment_mode", FRAGMENT_FLAT);
-if(IS_SPLITSCREEN)
-{
-  draw_surface_part(surfaces[PLAYER_ONE],);
-  draw_surface_part(surface[PLAYER_TWO],);
+  id_tag = tags[|query[1]]; id_tag = id_tag[|index[1]];
+  shader_set_uniform_f(shader_get_uniform(standard, "angle"), id_tag.roll, id_tag.pitch, id_tag.yaw);
 }
 else
-  draw_surface(surfaces[PLAYER_ONE], 0, 0);
+  shader_set_uniform_f(shader_get_uniform(standard, "angle"), 0,0,0);
+if(index[2] != -1)
+{
+  id_tag = tags[|query[2]]; id_tag = id_tag[|index[2]];
+  shader_set_uniform_f(shader_get_uniform(standard, "scale"), id_tag.X, id_tag.Y, id_tag.Z);
+}
+else
+  shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1,1,1);
+shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
+if(index[3] != -1)
+{
+  id_tag = tags[|query[3]]; id_tag = id_tag[|index[3]];
+  shader_set_uniform_f(shader_get_uniform(standard, "color"), id_tag.R, id_tag.G, id_tag.B);
+}
+else
+  shader_set_uniform_f(shader_get_uniform(standard, "color"), 0,0,0);
+if(index[4] != -1)
+{
+  id_tag = tags[|query[4]];
+  vertex_submit(id_tag[|index[4]], pr_trianglelist, 0);
+}
+//if(index[0] == -1 || index[1] == -1) continue;
+//SET_UNIFORM_F("id", PACK_32_BITS(index[0]))
+
+//#include "pick_and_render_lod.txt"
+
+surface_reset_target();
+shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
+shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 4);
+var scale = surface_info[0];
+shader_set_uniform_f(shader_get_uniform(standard, "a_pixel"), 1/(scale[0]*window_get_width()), 1/(scale[1]*window_get_height()));
+surface_set_target(surfaces[2]);
+draw_surface_stretched(surfaces[0],0,0, window_get_width(), window_get_height());
+surface_reset_target();
+//#include "edge.txt"
+//#include "collect_lights.txt"
+//non-shadow lights (deferred omni-lights)
+//#include "lighting.txt"
+//shadow lights (shadow mapped spotlights)
+//#include "shadowing.txt"
+//#include "post_processing.txt"
+shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
+shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
+surface_set_target(surfaces[6]);
+var scale = surface_info[2];
+draw_surface_ext(surfaces[2],0,0, 1/scale[0], 1/scale[1], 0, c_white, 1.0);
+surface_reset_target();
+}
+//if(IS_SPLITSCREEN)
+//{
+//  #define FINAL_SURFACE surfaces[PLAYER_TWO]
+  //#include "visibility_culling.txt"
+  //#include "mirrors.txt"
+//  ITERATE_VISIBLES
+//  {
+//    #include "render_scene.txt"
+//  }
+//}
+shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
+shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
+//if(IS_SPLITSCREEN)
+//{
+//  draw_surface_part(surfaces[PLAYER_ONE],0,0,window_width*SPLITSCREEN_HORIZONTAL_RATIO, window_height/2, window_width*(1-SPLITSCREEN_HORIZONTAL_RATIO), 0);
+//  draw_surface_part(surface[PLAYER_TWO],0,0, window_width*SPLITSCREEN_HORIZONTAL_RATIO, window_height/2, 0, window_height/2);
+//}
+//else
+  draw_surface(surfaces[6], 0 ,0);

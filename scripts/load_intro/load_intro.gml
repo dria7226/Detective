@@ -19,7 +19,7 @@ position.Z = 4.0;
 	//create room
 index = create_identity(["Level Building/wall_wainscoting.dat"]);
 
-var wall_segment = buffer_create(1, buffer_grow, 1); 
+var wall_segment = buffer_create(1, buffer_grow, 1);
 
 model = Game.tags[|Model]; model = model[|index[0]];
 
@@ -37,7 +37,7 @@ buffer_copy(wall_segment, 0, buffer_get_size(wall_segment), wall, 0);
 
 for(var i = 1; i < 3; i++)
 	add_buffer_to_buffer(wall, wall_segment, [3.0*i, 0,0]);
-	
+
 buffer_delete(wall_segment);
 
 query = [VBO, Position, Rotation, Color, Grayscale, Visible];
@@ -55,7 +55,7 @@ identity.b = 0.2;
 
 identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
-identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
+visibles[array_length_1d(visibles)] = index[6];
 
 //
 index = create_identity(query);
@@ -71,7 +71,7 @@ identity.b = 0.2;
 
 identity = Game.tags[|query[4]]; identity[|index[4]] = 0.5;
 
-identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
+visibles[array_length_1d(visibles)] = index[6];
 //
 index = create_identity(query);
 
@@ -88,7 +88,7 @@ identity.b = 0.2;
 
 identity = Game.tags[|query[4]]; identity[|index[4]] = 0.0;
 
-identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
+visibles[array_length_1d(visibles)] = index[6];
 
 	//floor
 index = create_identity(["Level Building/floor.dat"]);
@@ -115,7 +115,7 @@ identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Y = -1
 
 identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
-identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
+visibles[array_length_1d(visibles)] = index[6];
 
 	//ceiling
 //var ceiling = buffer_create(1, buffer_grow, 1);
@@ -142,11 +142,11 @@ identity = Game.tags[|query[0]]; identity[|index[0]] = vertex_create_buffer_from
 identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.X = 3;
 identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Y = -1.5;
 
-identity = Game.tags[|query[2]]; identity = identity[|index[2]]; identity.yaw = pi;
+identity = Game.tags[|query[2]]; identity = identity[|index[2]]; identity.yaw = -pi;
 
 identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
-identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
+visibles[array_length_1d(visibles)] = index[6];
 
 //
 
@@ -166,7 +166,7 @@ identity = Game.tags[|query[2]]; identity = identity[|index[2]]; identity.yaw = 
 
 identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
-identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
+visibles[array_length_1d(visibles)] = index[6];
 
 
 //load occlusion groups

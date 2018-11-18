@@ -1,44 +1,31 @@
-Game.format_size = 0;
+format_size = 0;
 vertex_format_begin();
-vertex_format_add_position_3d(); Game.format_size += 3;
-vertex_format_add_color(); Game.format_size += 1;
-vertex_format_add_texcoord(); Game.format_size += 2;
-Game.format = vertex_format_end();
+vertex_format_add_position_3d(); format_size += 3;
+vertex_format_add_color(); format_size += 1;
+vertex_format_add_texcoord(); format_size += 2;
+format = vertex_format_end();
 
 gpu_set_blendenable(false);
-
-#macro DIFFUSE 0
-#macro DEPTH 1
-#macro NORMAL 2
-#macro EDGE 3
-#macro SHADOW 4
-#macro BLACK 5
-#macro GRAY 6
-#macro RGB 7
-#macro OCCLUSION 8
-#macro OCCLUSION_DEBUG 9
-#macro PLAYER_ONE 10
-#macro PLAYER_TWO 11
-#macro NO_OF_SURFACES 12
-
-occlusion_debug = false;
-
-#macro OCCLUSION_RATIO 1/10
-
-for(var i = 0; i < NO_OF_SURFACES; i++)
-{
-	if(i == OCCLUSION)
-	Game.surfaces[i] = surface_create(window_get_width()*OCCLUSION_RATIO, window_get_height()*OCCLUSION_RATIO);
-	else
-	Game.surfaces[i] = surface_create(window_get_width(), window_get_height());
-}
-
-var occlusion_buffer = buffer_create(1, buffer_grow, 1);
-
-#macro MAXIMUM_VIEW_DISTANCE 100.0
-shader_set(standard);
-
+gpu_set_tex_repeat(true);
 gpu_set_ztestenable(true);
-
-shader_set_uniform_f(shader_get_uniform(standard, "far_clip"), MAXIMUM_VIEW_DISTANCE);
-shader_set_uniform_f(shader_get_uniform(standard, "screen_ratio"), window_get_height()/window_get_width());
+surfaces[8 - 1] = -1;
+surface_texture_pointers[8 - 1] = -1;
+surface_info[0] = [2,1];
+surface_info[1] = [2,1];
+surface_info[2] = [1, 1];
+surface_info[4] = [0.1,0.1];
+surface_info[8 -1] = 0;
+for(var i = 0; i < 8; i++)
+{
+ surfaces[i] = -1;
+ if(surface_info[i] == 0) surface_info[i] = [1,1];
+}
+var occlusion_buffer = buffer_create(1, buffer_grow, 1);
+shader_set(standard);
+shader_set_uniform_f(shader_get_uniform(standard, "near_clip"), 1.0);
+shader_set_uniform_f(shader_get_uniform(standard, "far_clip"), 300.0); shader_set_uniform_f(shader_get_uniform(standard, "screen_ratio"), window_get_height()/window_get_width());
+var occlusion_info = surface_info[4];
+shader_set_uniform_f(shader_get_uniform(standard, "a_pixel"), occlusion_info[0]/window_get_width(), occlusion_info[1]/window_get_height());
+sampler_a = shader_get_sampler_index(standard, "sampler_a");
+//load common texture
+//common_texture = sprite_get_texture(spr_common, 0);

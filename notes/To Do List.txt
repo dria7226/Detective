@@ -11,23 +11,25 @@
 - implement occlusion generation as part of load_intro
 	-
 - implement back-referenced tags ???
-- create_identity() with tag reference OR new tag (add another argument: an array of reffered tag indices, -1 meaning to create a new tag)
+- create_identity() with tag reference OR new tag (add another argument: an array of reffered tag indices, -1 meaning to create a new tag) (4 different object types: regular, omni_lights, spot_lights and mirrors)
 
 -----------------------------------------------
 Pre-Production
   Renderer----------------------------ETA ~10 mo
-    -cpp
-    -normal detection or normal rendering
+		-create test scene
+    -normal detection or normal rendering and edge detection
+    -post process
+    -uniform_buffers
     -frustrum culling
+		-omni lights
     -shadows
-    -compositing
-    -comic effects
-      -toon shader
+
+		-mirrors
     -software renderer
     -splitscreen
     -animation
-    -uniform_buffers
     -task system
+		-spatial hierarchy (contains locations, content groups and objects) (locations can contain content groups and objects, content groups can contain objects)
 
   Level Generator w/ Designer AI
   Simulator

@@ -1,13 +1,20 @@
-//check surfaces
-for(var i = 0; i < NO_OF_SURFACES; i++)
+//check surfaces and clear them
+shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
+shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
+for(var i = 0; i < 8; i++)
 {
-	if(!surface_exists(surfaces[i]))
-	{
-		if(i == OCCLUSION)
-		surfaces[i] = surface_create(window_get_width()*OCCLUSION_RATIO, window_get_height()*OCCLUSION_RATIO);
-		else
-		surfaces[i] = surface_create(window_get_width(), window_get_height());
-	}
+ if(!surface_exists(surfaces[i]))
+ {
+  var scale = surface_info[i];
+  surfaces[i] = surface_create(floor(scale[0]*window_get_width()), floor(scale[1]*window_get_height()));
+
+   //cache texture pointers for the surfaces
+  surface_texture_pointers[i] = surface_get_texture(surfaces[i]);
+ }
+
+ surface_set_target(surfaces[i]);
+ draw_clear(c_white);
+ surface_reset_target();
 }
 
 alpha += delta_time/5000000;

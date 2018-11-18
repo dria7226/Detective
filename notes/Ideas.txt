@@ -1,1 +1,2 @@
 - program that every new game created on April 1st starts as a murder case, where the victim actually died of a silly reason (such as old age).
+- death by box jellyfish venom (suicide induction)
