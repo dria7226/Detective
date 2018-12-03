@@ -25,7 +25,7 @@ model = Game.tags[|Model]; model = model[|index[0]];
 
 buffer_copy(model, 0, buffer_get_size(model), wall_segment, 0);
 
-index = create_identity(["Level Building/wall_deco.dat"]);
+index = create_identity(["Level Building/wall_deco/high.dat"]);
 
 model = Game.tags[|Model]; model = model[|index[0]];
 

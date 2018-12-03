@@ -13,6 +13,8 @@ void main()
 		#include "perspective_projection.txt"
 	}
 
+	#include "normals.txt"
+
 	#include "vertex_coloring_and_texturing.txt"
 }
 

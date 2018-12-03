@@ -1,4 +1,5 @@
 varying highp float depth;
+varying vec3 out_Normal;
 varying vec4 out_Color;
 varying vec2 out_TexCoord;
 
@@ -23,7 +24,9 @@ if(fragment_mode == 1)
 if(fragment_mode == 0)
 {
   vec4 c = out_Color;
-  if(mod(gl_FragCoord.x - 0.5, 2.0) == 0.0)
+  //calculate target type
+  float target_type = mod(gl_FragCoord.x - 0.5, 2.0) + mod(gl_FragCoord.y - 0.5, 2.0)*2.0;
+  if(target_type == 0.0)
   {
     //DIFFUSE
     if(out_TexCoord != vec2(0.0))
@@ -39,36 +42,26 @@ if(fragment_mode == 0)
         c = mix(intensity, c, gs);
       }
     }
+    gl_FragColor = c;
   }
-  else
+  if(target_type == 1.0)
   {
     //DEPTH
-    c = unpackColor(depth);
+    gl_FragColor = unpackColor(depth);
   }
-  gl_FragColor = c;
+  if(target_type == 2.0)
+  {
+    //NORMAL
+    gl_FragColor = vec4((normalize(out_Normal)+vec3(1.0))/2.0, 1.0);
+  }
+  if(target_type == 3.0)
+  {
+    //EXTRA - LIGHT ACCUMULATION
+    gl_FragColor = vec4((normalize(out_Normal)+vec3(1.0))/2.0, 1.0);
+  }
   return;
 }
-if(fragment_mode == 4)
-{
-  vec2 offsets[2];
-  offsets[0] = vec2(2.0 * a_pixel.x,0.0);
-  offsets[1] = vec2(0.0,a_pixel.y);
-  float result[2];
-  float current_depth = packColor(texture2D(gm_BaseTexture, out_TexCoord));
-  for(int i = 0; i < 2; i++)
-  {
-    result[i] = packColor(texture2D(gm_BaseTexture, out_TexCoord + offsets[i])) - current_depth;
-    float other = current_depth - packColor(texture2D(gm_BaseTexture, out_TexCoord - offsets[i]));
-    if(abs(other) < abs(result[i])) result[i] = other;
-  }
-  vec3 normal = vec3(result[0], 0.0, 0.0);
-  //normal *= MAXIMUM_VIEW_DISTANCE;
-  //normal.xy /= a_pixel.xy;
-  //normal.z = pow(1.0 - pow(length(normal), 2.0), 0.5);
-  //normal.x = 0.5 + normal.x/2.0;
-  //gl_FragColor = texture2D(gm_BaseTexture, out_TexCoord - vec2(a_pixel.x,0));
-  gl_FragColor = vec4(normal, 1.0);
-}
+  //#include "edge_detection.txt"
   // #include "occlusion_first_pass.txt"
   //
   // #include "occlusion_second_pass.txt"

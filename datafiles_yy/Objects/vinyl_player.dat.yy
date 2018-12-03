@@ -1,5 +1,5 @@
 {
-    "id": "2c11dfb7-1120-4919-a30a-4f6c9f20b8bf",
+    "id": "8ac9bb1b-7f61-429a-b62e-9f167f21fddf",
     "modelName": "GMIncludedFile",
     "mvc": "1.0",
     "name": "vinyl_player.dat",

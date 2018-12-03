@@ -1,12 +1,14 @@
-attribute vec2 in_TexCoord; // (u,v)
 attribute vec3 in_Position; // (x,y,z)
 attribute vec4 in_Color; // (r,g,b)
+attribute vec2 in_TexCoord; // (u,v)
 
 uniform vec3 id;
 
 uniform int vertex_mode;
 
 varying highp float depth;
+vec3 normal = vec3(0.0);
+varying vec3 out_Normal;
 varying vec4 out_Color;
 varying vec2 out_TexCoord;
 
@@ -32,7 +34,7 @@ void main()
 {
  if(vertex_mode == 1)
  {
-gl_Position = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * vec4( in_Position.x, in_Position.y, in_Position.z, 1.0);
+gl_Position = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * vec4(in_Position, 1.0);
 out_Color = in_Color;
 out_TexCoord = in_TexCoord;
 return;
@@ -40,9 +42,11 @@ return;
  else
  {
 //optimize uniforms with textures
-//local
-vec3 local = in_Position*scale;
-rotate(local.xy, angle.z);
+//local - extract normal and then proceed
+vec3 local = mod(in_Position, 100.0)*100.0;
+normal = (in_Position - local)/100.0/128.0 - vec3(1.0);
+local *= scale;
+//rotate(local.xy, angle.z);
 rotate(local.xz, angle.y);
 rotate(local.yz, angle.x);
 //local to relative
@@ -57,6 +61,10 @@ gl_Position.xy = local.yz*near_clip;
 gl_Position.x *= -screen_ratio;
 gl_Position.w = local.x;
  }
+out_Normal = normal;
+rotate(out_Normal.xy, angle.z);
+rotate(out_Normal.xz, angle.y);
+rotate(out_Normal.yz, angle.x);
 if(vertex_mode == 3)
 {
  out_Color = vec4(id, 1.0);

@@ -6,9 +6,9 @@ void main()
 {
   #include "flat_fragment.txt"
 
-  #include "diffuse_and_depth_fragment.txt"
+  #include "mrt_fragment.txt"
 
-  #include "normal_detection.txt"
+  //#include "edge_detection.txt"
 
   // #include "occlusion_first_pass.txt"
   //

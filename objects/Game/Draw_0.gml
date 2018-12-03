@@ -26,7 +26,7 @@ else
 if(index[1] != -1)
 {
   id_tag = tags[|query[1]]; id_tag = id_tag[|index[1]];
-  shader_set_uniform_f(shader_get_uniform(standard, "angle"), id_tag.roll, id_tag.pitch, id_tag.yaw);
+  shader_set_uniform_f(shader_get_uniform(standard, "angle"), id_tag.roll, id_tag.pitch, id_tag.yaw + alpha);
 }
 else
   shader_set_uniform_f(shader_get_uniform(standard, "angle"), 0,0,0);
@@ -56,13 +56,6 @@ if(index[4] != -1)
 //#include "pick_and_render_lod.txt"
 
 surface_reset_target();
-shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
-shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 4);
-var scale = surface_info[0];
-shader_set_uniform_f(shader_get_uniform(standard, "a_pixel"), 1/(scale[0]*window_get_width()), 1/(scale[1]*window_get_height()));
-surface_set_target(surfaces[2]);
-draw_surface_stretched(surfaces[0],0,0, window_get_width(), window_get_height());
-surface_reset_target();
 //#include "edge.txt"
 //#include "collect_lights.txt"
 //non-shadow lights (deferred omni-lights)
@@ -73,8 +66,8 @@ surface_reset_target();
 shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
 shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
 surface_set_target(surfaces[6]);
-var scale = surface_info[2];
-draw_surface_ext(surfaces[2],0,0, 1/scale[0], 1/scale[1], 0, c_white, 1.0);
+var scale = surface_info[0];
+draw_surface_ext(surfaces[0],0,0, 1/scale[0], 1/scale[1],0,c_white,1.0);
 surface_reset_target();
 }
 //if(IS_SPLITSCREEN)
@@ -95,4 +88,4 @@ shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
 //  draw_surface_part(surface[PLAYER_TWO],0,0, window_width*SPLITSCREEN_HORIZONTAL_RATIO, window_height/2, 0, window_height/2);
 //}
 //else
-  draw_surface(surfaces[6], 0 ,0);
+    draw_surface(surfaces[6],0,0);

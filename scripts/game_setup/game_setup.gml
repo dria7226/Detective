@@ -17,7 +17,7 @@ var plane = create_identity(["plane.dat", VBO]);
 
 vbo = tags[|VBO];
 
-vbo[|plane[1]] = vertex_create_buffer_from_buffer(model[|plane[0]] , format);
+vbo[|plane[1]] = vertex_create_buffer_from_buffer(model[|plane[0]] , Game.format);
 //
 
 alpha = 0;
