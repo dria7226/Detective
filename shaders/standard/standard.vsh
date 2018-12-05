@@ -43,10 +43,10 @@ return;
  {
 //optimize uniforms with textures
 //local - extract normal and then proceed
-vec3 local = mod(in_Position, 100.0)*100.0;
-normal = (in_Position - local)/100.0/128.0 - vec3(1.0);
+vec3 local = floor(in_Position/100.0);
+normal = abs(in_Position - local)/100.0/128.0;
 local *= scale;
-//rotate(local.xy, angle.z);
+rotate(local.xy, angle.z);
 rotate(local.xz, angle.y);
 rotate(local.yz, angle.x);
 //local to relative

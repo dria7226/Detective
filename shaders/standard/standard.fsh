@@ -52,12 +52,12 @@ if(fragment_mode == 0)
   if(target_type == 2.0)
   {
     //NORMAL
-    gl_FragColor = vec4((normalize(out_Normal)+vec3(1.0))/2.0, 1.0);
+    gl_FragColor = vec4(normalize(out_Normal-vec3(1.0)), 1.0);
   }
   if(target_type == 3.0)
   {
     //EXTRA - LIGHT ACCUMULATION
-    gl_FragColor = vec4((normalize(out_Normal)+vec3(1.0))/2.0, 1.0);
+    gl_FragColor = vec4(normalize(out_Normal-vec3(1.0)), 1.0);
   }
   return;
 }

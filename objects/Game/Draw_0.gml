@@ -26,7 +26,7 @@ else
 if(index[1] != -1)
 {
   id_tag = tags[|query[1]]; id_tag = id_tag[|index[1]];
-  shader_set_uniform_f(shader_get_uniform(standard, "angle"), id_tag.roll, id_tag.pitch, id_tag.yaw + alpha);
+  shader_set_uniform_f(shader_get_uniform(standard, "angle"), id_tag.roll, id_tag.pitch, id_tag.yaw);
 }
 else
   shader_set_uniform_f(shader_get_uniform(standard, "angle"), 0,0,0);
