@@ -1,5 +1,5 @@
 {
-    "id": "65f3a0bf-ef82-4328-94b3-dcc0589cf6c4",
+    "id": "abb43582-d98d-4c27-bf06-9d834cd83f32",
     "modelName": "GMIncludedFile",
     "mvc": "1.0",
     "name": "vinyl_highlights.dat",

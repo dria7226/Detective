@@ -8,7 +8,7 @@ format = vertex_format_end();
 gpu_set_blendenable(false);
 gpu_set_tex_repeat(true);
 gpu_set_ztestenable(true);
-gpu_set_tex_filter(true);
+//gpu_set_tex_filter(true);
 surfaces[8 - 1] = -1;
 surface_texture_pointers[8 - 1] = -1;
 surface_info[0] = [2,2];

@@ -1,5 +1,5 @@
 {
-    "id": "bda6424d-a44c-4c06-bef0-f1e2f0daebf9",
+    "id": "4e375ddf-b83b-4e94-8134-74ce469d7753",
     "modelName": "GMIncludedFile",
     "mvc": "1.0",
     "name": "movie_camera.dat",
