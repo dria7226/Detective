@@ -31,14 +31,6 @@
     },
     "resources": [
         {
-            "Key": "0aac08e6-6d0d-4515-8ab6-9897464a6800",
-            "Value": {
-                "id": "5b4a5624-afaf-40e6-a86d-8e6e29d36b76",
-                "resourcePath": "datafiles_yy\\Level Building\\wall_deco\\high.dat.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "0acdabd4-2268-4711-a31d-7c04e7c0a113",
             "Value": {
                 "id": "ba0d33f4-fc2c-47d6-a914-494dfaf51f3a",
@@ -111,6 +103,14 @@
             }
         },
         {
+            "Key": "16ae8215-35aa-491e-b7f6-82fac5a89f12",
+            "Value": {
+                "id": "3b2ca669-4a04-4b65-8a1e-ca55544f4c75",
+                "resourcePath": "datafiles_yy\\plane.dat.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "183ebd8e-f8a5-47c3-ad40-1f850aff67d8",
             "Value": {
                 "id": "bd4eb8d5-6f0b-48c0-a69a-300ed5dda9ff",
@@ -159,19 +159,19 @@
             }
         },
         {
+            "Key": "261a9dc0-fd38-426c-89c7-9f9290d20a4f",
+            "Value": {
+                "id": "a8668220-93c8-45f8-9d81-860b1403e7d9",
+                "resourcePath": "datafiles_yy\\Objects\\vinyl_highlights.dat.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "263cb69f-c82f-475e-a5b7-43f5eec105d4",
             "Value": {
                 "id": "d9068ad6-bc81-4448-be7d-1fe1f7bc1d82",
                 "resourcePath": "views\\263cb69f-c82f-475e-a5b7-43f5eec105d4.yy",
                 "resourceType": "GMFolder"
-            }
-        },
-        {
-            "Key": "29d45e94-d48c-4536-bddd-5bdd7ecf8360",
-            "Value": {
-                "id": "b7531f64-f878-43d1-9250-c1f8e3538087",
-                "resourcePath": "datafiles_yy\\Objects\\desk_med_class.dat.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -207,6 +207,22 @@
             }
         },
         {
+            "Key": "33896376-0fcf-4616-b486-f6dce73eb037",
+            "Value": {
+                "id": "7a4d986b-262b-4b59-b644-3d81daf7b761",
+                "resourcePath": "datafiles_yy\\Level Building\\floor.dat.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
+            "Key": "377cd76a-d0de-45f5-bfb6-62593ea8cae7",
+            "Value": {
+                "id": "24facc38-31fc-4360-aab5-842d413ce370",
+                "resourcePath": "datafiles_yy\\Objects\\typewriter.dat.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "387d9ec0-c125-481e-8592-80d49fbe9850",
             "Value": {
                 "id": "ca4554fb-7901-47fb-9628-43e86e8a6115",
@@ -215,11 +231,27 @@
             }
         },
         {
+            "Key": "39307ea1-4674-449a-aaa5-8c0a886b03db",
+            "Value": {
+                "id": "42283a89-ab87-4924-b55e-c57f86cf57f4",
+                "resourcePath": "datafiles_yy\\Objects\\vinyl_player.dat.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "3a84f1af-4341-4854-9f42-4a3ba5f1d688",
             "Value": {
                 "id": "39f86f32-97bc-4553-9f22-4271bc371eb5",
                 "resourcePath": "views\\3a84f1af-4341-4854-9f42-4a3ba5f1d688.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "3b2ace3e-1fd9-4333-8221-aa3b138b2713",
+            "Value": {
+                "id": "4f1937de-8668-4fa7-915c-380e27ebe5ab",
+                "resourcePath": "datafiles_yy\\cube.dat.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -236,6 +268,14 @@
                 "id": "a5d1366b-973d-4f08-b821-b99adf817e64",
                 "resourcePath": "notes\\Engine.yy",
                 "resourceType": "GMNotes"
+            }
+        },
+        {
+            "Key": "3c325ec5-4160-4ed9-b3b6-ba232f29f775",
+            "Value": {
+                "id": "9b0dca59-3897-416c-ab07-ec383fcda51e",
+                "resourcePath": "datafiles_yy\\Level Building\\wall_wainscoting.dat.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -263,27 +303,19 @@
             }
         },
         {
+            "Key": "4c576f1f-2fd2-4543-9b23-7df5c0850f1c",
+            "Value": {
+                "id": "33709210-e056-4e1a-8797-8a6e25f6a975",
+                "resourcePath": "datafiles_yy\\Level Building\\wall_deco\\high.dat.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "4cd51bf0-be40-4f90-a9bd-da92b70bac56",
             "Value": {
                 "id": "ef7d51bc-fb1d-4a26-818d-ce372b9d0d84",
                 "resourcePath": "views\\4cd51bf0-be40-4f90-a9bd-da92b70bac56.yy",
                 "resourceType": "GMFolder"
-            }
-        },
-        {
-            "Key": "4cd52ac7-728d-484c-b91e-dc6bebf58090",
-            "Value": {
-                "id": "3af2ed00-f4cc-4e5f-afd3-6ecba8f76138",
-                "resourcePath": "datafiles_yy\\Objects\\office_lamp.dat.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
-            "Key": "4e375ddf-b83b-4e94-8134-74ce469d7753",
-            "Value": {
-                "id": "fa382aa3-4678-491a-a1e6-5e4bd0fc5d1a",
-                "resourcePath": "datafiles_yy\\Objects\\movie_camera.dat.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -311,14 +343,6 @@
             }
         },
         {
-            "Key": "5823d714-83aa-422c-b281-98f887112eb2",
-            "Value": {
-                "id": "c41c5996-bbb3-413a-a2c4-c96705e306a4",
-                "resourcePath": "datafiles_yy\\Objects\\typewriter.dat.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "5988462a-2106-43ac-b9f9-197228780943",
             "Value": {
                 "id": "fde5131d-820c-4c91-b9c8-2e906e24e01d",
@@ -340,14 +364,6 @@
                 "id": "f5d23197-a4ca-4cb8-a1a3-bdd58ef478dc",
                 "resourcePath": "notes\\Art Style Modeling.yy",
                 "resourceType": "GMNotes"
-            }
-        },
-        {
-            "Key": "5bba336a-dffc-42b4-a359-677e02562fa1",
-            "Value": {
-                "id": "4bf0331b-aa5d-441b-91e5-a210d1b28b46",
-                "resourcePath": "datafiles_yy\\Objects\\vinyl.dat.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -431,14 +447,6 @@
             }
         },
         {
-            "Key": "73819d01-304d-4711-9c8e-afc708fd3120",
-            "Value": {
-                "id": "8083c290-05ca-4d5f-87c1-2133b1ec8c51",
-                "resourcePath": "datafiles_yy\\Level Building\\wall_deco\\med.dat.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "75858ae6-e8e6-4cec-9253-b535dcfc50d7",
             "Value": {
                 "id": "f5092166-d341-41f2-995b-79d640f8e0d8",
@@ -452,14 +460,6 @@
                 "id": "fd345291-bd0e-44b0-a403-77579ca33c76",
                 "resourcePath": "objects\\Delete_Protected\\Delete_Protected.yy",
                 "resourceType": "GMObject"
-            }
-        },
-        {
-            "Key": "76ae75f3-4bc5-4213-947e-5ce092dc7863",
-            "Value": {
-                "id": "41987104-e1ea-4eb2-96c6-0b1dc7311cdc",
-                "resourcePath": "datafiles_yy\\Level Building\\wall_bumper.dat.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -479,6 +479,14 @@
             }
         },
         {
+            "Key": "80e4c5b3-40dc-432c-940f-f7c6003eea11",
+            "Value": {
+                "id": "bb96f053-26bc-48f2-aff1-f7c579511861",
+                "resourcePath": "datafiles_yy\\Level Building\\wall_bumper.dat.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "8427047f-9ef8-4c77-89f3-9c20623d07b6",
             "Value": {
                 "id": "c6622189-32ef-4aca-a749-a08c581e92be",
@@ -495,14 +503,6 @@
             }
         },
         {
-            "Key": "84e420cc-176e-4097-a178-e47276dd5543",
-            "Value": {
-                "id": "f33e28a6-a53b-444a-96bc-0fb87ba4c133",
-                "resourcePath": "datafiles_yy\\Level Building\\floor.dat.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "8999b813-0cfb-4210-a6a2-a2a8ee925765",
             "Value": {
                 "id": "2198904a-2745-417b-8466-290cba7a0b83",
@@ -516,6 +516,14 @@
                 "id": "44abbe08-8f6d-48e1-bb68-ca1e9b24493d",
                 "resourcePath": "objects\\Scale\\Scale.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "8c56b8b7-deb4-4ea7-aa3b-2a5b75eb93d2",
+            "Value": {
+                "id": "12b05d04-d9a8-46ee-b904-b331bec8ad53",
+                "resourcePath": "datafiles_yy\\Objects\\movie_camera.dat.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -639,22 +647,6 @@
             }
         },
         {
-            "Key": "ab2ef621-78d5-41ee-8ede-6e1b207f9317",
-            "Value": {
-                "id": "017dbff0-2d9a-49e4-8e23-659304783fb3",
-                "resourcePath": "datafiles_yy\\cube.dat.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
-            "Key": "abb43582-d98d-4c27-bf06-9d834cd83f32",
-            "Value": {
-                "id": "b02ac4a8-ce9b-4576-ad1f-93f2c7e76be5",
-                "resourcePath": "datafiles_yy\\Objects\\vinyl_highlights.dat.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "b2519cfc-bf7d-452a-bbc2-934f51f58ed4",
             "Value": {
                 "id": "60740be7-b806-449b-8c5b-a8441993253b",
@@ -671,6 +663,14 @@
             }
         },
         {
+            "Key": "b288a951-f0d5-4d25-803f-d97bfd6b5dcf",
+            "Value": {
+                "id": "d6e45572-57b7-46bf-b43c-8339e87207f9",
+                "resourcePath": "datafiles_yy\\Objects\\office_lamp.dat.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "b375e00b-c6b3-4839-b585-fef935f60205",
             "Value": {
                 "id": "acc238cb-c1e2-4a44-b78c-349e9855335b",
@@ -679,19 +679,19 @@
             }
         },
         {
-            "Key": "b7347cdc-514d-496c-9c48-f1d8b6a89547",
-            "Value": {
-                "id": "7291eae1-c968-4608-92e8-f8b37afdd3fc",
-                "resourcePath": "datafiles_yy\\Level Building\\wall_wainscoting.dat.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "b8126de8-bfa9-49b4-be7c-0fc18ed0f761",
             "Value": {
                 "id": "d45f288a-afcc-4546-8ebf-30f758070c91",
                 "resourcePath": "views\\b8126de8-bfa9-49b4-be7c-0fc18ed0f761.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "be92499c-6ab6-493f-a6ae-1c69f6aabe21",
+            "Value": {
+                "id": "e387c249-7e9e-467b-ad96-0236d3a88ddf",
+                "resourcePath": "datafiles_yy\\Level Building\\wall_deco\\med.dat.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -708,14 +708,6 @@
                 "id": "97d19e39-46d0-46cb-92f1-59eac968a173",
                 "resourcePath": "views\\c072193e-6636-471c-8fd7-ba935521acdd.yy",
                 "resourceType": "GMFolder"
-            }
-        },
-        {
-            "Key": "c1dd9656-1a16-4899-aae1-b2837f79a98c",
-            "Value": {
-                "id": "2a49eebb-2921-4571-9628-285c6c5e14ad",
-                "resourcePath": "datafiles_yy\\Objects\\vinyl_player.dat.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -879,6 +871,14 @@
             }
         },
         {
+            "Key": "e2792523-6168-4d89-8c4b-c91ee6ac6f4a",
+            "Value": {
+                "id": "4603f1b2-e4dc-494b-97e7-37b08010b08b",
+                "resourcePath": "datafiles_yy\\Objects\\vinyl.dat.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "e2db03f7-aa77-42f8-b3d1-bcb2f71d1511",
             "Value": {
                 "id": "f18bb3fe-0683-4b94-96df-79392cb13002",
@@ -919,6 +919,14 @@
             }
         },
         {
+            "Key": "ee08af9a-bdda-48a4-854a-cf7cf540b4cc",
+            "Value": {
+                "id": "471cd353-fc66-4f76-bbfc-eb13187db6cf",
+                "resourcePath": "datafiles_yy\\Objects\\desk_med_class.dat.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "f1df0ddb-2821-4ca7-96c8-124d9c61e38f",
             "Value": {
                 "id": "7f69d5aa-b432-4884-8c55-4a4f93e0ad94",
@@ -940,14 +948,6 @@
                 "id": "205299c2-7a6a-4e0c-8ded-0f80071a4d79",
                 "resourcePath": "views\\f56a52fd-9bb6-4d68-afc8-c33855e15a4a.yy",
                 "resourceType": "GMFolder"
-            }
-        },
-        {
-            "Key": "f83638c0-6e1e-4f1a-b86b-1e7116a58e68",
-            "Value": {
-                "id": "3fa71481-a2f2-4b1f-b666-76fc95683b9e",
-                "resourcePath": "datafiles_yy\\plane.dat.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {

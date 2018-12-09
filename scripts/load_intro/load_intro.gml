@@ -142,8 +142,6 @@ identity = Game.tags[|query[0]]; identity[|index[0]] = vertex_create_buffer_from
 identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.X = 3;
 identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Y = -1.5;
 
-identity = Game.tags[|query[2]]; identity = identity[|index[2]]; identity.yaw = -pi;
-
 identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
 visibles[array_length_1d(visibles)] = index[6];

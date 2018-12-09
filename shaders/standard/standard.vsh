@@ -44,9 +44,9 @@ return;
 //optimize uniforms with textures
 //local - extract normal and then proceed
 vec3 local = abs(in_Position);
-out_Normal = floor(local/100.0);
 vec3 sign = in_Position/local;
-local = (local - 100.0*out_Normal)*sign;
+out_Normal = floor(local/1000.0);
+local = (local - 1000.0*out_Normal)*sign;
 out_Normal = out_Normal/128.0 - vec3(1.0);
 local *= scale;
 rotate(local.xy, angle.z);
