@@ -14,19 +14,22 @@
 
 -----------------------------------------------
 Pre-Production
-  Renderer----------------------------ETA ~10 mo
-		-create test scene
-    -normal detection or normal rendering and edge detection
-    -post process
-    -uniform_buffers
+  Renderer----------------------------ETA June 2019
+	-create test scene
     -frustrum culling
-		-omni lights
-    -shadows
-
-		-mirrors
-    -software renderer
-    -splitscreen
+	-lod
+    -uniform buffers
     -animation
+	-mirrors
+
+	-omni lights
+	-shadow casting spot lights
+
+	-post process
+		-edge detection
+---------------------
+    -software renderer?
+    -splitscreen
     -task system
 		-spatial hierarchy (contains locations, content groups and objects) (locations can contain content groups and objects, content groups can contain objects)
 

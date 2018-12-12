@@ -18,3 +18,12 @@ for(var i = 0; i < 8; i++)
 }
 
 alpha += delta_time/5000000;
+
+var rotation = tags[|Rotation]; rotation = rotation[|0];
+rotation.yaw += (previous_x - mouse_x)/(delta_time/1000000)/4000;
+rotation.pitch += (previous_y - mouse_y)/(delta_time/1000000)/4000;
+if(rotation.pitch > 3.1415926535897932384626433832795/2) rotation.pitch = 3.1415926535897932384626433832795/2;
+if(rotation.pitch < -3.1415926535897932384626433832795/2) rotation.pitch = -3.1415926535897932384626433832795/2;
+
+var index = tags[|Rotation]; index = index[|5];
+index.yaw = alpha*2;

@@ -1,7 +1,7 @@
 var position = tags[|Position]; position = position[|0];
 shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.X, position.Y, position.Z);
 var rotation = tags[|Rotation]; rotation = rotation[|0];
-shader_set_uniform_f(shader_get_uniform(standard, "camera_angle"), rotation.roll, rotation.pitch, rotation.yaw+alpha);
+shader_set_uniform_f(shader_get_uniform(standard, "camera_angle"), rotation.roll, rotation.pitch, rotation.yaw);
 
 
 //#include "visibility_culling.txt"

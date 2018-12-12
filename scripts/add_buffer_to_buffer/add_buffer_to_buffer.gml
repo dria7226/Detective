@@ -1,8 +1,13 @@
 //add_buffer_to_buffer(buffer, model_buffer, offset)
 
-buffer_seek(argument1, buffer_seek_start,0);
+var arg0_size = buffer_get_size(argument0);
+var arg1_size = buffer_get_size(argument1);
 
-var no_of_vertices = buffer_get_size(argument1)/(Game.format_size*4);
+buffer_resize(argument0, arg0_size + arg1_size);
+buffer_seek(argument0, buffer_seek_start, arg0_size);
+buffer_seek(argument1, buffer_seek_start, 0);
+
+var no_of_vertices = arg1_size/(Game.format_size*4);
 
 repeat(no_of_vertices)
 {
@@ -10,11 +15,11 @@ repeat(no_of_vertices)
  for(i = 0; i < 3; i++)
  {
   var position = buffer_read(argument1, buffer_f32);
-  var normal = position/1000.0;
+  var normal = position/100.0;
   if(position < 0)
-   normal = 1000.0*ceil(normal);
+   normal = 100.0*ceil(normal);
   else
-   normal = 1000.0*floor(normal);
+   normal = 100.0*floor(normal);
 
   position = position - normal + argument2[i];
 

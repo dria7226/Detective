@@ -1,8 +1,13 @@
 //add_buffer_to_buffer(buffer, model_buffer, offset)
 
-buffer_seek(argument1, buffer_seek_start,0);
+var arg0_size = buffer_get_size(argument0);
+var arg1_size = buffer_get_size(argument1);
 
-var no_of_vertices = buffer_get_size(argument1)/(Game.format_size*4);
+buffer_resize(argument0, arg0_size + arg1_size);
+buffer_seek(argument0, buffer_seek_start, arg0_size);
+buffer_seek(argument1, buffer_seek_start, 0);
+
+var no_of_vertices = arg1_size/(Game.format_size*4);
 
 repeat(no_of_vertices)
 {

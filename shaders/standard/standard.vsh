@@ -45,8 +45,8 @@ return;
 //local - extract normal and then proceed
 vec3 local = abs(in_Position);
 vec3 sign = in_Position/local;
-out_Normal = floor(local/1000.0);
-local = (local - 1000.0*out_Normal)*sign;
+out_Normal = floor(local/100.0);
+local = (local - 100.0*out_Normal)*sign;
 out_Normal = out_Normal/128.0 - vec3(1.0);
 local *= scale;
 rotate(local.xy, angle.z);
@@ -67,7 +67,7 @@ gl_Position.xy = local.yz*near_clip;
 gl_Position.x *= -screen_ratio;
 gl_Position.w = local.x;
  }
-if(vertex_mode == 3)
+if(vertex_mode == 2)
 {
  out_Color = vec4(id, 1.0);
  out_TexCoord = vec2(0.0);
@@ -80,7 +80,7 @@ else
  if(in_TexCoord == vec2(0.0))
  {
   if(out_Color == vec4(1.0))
-   out_Color *= vec4(col, 1.0);
+   out_Color = vec4(col, 1.0);
   if(grayscale != 1.0)
   {
    vec4 intensity = (out_Color.rgba + out_Color.gbra + out_Color.brga)/3.0;
