@@ -1,25 +1,9 @@
 //NOTE: EVERYTHING NEEDS TO BE TAGGED AS DELETE PROTECTED
 
-//load main camera
-var query = [Camera, Position, Rotation, "Objects/movie_camera.dat", VBO];
-
-var index = create_identity(query);
-
-var vbo = Game.tags[|query[4]]; vbo = vbo[|index[4]];
-var model = Game.tags[|Model]; model = model[|index[3]];
-vbo = vertex_create_buffer_from_buffer(model, Game.format);
-
-var position = Game.tags[|query[1]]; position = position[|index[1]];
-position.X = 4.5;
-position.Y = -9.0;
-position.Z = 5.5;
-
-//load level
-
 	//create room
-index = create_identity(["Level Building/wall_wainscoting.dat"]);
+var index = create_identity(["Level Building/wall_wainscoting.dat"]);
 
-model = Game.tags[|Model]; model = model[|index[0]];
+var model = Game.tags[|Model]; model = model[|index[0]];
 
 var wall_segment = buffer_create(buffer_get_size(model), buffer_grow, 1);
 
@@ -40,7 +24,7 @@ for(var i = 1; i < 3; i++)
 
 buffer_delete(wall_segment);
 
-query = [VBO, Position, Rotation, Color, Grayscale, Visible];
+var query = [VBO, Position, Rotation, Color, Grayscale, Visible];
 
 index = create_identity(query);
 

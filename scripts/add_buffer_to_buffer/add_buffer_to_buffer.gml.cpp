@@ -14,18 +14,20 @@ repeat(no_of_vertices)
 	//Position 3x4 bytes
 	for(i = 0; i < 3; i++)
 	{
-		var position = buffer_read(argument1, buffer_f32);
-		var normal = position/COMPRESSED_NORMAL_POSITION;
-		if(position < 0)
-			normal = COMPRESSED_NORMAL_POSITION*ceil(normal);
-		else
-			normal = COMPRESSED_NORMAL_POSITION*floor(normal);
+		// var position = buffer_read(argument1, buffer_f32);
+		// var normal = position/COMPRESSED_NORMAL_POSITION;
+		// if(position < 0)
+		// 	normal = ceil(normal)*COMPRESSED_NORMAL_POSITION;
+		// else
+		// 	normal = floor(normal)*COMPRESSED_NORMAL_POSITION;
+		//
+		// position = position - normal + argument2[i];
+		//
+	 	// position += sign(position)*abs(normal);
+		//
+	 	// buffer_write(argument0, buffer_f32, position);
 
-		position = position - normal + argument2[i];
-
-		position = position*(abs(normal/position) + 1);
-
-		buffer_write(argument0, buffer_f32, position);
+		buffer_write(argument0, buffer_f32, buffer_read(argument1,buffer_f32) + argument2[i]);
 	}
 
 	//Color 1x4 bytes

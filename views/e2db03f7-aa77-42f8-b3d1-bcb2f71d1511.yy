@@ -5,7 +5,8 @@
     "name": "e2db03f7-aa77-42f8-b3d1-bcb2f71d1511",
     "children": [
         "f1df0ddb-2821-4ca7-96c8-124d9c61e38f",
-        "9fa9776a-d613-4274-8aa2-5f1a7f7e7add"
+        "9fa9776a-d613-4274-8aa2-5f1a7f7e7add",
+        "69e02005-1ef4-4797-bebe-83ece12bca85"
     ],
     "filterType": "GMScript",
     "folderName": "Chunk Loading",

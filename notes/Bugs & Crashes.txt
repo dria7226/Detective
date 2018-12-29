@@ -2,5 +2,6 @@ Crashes
 - nonexisting segment at end of path (upon reaching end of path) get_point_on_path()
 
 Bugs
-- mrt aliasing artifacts
 - missing vertices in add_buffer_to_buffer
+- finish working on rotate_model
+- depth encoding is wrong

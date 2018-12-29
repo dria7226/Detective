@@ -1,5 +1,5 @@
 {
-    "id": "561bef7e-8c54-402a-9fda-938e19435abc",
+    "id": "bf8f63fd-7191-45a1-ac1f-1039d9ea2ae6",
     "modelName": "GMIncludedFile",
     "mvc": "1.0",
     "name": "office_lamp.dat",
