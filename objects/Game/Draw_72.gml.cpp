@@ -25,5 +25,5 @@ rotation.pitch += (previous_y - mouse_y)/(delta_time/1000000)/4000;
 if(rotation.pitch > pi/2) rotation.pitch = pi/2;
 if(rotation.pitch < -pi/2) rotation.pitch = -pi/2;
 
-var index = tags[|Rotation]; index = index[|5];
-index.yaw = alpha*2;
+//var index = tags[|Rotation]; index = index[|6];
+//index.yaw = alpha*2;

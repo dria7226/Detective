@@ -24,14 +24,14 @@ alpha = 0;
 
 load_main_camera();
 
-//load_intro();
+load_intro();
 
-#include "simple_test_scene.txt"
+//#include "simple_test_scene.txt"
 
-//completely load main menu
-//load_main_menu();
+//completely load hub
+//load_hub();
 
-//move camera from vinyl to typewriter
+//move camera from vinyl to character
 
 
 //load common identities in module pool

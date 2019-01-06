@@ -8,7 +8,7 @@
         "cc87e5bc-a89f-4567-9154-f1c1848369a7"
     ],
     "filterType": "GMScript",
-    "folderName": "Main Menu",
+    "folderName": "Hub",
     "isDefaultView": false,
     "localisedFolderName": ""
 }
