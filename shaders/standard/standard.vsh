@@ -63,8 +63,8 @@ rotate(local.xz, -camera_angle.y);
 rotate(local.yz, -camera_angle.x);
 //project
 depth = length(local.xyz);
-if(local.x < 0.0)
-    depth *= abs(local.x) + 1.0;
+// if(local.x < 0.0)
+//     depth *= abs(local.x) + 1.0;
 gl_Position.z = depth/far_clip*local.x;
 gl_Position.xy = local.yz*near_clip;
 gl_Position.x *= -screen_ratio;

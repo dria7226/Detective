@@ -1,31 +1,45 @@
 //add_buffer_to_buffer(buffer, model_buffer, offset)
 
+if(argument0 == argument1)
+{
+ log(ERROR, "Cant add buffer to itself.");
+ return;
+}
+
 var arg0_size = buffer_get_size(argument0);
 var arg1_size = buffer_get_size(argument1);
 
 buffer_resize(argument0, arg0_size + arg1_size);
+buffer_seek(argument0, buffer_seek_start, arg0_size);
+buffer_seek(argument1, buffer_seek_start, 0);
 
-buffer_copy(argument1, 0, arg1_size, argument0, arg0_size);
+var no_of_vertices = arg1_size/(Game.format_size*4);
 
-for(var i = arg0_size; i < arg0_size + arg1_size; i += Game.format_size*4)
+repeat(no_of_vertices)
 {
- for(var j = 0; j < 3; j++)
+ for(var i = 0; i < 3; i++)
  {
-  var position = buffer_peek(argument0, i + j*4, buffer_f32);
-
+  var position = buffer_read(argument1, buffer_f32);
   var normal = position/10.0;
   if(position < 0)
    normal = ceil(normal)*10.0;
   else
    normal = floor(normal)*10.0;
 
-  position = position - normal + argument2[j];
+  position = position - normal + argument2[i];
 
   var s = sign(position);
   s += (s == 0);
 
-   position += s*abs(normal);
+  position += s*abs(normal);
 
-  buffer_poke(argument0, i + j*4, buffer_f32, position);
+   buffer_write(argument0, buffer_f32, position);
  }
+
+ //Color 1x4 bytes
+ buffer_write(argument0, buffer_f32, buffer_read(argument1, buffer_f32));
+
+ //Texture Coordinates 2x4 bytes
+ buffer_write(argument0, buffer_f32, buffer_read(argument1, buffer_f32));
+ buffer_write(argument0, buffer_f32, buffer_read(argument1, buffer_f32));
 }

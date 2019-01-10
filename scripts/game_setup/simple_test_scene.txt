@@ -4,10 +4,10 @@ var scene = buffer_create(buffer_get_size(model[|other_plane[0]]), buffer_grow, 
 
 buffer_copy(model[|other_plane[0]], 0, buffer_get_size(model[|other_plane[0]]), scene, 0);
 
-add_buffer_to_buffer(scene, model[|other_plane[0]], [0.1,2,0.1]);
-add_buffer_to_buffer(scene, model[|other_plane[0]], [2,0.1,0.1]);
-add_buffer_to_buffer(scene, model[|other_plane[0]], [0.1,0.1,2]);
-add_buffer_to_buffer(scene, model[|other_plane[0]], [2,2,1]);
+add_buffer_to_buffer(scene, get_rotated_model(model[|other_plane[0]], 0), [0.1,2,0.1]);
+add_buffer_to_buffer(scene, get_rotated_model( model[|other_plane[0]], 30), [2,0.1,0.1]);
+add_buffer_to_buffer(scene, get_rotated_model(model[|other_plane[0]], 60), [0.1,0.1,2]);
+add_buffer_to_buffer(scene, get_rotated_model(model[|other_plane[0]], 90), [2,2,1]);
 
 export_model_to_stl(scene, "floor_before.stl");
 
