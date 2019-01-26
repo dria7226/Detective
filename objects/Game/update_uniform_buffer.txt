@@ -1,0 +1,27 @@
+var statics = tags[|Static];
+var total_statics = ds_list_size(statics);
+var total_new_statics = ds_list_size(new_statics);
+
+surface_set_target(surfaces[UNIFORM_BUFFER]);
+
+SET_UNIFORM_I("vertex_mode", VERTEX_FLAT)
+SET_UNIFORM_I("fragment_mode", FRAGMENT_UNIFORM_ENCODING)
+
+var next_candidate = 0;
+for(var i = 0; i < total_new_statics; i++)
+{
+    for(var j = next_candidate;;j++)
+    {
+        //if occupied go to next
+        if(j < total_statics && statics[|j] != -1) continue;
+
+        statics[|j] = new_statics[|i];
+        update_static(j);
+        next_candidate = j+1;
+        break;
+    }
+}
+
+surface_reset_target();
+
+ds_list_clear(new_statics);

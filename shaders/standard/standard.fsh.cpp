@@ -8,6 +8,8 @@ void main()
 
   #include "mrt_fragment.txt"
 
+  #include "uniform_encoding.txt"
+
   //#include "edge_detection.txt"
 
   // #include "occlusion_first_pass.txt"

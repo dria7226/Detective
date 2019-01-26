@@ -1,13 +1,13 @@
+
 //check surfaces and clear them
 shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
 shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
-for(var i = 0; i < 8; i++)
+for(var i = 0; i < 9; i++)
 {
  if(!surface_exists(surfaces[i]))
  {
   var scale = surface_info[i];
   surfaces[i] = surface_create(floor(scale[0]*window_get_width()), floor(scale[1]*window_get_height()));
-
    //cache texture pointers for the surfaces
   surface_texture_pointers[i] = surface_get_texture(surfaces[i]);
  }

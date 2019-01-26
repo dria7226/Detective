@@ -1,8 +1,8 @@
 {
-    "id": "8d613d5a-8bb7-49e2-9ee6-748d809316e5",
+    "id": "8358721d-11ae-4099-9015-577b3a157567",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "calculate_bb",
+    "name": "update_static",
     "IsCompatibility": false,
     "IsDnD": false
 }

@@ -1,7 +1,9 @@
-
 //NOTE: EVERYTHING NEEDS TO BE TAGGED AS DELETE PROTECTED
- //create room
 
+	//create room
+#define COUNT_STATIC visibles_static_count++;
+#undef COUNT_STATIC
+#define COUNT_STATIC
 var index = create_identity(["Level Building/wall_wainscoting.dat"]);
 
 var model = Game.tags[|Model]; model = model[|index[0]];
@@ -27,7 +29,7 @@ var wall = buffer_create(buffer_get_size(wall_segment), buffer_grow, 1);
 buffer_copy(wall_segment, 0, buffer_get_size(wall_segment), wall, 0);
 
 for(var i = 1; i < 3; i++)
- add_buffer_to_buffer(wall, wall_segment, [3.0*i, 0,0]);
+	add_buffer_to_buffer(wall, wall_segment, [3.0*i, 0,0]);
 
 buffer_delete(wall_segment);
 
@@ -48,7 +50,7 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-visibles[array_length_1d(visibles)] = index[6]; visibles_static_count++;
+ADD_IDENTITY_TO_VISIBLES(index[6])
 
 //
 index = create_identity(query);
@@ -66,7 +68,7 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 0.5;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-visibles[array_length_1d(visibles)] = index[6]; visibles_static_count++;
+ADD_IDENTITY_TO_VISIBLES(index[6])
 //
 index = create_identity(query);
 
@@ -76,7 +78,7 @@ identity = Game.tags[|query[1]]; identity = identity[|index[1]];
 identity.X = -3/2;
 identity.Y = -3*3 + 3/2;
 
-identity = Game.tags[|query[2]]; identity = identity[|index[2]]; identity.yaw = 3.1415926535897932384626433832795/2;
+identity = Game.tags[|query[2]]; identity = identity[|index[2]]; identity.yaw = pi/2;
 
 identity = Game.tags[|query[3]]; identity = identity[|index[3]];
 identity.R = 0.2;
@@ -87,9 +89,9 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 0.0;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-visibles[array_length_1d(visibles)] = index[6]; visibles_static_count++;
+ADD_IDENTITY_TO_VISIBLES(index[6])
 
- //floor
+	//floor
 index = create_identity(["Level Building/floor.dat"]);
 
 model = Game.tags[|Model]; model = model[|index[0]];
@@ -100,7 +102,7 @@ buffer_copy(model, 0, buffer_get_size(model), Floor, 0);
 
 for(var i = 1; i < 3; i++)
 {
- add_buffer_to_buffer(Floor, model, [i*3,0,0]);
+	add_buffer_to_buffer(Floor, model, [i*3,0,0]);
 }
 
 var temp = buffer_create(buffer_get_size(Floor), buffer_fixed, 1);
@@ -108,7 +110,7 @@ buffer_copy(Floor, 0, buffer_get_size(Floor), temp, 0);
 
 for(var i = 0; i < 3; i++)
 {
- add_buffer_to_buffer(Floor, temp, [0, -i*3, 0]);
+	add_buffer_to_buffer(Floor, temp, [0, -i*3, 0]);
 }
 
 index = create_identity(query);
@@ -121,7 +123,7 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-visibles[array_length_1d(visibles)] = index[6]; visibles_static_count++;
+ADD_IDENTITY_TO_VISIBLES(index[6])
 
 index = create_identity(query);
 
@@ -134,15 +136,15 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-visibles[array_length_1d(visibles)] = index[6]; visibles_static_count++;
+ADD_IDENTITY_TO_VISIBLES(index[6])
 
- //ceiling
+	//ceiling
 //var ceiling = buffer_create(1, buffer_grow, 1);
 
 //index = create_identity(["Level Building/ceiling.dat"]);
 
 
- //add items inside
+	//add items inside
 
 //index = create_identity(["Objects/vinyl_player.dat", VBO]);
 
@@ -165,7 +167,7 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-visibles[array_length_1d(visibles)] = index[6]; visibles_static_count++;
+ADD_IDENTITY_TO_VISIBLES(index[6])
 
 //
 
@@ -187,10 +189,10 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-visibles[array_length_1d(visibles)] = index[6]; visibles_static_count++;
+ADD_IDENTITY_TO_VISIBLES(index[6])
 
-
-
+#undef COUNT_STATIC
+#define COUNT_STATIC
 
 //load occlusion groups
 

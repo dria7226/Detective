@@ -1,3 +1,6 @@
+- make remove_static
+- make make_static and make_dynamic
+- add statics to load_intro
 - implement task system and finish occlussion system
 	- finish arranging the scene
 	- decide what the occlusion tree will look like
@@ -8,7 +11,7 @@
 	- rewrite load_intro into separate, reusable scripts
 	- rewrite load_intro as sub-task ds_list
 - implement occlusion generation as part of load_intro
-	-
+	- 
 - implement back-referenced tags ???
 - create_identity() with tag reference OR new tag (add another argument: an array of reffered tag indices, -1 meaning to create a new tag) (4 different object types: regular, omni_lights, spot_lights and mirrors)
 
@@ -46,6 +49,7 @@ Cruise Ship         |
 Mountain Resort     |
 City                |
 Mansion             |
+Fashion DLC			|
 
 Testing
 

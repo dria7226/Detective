@@ -1,19 +1,33 @@
+
 var position = tags[|Position]; position = position[|0];
 shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.X, position.Y, position.Z);
 var rotation = tags[|Rotation]; rotation = rotation[|0];
 shader_set_uniform_f(shader_get_uniform(standard, "camera_angle"), rotation.roll, rotation.pitch, rotation.yaw);
 
-
 //#include "visibility_culling.txt"
 //#include "mirrors.txt"
-for(var i = 0; i < array_length_1d(visibles); i++)
+surface_set_target(surfaces[1]);
+shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 0);
+shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 0);
+texture_set_stage(uniform_sampler, surface_texture_pointers[0]);
+for(var i = 0; i < visibles_static_count; i++)
 {
-surface_set_target(surfaces[0]);
+shader_set_uniform_i(shader_get_uniform(standard, "id"), i);
+var query = [VBO];
+var index = search_tags(visibles[i], query);
+//#include "pick_and_render_lod.txt"
+if(index[0] != -1)
+{
+  id_tag = tags[|query[0]];
+  vertex_submit(id_tag[|index[0]], pr_trianglelist, 0);
+}
+}
+shader_set_uniform_i(shader_get_uniform(standard, "id"), 1000.0*1000.0);
+for(var i = visibles_static_count; i < array_length_1d(visibles); i++)
+{
 //NOTES
 //account for animation as well
 //account for mirrors
-shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 0);
-shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 0);
 var query = [Position, Rotation, Scale, Color, VBO];
 var index = search_tags(visibles[i], query);
 if(index[0] != -1)
@@ -45,16 +59,13 @@ if(index[3] != -1)
 }
 else
   shader_set_uniform_f(shader_get_uniform(standard, "color"), 0,0,0);
+//#include "pick_and_render_lod.txt"
 if(index[4] != -1)
 {
   id_tag = tags[|query[4]];
   vertex_submit(id_tag[|index[4]], pr_trianglelist, 0);
 }
-//if(index[0] == -1 || index[1] == -1) continue;
-//SET_UNIFORM_F("id", PACK_32_BITS(index[0]))
-
-//#include "pick_and_render_lod.txt"
-
+}
 surface_reset_target();
 //#include "edge.txt"
 //#include "collect_lights.txt"
@@ -65,20 +76,16 @@ surface_reset_target();
 //#include "post_processing.txt"
 shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
 shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
-surface_set_target(surfaces[6]);
-var scale = surface_info[0];
-draw_surface_ext(surfaces[0],0,0, 1/scale[0], 1/scale[1],0,c_white,1.0);
+surface_set_target(surfaces[5]);
+var scale = surface_info[1];
+draw_surface_ext(surfaces[1],0,0, 1/scale[0], 1/scale[1],0,c_white,1.0);
 surface_reset_target();
-}
 //if(IS_SPLITSCREEN)
 //{
 //  #define FINAL_SURFACE surfaces[PLAYER_TWO]
-  //#include "visibility_culling.txt"
-  //#include "mirrors.txt"
-//  ITERATE_VISIBLES
-//  {
-//    #include "render_scene.txt"
-//  }
+//  #include "visibility_culling.txt"
+//  #include "mirrors.txt"
+//  #include "render_scene.txt"
 //}
 shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
 shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
@@ -88,4 +95,4 @@ shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
 //  draw_surface_part(surface[PLAYER_TWO],0,0, window_width*SPLITSCREEN_HORIZONTAL_RATIO, window_height/2, 0, window_height/2);
 //}
 //else
-    draw_surface(surfaces[6],0,0);
+    draw_surface(surfaces[5],0,0);
