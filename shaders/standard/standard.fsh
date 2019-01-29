@@ -64,6 +64,82 @@ if(fragment_mode == 0)
   }
   return;
 }
+if(fragment_mode == 6)
+{
+    //calculate target type
+    float target_type = mod(gl_FragCoord.x - 0.5, 3.0) + mod(gl_FragCoord.y - 0.5, 3.0)*3.0;
+    //offset
+    if(target_type == 0.0)
+    {
+        if(pass_offset.x > 10560.0/2.0) pass_offset.x = 10560.0/2.0;
+        if(pass_offset.x < -10560.0/2.0) pass_offset.x = -10560.0/2.0;
+        gl_FragColor = float_to_vec4((pass_offset.x - (-10560.0/2.0))/10560.0);
+        return;
+    }
+    if(target_type == 1.0)
+    {
+        if(pass_offset.y > 10560.0/2.0) pass_offset.y = 10560.0/2.0;
+        if(pass_offset.y < -10560.0/2.0) pass_offset.y = -10560.0/2.0;
+        gl_FragColor = float_to_vec4((pass_offset.y - (-10560.0/2.0))/10560.0);
+        return;
+    }
+    if(target_type == 2.0)
+    {
+        if(pass_offset.z > 10560.0/2.0) pass_offset.z = 10560.0/2.0;
+        if(pass_offset.z < -10560.0/2.0) pass_offset.z = -10560.0/2.0;
+        gl_FragColor = float_to_vec4((pass_offset.y - (-10560.0/2.0))/10560.0);
+        return;
+    }
+    //scale
+    if(target_type == 3.0)
+    {
+        if(pass_scale.x > 127.0) pass_scale.x = 127.0;
+        if(pass_scale.x < -128.0) pass_scale.x = -128.0;
+        gl_FragColor = float_to_vec4((pass_scale.x - (-128.0))/255.0);
+        return;
+    }
+    if(target_type == 4.0)
+    {
+        if(pass_scale.y > 127.0) pass_scale.y = 127.0;
+        if(pass_scale.y < -128.0) pass_scale.y = -128.0;
+        gl_FragColor = float_to_vec4((pass_scale.y - (-128.0))/255.0);
+        return;
+    }
+    if(target_type == 5.0)
+    {
+        if(pass_scale.z > 127.0) pass_scale.z = 127.0;
+        if(pass_scale.z < -128.0) pass_scale.z = -128.0;
+        gl_FragColor = float_to_vec4((pass_scale.z - (-128.0))/255.0);
+        return;
+    }
+    //color and grayscale
+    if(target_type == 6.0)
+    {
+        gl_FragColor = vec4(col, gs);
+        return;
+    }
+    //angle
+    if(target_type == 7.0)
+    {
+        if(pass_angle.x > 3.1415926535897932384626433832795) pass_angle.x = 3.1415926535897932384626433832795;
+        if(pass_angle.x < -3.1415926535897932384626433832795) pass_angle.x = -3.1415926535897932384626433832795;
+        vec4 result = float_to_vec4((pass_angle.x - (-3.1415926535897932384626433832795))/(2.0*3.1415926535897932384626433832795));
+        gl_FragColor.rg = result.rg;
+        if(pass_angle.y > 3.1415926535897932384626433832795) pass_angle.y = 3.1415926535897932384626433832795;
+        if(pass_angle.y < -3.1415926535897932384626433832795) pass_angle.y = -3.1415926535897932384626433832795;
+        result = float_to_vec4((pass_angle.y - (-3.1415926535897932384626433832795))/(2.0*3.1415926535897932384626433832795));
+        gl_FragColor.ba = result.rg;
+        return;
+    }
+    if(target_type == 8.0)
+    {
+        if(pass_angle.z > 3.1415926535897932384626433832795) pass_angle.z = 3.1415926535897932384626433832795;
+        if(pass_angle.x < -3.1415926535897932384626433832795) pass_angle.z = -3.1415926535897932384626433832795;
+        gl_FragColor.rg = float_to_vec4((pass_angle.x - (-3.1415926535897932384626433832795))/(2.0*3.1415926535897932384626433832795)).rg;
+        gl_FragColor.ba = vec2(0.0);
+        return;
+    }
+}
   //#include "edge_detection.txt"
   // #include "occlusion_first_pass.txt"
   //
@@ -88,4 +164,26 @@ vec4 unpackColor(float f)
   enc = fract(enc);
   enc.rgb -= enc.gba/vec3(255.0);
   return enc;
+}
+//pack_id() dot(id, vec3(byte, byte*256.0, byte*256.0*256.0))
+//percentage to partial percentages
+vec4 float_to_vec4(float f)
+{
+    float max_value = 255.0/256.0;
+    float r = floor(f/max_value);
+    f -= r*max_value;
+    max_value /= 256.0;
+    float g = floor(f/max_value);
+    f -= g*max_value;
+    max_value /= 256.0;
+    float b = floor(f/max_value);
+    f -= b*max_value;
+    max_value /= 255.0;
+    float a = floor(f/max_value);
+    return vec4(r,g,b,a);
+}
+//partial percentages to percentage
+float vec4_to_float(vec4 color)
+{
+    return dot(vec3(color.r*255.0, color.g*255.0, color.b*255.0 + color.a), vec3(1.0)/vec3(256.0, 256.0*256.0, 256.0*256.0*256.0));
 }

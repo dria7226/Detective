@@ -22,13 +22,13 @@ if(index[0] != -1)
   vertex_submit(id_tag[|index[0]], pr_trianglelist, 0);
 }
 }
-shader_set_uniform_i(shader_get_uniform(standard, "id"), 1000.0*1000.0);
+shader_set_uniform_i(shader_get_uniform(standard, "id"), 10.0*10.0);
 for(var i = visibles_static_count; i < array_length_1d(visibles); i++)
 {
 //NOTES
 //account for animation as well
 //account for mirrors
-var query = [Position, Rotation, Scale, Color, VBO];
+var query = [Position, Rotation, Scale, Color, Grayscale, VBO];
 var index = search_tags(visibles[i], query);
 if(index[0] != -1)
 {
@@ -51,7 +51,6 @@ if(index[2] != -1)
 }
 else
   shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1,1,1);
-shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
 if(index[3] != -1)
 {
   id_tag = tags[|query[3]]; id_tag = id_tag[|index[3]];
@@ -59,11 +58,18 @@ if(index[3] != -1)
 }
 else
   shader_set_uniform_f(shader_get_uniform(standard, "color"), 0,0,0);
-//#include "pick_and_render_lod.txt"
 if(index[4] != -1)
 {
-  id_tag = tags[|query[4]];
-  vertex_submit(id_tag[|index[4]], pr_trianglelist, 0);
+    id_tag = tags[|query[4]];
+    shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), id_tag[|index[4]]);
+}
+else
+    shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
+//#include "pick_and_render_lod.txt"
+if(index[5] != -1)
+{
+  id_tag = tags[|query[5]];
+  vertex_submit(id_tag[|index[5]], pr_trianglelist, 0);
 }
 }
 surface_reset_target();
