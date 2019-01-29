@@ -29,6 +29,5 @@ shader_set_uniform_f(shader_get_uniform(standard, "far_clip"), 300.0); shader_se
 var occlusion_info = surface_info[7];
 shader_set_uniform_f(shader_get_uniform(standard, "a_pixel"), occlusion_info[0]/window_get_width(), occlusion_info[1]/window_get_height());
 uniform_sampler = shader_get_sampler_index(standard, "uniform_buffer");
-new_statics = ds_list_create();
 //load common texture
 //common_texture = sprite_get_texture(spr_common, 0);

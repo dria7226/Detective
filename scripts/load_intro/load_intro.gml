@@ -2,8 +2,6 @@
 //NOTE: EVERYTHING NEEDS TO BE TAGGED AS DELETE PROTECTED
  //create room
 
-
-
 var index = create_identity(["Level Building/wall_wainscoting.dat"]);
 
 var model = Game.tags[|Model]; model = model[|index[0]];
@@ -50,7 +48,7 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-visibles[array_length_1d(visibles)] = index[6];
+visibles[array_length_1d(visibles)] = index[6]; visibles_static_count++;
 
 //
 index = create_identity(query);
@@ -68,7 +66,7 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 0.5;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-visibles[array_length_1d(visibles)] = index[6];
+visibles[array_length_1d(visibles)] = index[6]; visibles_static_count++;
 //
 index = create_identity(query);
 
@@ -89,7 +87,7 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 0.0;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-visibles[array_length_1d(visibles)] = index[6];
+visibles[array_length_1d(visibles)] = index[6]; visibles_static_count++;
 
  //floor
 index = create_identity(["Level Building/floor.dat"]);
@@ -123,7 +121,7 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-visibles[array_length_1d(visibles)] = index[6];
+visibles[array_length_1d(visibles)] = index[6]; visibles_static_count++;
 
 index = create_identity(query);
 
@@ -136,7 +134,7 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-visibles[array_length_1d(visibles)] = index[6];
+visibles[array_length_1d(visibles)] = index[6]; visibles_static_count++;
 
  //ceiling
 //var ceiling = buffer_create(1, buffer_grow, 1);
@@ -167,7 +165,7 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-visibles[array_length_1d(visibles)] = index[6];
+visibles[array_length_1d(visibles)] = index[6]; visibles_static_count++;
 
 //
 
@@ -189,7 +187,7 @@ identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
 
 identity = Game.tags[|query[5]]; identity[|index[5]] = index[6];
 
-visibles[array_length_1d(visibles)] = index[6];
+visibles[array_length_1d(visibles)] = index[6]; visibles_static_count++;
 
 
 
