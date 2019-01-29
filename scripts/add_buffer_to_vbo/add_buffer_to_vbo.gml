@@ -1,5 +1,5 @@
-
 //add_buffer_to_vbo(buffer, model_buffer, offset)
+
 buffer_seek(argument1, buffer_seek_start, 0);
 
 for(var i = 0; i < buffer_get_size(argument1)/Game.format_size; i+=Game.format_size)

@@ -1,6 +1,8 @@
-
 initialize_tags();
+
 identities = ds_list_create();
+
+visibles = array_create(0);
 
 //
 var cube = create_identity(["cube.dat", VBO]);

@@ -1,9 +1,8 @@
-
 attribute vec3 in_Position; // (x,y,z)
 attribute vec4 in_Color; // (r,g,b)
 attribute vec2 in_TexCoord; // (u,v)
+
 uniform vec3 id;
-uniform sampler2D uniform_buffer;
 
 uniform int vertex_mode;
 
@@ -43,37 +42,6 @@ return;
  else
  {
 //optimize uniforms with textures
-if(id < 1000.0*1000.0)
-{
-    a_pixel = vec2(1.0/1000.0);
-    vec2 coordinates = vec2(mod(id, 1000.0), 0.0);
-    coordinates.y = (id/1000.0 - coordinates.x)/;
-    coordinates *= 3.0/1000.0;
-    //offset
-    vec4 reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(0.0,0.0));
-    offset.x = map_color_to_number_range(reading, -10560.0/2.0, 10560.0/2.0);
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(1.0,0.0));
-    offset.y = map_color_to_number_range(reading, -10560.0/2.0, 10560.0/2.0);
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(2.0,0.0));
-    offset.z = map_color_to_number_range(reading, -10560.0/2.0, 10560.0/2.0);
-    //color and grayscale
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(0.0,2.0));
-    color.rgb = reading.rgb;
-    grayscale = reading.a;
-    //scale
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(0.0,1.0));
-    scale.x = map_color_to_number_range(reading, -128.0, 127.0);
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(1.0,1.0));
-    scale.y = map_color_to_number_range(reading, -128.0, 127.0);
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(2.0,1.0));
-    scale.z = map_color_to_number_range(reading, -128.0, 127.0);
-    //angle
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(1.0,2.0));
-    angle.x = map_color_to_number_range(vec4(angle_reading.rg,0.0,0.0), -3.1415926535897932384626433832795, 3.1415926535897932384626433832795);
-    angle.y = map_color_to_number_range(vec4(angle_reading.ba, 0.0, 0.0), -3.1415926535897932384626433832795, 3.1415926535897932384626433832795);
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(2.0,2.0));
-    angle.z = map_color_to_number_range(vec4(angle_reading.rg, 0.0, 0.0), -3.1415926535897932384626433832795, 3.1415926535897932384626433832795);
-}
 //local - extract normal and then proceed
 vec3 local = abs(in_Position);
 vec3 sign = in_Position/local;
@@ -81,7 +49,6 @@ sign += vec3(1.0) - abs(sign);
 out_Normal = floor(local/10.0);
 local = (local - 10.0*out_Normal)*sign;
 out_Normal = out_Normal/128.0 - vec3(1.0);
-//snap vertices
 local *= scale;
 rotate(local.xy, angle.z);
 rotate(local.xz, angle.y);
@@ -96,6 +63,8 @@ rotate(local.xz, -camera_angle.y);
 rotate(local.yz, -camera_angle.x);
 //project
 depth = length(local.xyz);
+// if(local.x < 0.0)
+//     depth *= abs(local.x) + 1.0;
 gl_Position.z = depth/far_clip*local.x;
 gl_Position.xy = local.yz*near_clip;
 gl_Position.x *= -screen_ratio;

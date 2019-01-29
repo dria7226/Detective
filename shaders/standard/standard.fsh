@@ -1,8 +1,8 @@
-
 varying highp float depth;
 varying vec3 out_Normal;
 varying vec4 out_Color;
 varying vec2 out_TexCoord;
+
 uniform vec2 a_pixel;
 uniform sampler2D sampler_a;
 
