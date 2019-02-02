@@ -1,8 +1,9 @@
+
 attribute vec3 in_Position; // (x,y,z)
 attribute vec4 in_Color; // (r,g,b)
 attribute vec2 in_TexCoord; // (u,v)
-
 uniform vec3 id;
+uniform sampler2D uniform_buffer;
 
 uniform int vertex_mode;
 
@@ -29,6 +30,7 @@ varying vec3 col;
 float packColor(vec4 color);
 vec4 unpackColor(float f);
 void rotate(inout vec2 point, float angle);
+float vec4_to_float(vec4 color);
 void main()
 {
  if(vertex_mode == 1)
@@ -41,7 +43,42 @@ return;
  }
  else
  {
+vec3 final_offset = offset;
+vec3 final_angle = angle;
+vec3 final_scale = scale;
 //optimize uniforms with textures
+float packed_id = dot(id, vec3(255.0, 255.0*256.0, 255.0*256.0*256.0));
+if(packed_id < 10.0*10.0)
+{
+    vec2 a_pixel = vec2(1.0/10.0);
+    vec2 coordinates = vec2(mod(packed_id, 10.0), 0.0);
+    coordinates.y = packed_id/10.0 - coordinates.x;
+    coordinates *= 3.0/10.0;
+    //offset
+    vec4 reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(0.0,0.0));
+    final_offset.x = vec4_to_float(reading)*10560.0 + (-10560.0/2.0);
+    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(1.0,0.0));
+    final_offset.y = vec4_to_float(reading)*10560.0 + (-10560.0/2.0);
+    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(2.0,0.0));
+    final_offset.z = vec4_to_float(reading)*10560.0 + (-10560.0/2.0);
+    //scale
+    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(0.0,1.0));
+    final_scale.x = vec4_to_float(reading)*255.0 + (-128.0);
+    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(1.0,1.0));
+    final_scale.y = vec4_to_float(reading)*255.0 + (-128.0);
+    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(2.0,1.0));
+    final_scale.z = vec4_to_float(reading)*255.0 + (-128.0);
+    //color and grayscale
+    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(0.0,2.0));
+    col.rgb = reading.rgb;
+    gs = reading.a;
+    //angle
+    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(1.0,2.0));
+    final_angle.x = vec4_to_float(vec4(reading.rg, 0.0, 0.0))*2.0*3.1415926535897932384626433832795 + (-3.1415926535897932384626433832795);
+    final_angle.y = vec4_to_float(vec4(reading.ba, 0.0, 0.0))*2.0*3.1415926535897932384626433832795 + (-3.1415926535897932384626433832795);
+    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(2.0,2.0));
+    final_angle.z = vec4_to_float(vec4(reading.rg, 0.0, 0.0))*2.0*3.1415926535897932384626433832795 + (-3.1415926535897932384626433832795);
+}
 //local - extract normal and then proceed
 vec3 local = abs(in_Position);
 vec3 sign = in_Position/local;
@@ -49,22 +86,21 @@ sign += vec3(1.0) - abs(sign);
 out_Normal = floor(local/10.0);
 local = (local - 10.0*out_Normal)*sign;
 out_Normal = out_Normal/128.0 - vec3(1.0);
-local *= scale;
-rotate(local.xy, angle.z);
-rotate(local.xz, angle.y);
-rotate(local.yz, angle.x);
-rotate(out_Normal.xy, angle.z);
-rotate(out_Normal.xz, angle.y);
-rotate(out_Normal.yz, angle.x);
+//snap vertices
+local *= final_scale;
+rotate(local.xy, final_angle.z);
+rotate(local.xz, final_angle.y);
+rotate(local.yz, final_angle.x);
+rotate(out_Normal.xy, final_angle.z);
+rotate(out_Normal.xz, final_angle.y);
+rotate(out_Normal.yz, final_angle.x);
 //local to relative
-local += offset - camera_position;
+local += final_offset - camera_position;
 rotate(local.xy, -camera_angle.z);
 rotate(local.xz, -camera_angle.y);
 rotate(local.yz, -camera_angle.x);
 //project
 depth = length(local.xyz);
-// if(local.x < 0.0)
-//     depth *= abs(local.x) + 1.0;
 gl_Position.z = depth/far_clip*local.x;
 gl_Position.xy = local.yz*near_clip;
 gl_Position.x *= -screen_ratio;
@@ -78,8 +114,11 @@ if(vertex_mode == 2)
 else
 {
  out_Color = in_Color;
- gs = grayscale;
- col = color;
+ if(dot(id, vec3(255.0, 255.0*256.0, 255.0*256.0*256.0)) >= 10.0*10.0)
+ {
+  gs = grayscale;
+  col = color;
+ }
  if(in_TexCoord == vec2(0.0))
  {
   if(out_Color == vec4(1.0))
@@ -87,7 +126,7 @@ else
   if(grayscale != 1.0)
   {
    vec4 intensity = (out_Color.rgba + out_Color.gbra + out_Color.brga)/3.0;
-   out_Color = mix(intensity, out_Color, grayscale);
+   out_Color = mix(intensity, out_Color, gs);
   }
  }
  out_TexCoord = in_TexCoord;
@@ -110,4 +149,26 @@ vec4 unpackColor(float f)
   enc = fract(enc);
   enc.rgb -= enc.gba/vec3(255.0);
   return enc;
+}
+//pack_id() dot(id, vec3(byte, byte*256.0, byte*256.0*256.0))
+//percentage to partial percentages
+vec4 float_to_vec4(float f)
+{
+    float max_value = 255.0/256.0;
+    float r = floor(f/max_value);
+    f -= r*max_value;
+    max_value /= 256.0;
+    float g = floor(f/max_value);
+    f -= g*max_value;
+    max_value /= 256.0;
+    float b = floor(f/max_value);
+    f -= b*max_value;
+    max_value /= 255.0;
+    float a = floor(f/max_value);
+    return vec4(r,g,b,a);
+}
+//partial percentages to percentage
+float vec4_to_float(vec4 color)
+{
+    return dot(vec3(color.r*255.0, color.g*255.0, color.b*255.0 + color.a), vec3(1.0)/vec3(256.0, 256.0*256.0, 256.0*256.0*256.0));
 }

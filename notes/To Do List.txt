@@ -1,3 +1,5 @@
+- add statics to load_intro
+- change primitive to plane in update_static()
 - implement task system and finish occlussion system
 	- finish arranging the scene
 	- decide what the occlusion tree will look like
@@ -11,6 +13,7 @@
 	-
 - implement back-referenced tags ???
 - create_identity() with tag reference OR new tag (add another argument: an array of reffered tag indices, -1 meaning to create a new tag) (4 different object types: regular, omni_lights, spot_lights and mirrors)
+- add timestamp to log() script
 
 -----------------------------------------------
 Pre-Production
@@ -46,6 +49,7 @@ Cruise Ship         |
 Mountain Resort     |
 City                |
 Mansion             |
+Fashion DLC			|
 
 Testing
 

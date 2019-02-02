@@ -1,4 +1,7 @@
 //export_model_to_stl(model, filename)
+
+//BUG: last vertex is always zero
+
 var model_size = buffer_get_size(argument0)/Game.format_size/4/3; //# of triangles
 
 buffer_seek(argument0, buffer_seek_start, 0);

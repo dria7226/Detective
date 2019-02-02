@@ -1,5 +1,4 @@
 //add_buffer_to_vbo(buffer, model_buffer, offset)
-
 buffer_seek(argument1, buffer_seek_start, 0);
 
 for(var i = 0; i < buffer_get_size(argument1)/Game.format_size; i+=Game.format_size)
@@ -16,7 +15,10 @@ for(var i = 0; i < buffer_get_size(argument1)/Game.format_size; i+=Game.format_s
 
 		position = position - normal + argument2[i];
 
-		position = position*(abs(normal/position) + 1);
+		var s = sign(position);
+		s += (s == 0);
+
+		position += s*abs(normal);
 
 		vertex[i] = position;
 	}

@@ -1,11 +1,10 @@
-//add_buffer_to_buffer(buffer, model_buffer, offset)
 
+//add_buffer_to_buffer(buffer, model_buffer, offset)
 if(argument0 == argument1)
 {
  log(ERROR, "Cant add buffer to itself.");
  return;
 }
-
 var arg0_size = buffer_get_size(argument0);
 var arg1_size = buffer_get_size(argument1);
 

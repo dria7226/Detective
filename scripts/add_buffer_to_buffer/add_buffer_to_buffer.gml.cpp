@@ -1,5 +1,4 @@
 //add_buffer_to_buffer(buffer, model_buffer, offset)
-
 if(argument0 == argument1)
 {
 	log(ERROR, "Cant add buffer to itself.");

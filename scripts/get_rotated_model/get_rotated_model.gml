@@ -1,5 +1,5 @@
-//get_rotated_model(buffer, degrees)
 
+//get_rotated_model(buffer, degrees)
 buffer_seek(argument0, buffer_seek_start, 0);
 
 var new_buffer = buffer_create(buffer_get_size(argument0), buffer_fixed, 1);
