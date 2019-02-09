@@ -51,7 +51,7 @@ else
 
 var X = argument0%10.0;
 var Y = (argument0 - X)/10.0;
-X *= 3; Y *= 3;
+X *= 4; Y *= 4;
 
 //in pixels
-draw_rectangle(X, Y, X+3, Y+3, false);
+draw_rectangle(X, Y, X+2, Y+2, false);

@@ -54,4 +54,4 @@ var Y = (argument0 - X)/UNIFORM_BUFFER_WIDTH;
 X *= 3; Y *= 3;
 
 //in pixels
-draw_rectangle(X, Y, X+3, Y+3, false);
+draw_rectangle(X, Y, X+2, Y+2, false);

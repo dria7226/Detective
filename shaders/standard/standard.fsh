@@ -71,7 +71,6 @@ if(fragment_mode == 0)
 }
 if(fragment_mode == 6)
 {
-    gl_FragColor = vec4(0.0,0.0,0.0,1.0);return;
     //calculate target type
     float target_type = mod(gl_FragCoord.x - 0.5, 3.0) + mod(gl_FragCoord.y - 0.5, 3.0)*3.0;
     //offset

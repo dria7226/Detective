@@ -94,6 +94,10 @@ surface_reset_target();
   //#include "render_scene.txt"
 //}
 shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
+shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 6);
+surface_set_target(surfaces[5]);
+draw_rectangle(0,0, 3,3,false);
+surface_reset_target();
 shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
 //if(IS_SPLITSCREEN)
 //{
