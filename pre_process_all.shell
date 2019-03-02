@@ -19,11 +19,11 @@ do
 
   #echo $(($cpp_mtime - $original_mtime)) $file
 
-  #if [ $cpp_mtime -gt $original_mtime ]
-  #then
+  if [ $cpp_mtime -gt $original_mtime ]
+  then
     cpp $file -imacros ../GMS_Tech/cpp_definitions.txt -nostdinc -I $includes ./ -C -D $definitions -P > ${file%.*cpp}
     total=$(($total + 1))
-  #fi
+  fi
 done
 
 echo $total total files processed.
