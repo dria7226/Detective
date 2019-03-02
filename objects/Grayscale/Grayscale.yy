@@ -4,7 +4,16 @@
     "mvc": "1.0",
     "name": "Grayscale",
     "eventList": [
-        
+        {
+            "id": "300a7573-d529-47c9-a7a4-bfb166689f75",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 0,
+            "eventtype": 0,
+            "m_owner": "b375e00b-c6b3-4839-b585-fef935f60205"
+        }
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
     "overriddenProperties": null,

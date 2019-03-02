@@ -1,3 +1,5 @@
-yaw = 0;
-pitch = 0;
-roll = 0;
+angle = [0,0,0];
+
+#macro ROLL 0
+#macro PITCH 1
+#macro YAW 2

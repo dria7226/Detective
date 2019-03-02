@@ -34,3 +34,7 @@ for(var i = 0; i < buffer_get_size(argument1)/Game.format_size; i+=Game.format_s
 	vertex_texcoord(argument0,	buffer_read(argument1, buffer_f32),
 								buffer_read(argument1, buffer_f32));
 }
+
+#ifdef SHOW_USE
+//uses_compressed_normal
+#endif

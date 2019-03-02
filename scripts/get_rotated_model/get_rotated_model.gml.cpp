@@ -1,5 +1,4 @@
 //get_rotated_model(buffer, degrees)
-
 buffer_seek(argument0, buffer_seek_start, 0);
 
 var new_buffer = buffer_create(buffer_get_size(argument0), buffer_fixed, 1);
@@ -26,13 +25,13 @@ repeat(no_of_vertices)
 	}
 
 	//rotate
-	var X = sin(argument1*pi/180)*XY[1] - cos(argument1*pi/180)*XY[0];
+	var temp = sin(argument1*pi/180)*XY[1] - cos(argument1*pi/180)*XY[0];
 	XY[1] = cos(argument1*pi/180)*XY[1] + sin(argument1*pi/180)*XY[0];
-	XY[0] = X;
+	XY[0] = temp;
 
-	var NX = sin(argument1*pi/180)*NXY[1] - cos(argument1*pi/180)*NXY[0];
+	var Ntemp = sin(argument1*pi/180)*NXY[1] - cos(argument1*pi/180)*NXY[0];
 	NXY[1] = cos(argument1*pi/180)*NXY[1] + sin(argument1*pi/180)*NXY[0];
-	NXY[0] = NX;
+	NXY[0] = Ntemp;
 
 	//write
 	for(i = 0; i < 2; i++)
@@ -56,3 +55,7 @@ repeat(no_of_vertices)
 }
 
 return new_buffer;
+
+#ifdef SHOW_USE
+//uses_compressed_normal
+#endif

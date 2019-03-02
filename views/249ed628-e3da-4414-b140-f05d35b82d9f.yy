@@ -4,8 +4,8 @@
     "mvc": "1.1",
     "name": "249ed628-e3da-4414-b140-f05d35b82d9f",
     "children": [
-        "e56b4aaf-a4a2-4225-b747-9f865d547a0e",
-        "1f209465-ad88-477d-a6b6-060ef555d4c4"
+        "40b8156d-54ec-4173-8875-f342bb249ccd",
+        "144c39a0-4dfe-4c1c-8baa-4fcf0e1efa72"
     ],
     "filterType": "GMIncludedFile",
     "folderName": "wall_deco",

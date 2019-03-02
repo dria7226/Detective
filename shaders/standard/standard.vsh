@@ -20,7 +20,6 @@ uniform float screen_ratio;
 
 uniform vec3 offset;
 uniform vec3 angle;
-uniform vec3 scale;
 
 uniform float grayscale;
 uniform vec3 color;
@@ -45,7 +44,6 @@ return;
  {
 vec3 final_offset = offset;
 vec3 final_angle = angle;
-vec3 final_scale = scale;
 //optimize uniforms with textures
 float packed_id = dot(id, vec3(255.0, 255.0*256.0, 255.0*256.0*256.0));
 if(packed_id < 10.0*10.0)
@@ -62,14 +60,6 @@ if(packed_id < 10.0*10.0)
     reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(2.0,0.0));
     final_offset.z = vec4_to_float(reading)*10560.0 + (-10560.0/2.0);
     final_offset = vec3(0.0);
-    //scale
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(0.0,1.0));
-    final_scale.x = vec4_to_float(reading)*255.0 + (-128.0);
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(1.0,1.0));
-    final_scale.y = vec4_to_float(reading)*255.0 + (-128.0);
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(2.0,1.0));
-    final_scale.z = vec4_to_float(reading)*255.0 + (-128.0);
-    //final_scale = vec3(1.0);
     //color and grayscale
     reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(0.0,2.0));
     col.rgb = reading.rgb;
@@ -89,7 +79,6 @@ out_Normal = floor(local/10.0);
 local = (local - 10.0*out_Normal)*sign;
 out_Normal = out_Normal/128.0 - vec3(1.0);
 //snap vertices
-local *= final_scale;
 rotate(local.xy, final_angle.z);
 rotate(local.xz, final_angle.y);
 rotate(local.yz, final_angle.x);

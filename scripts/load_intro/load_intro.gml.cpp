@@ -1,136 +1,112 @@
-//NOTE: EVERYTHING NEEDS TO BE TAGGED AS DELETE PROTECTED
-
 	//create room
-#define COUNT_STATIC visibles_static_count++;
-var index = create_identity(["Level Building/wall_wainscoting.dat"]);
+var wainscoting = create_identity(["Level Building/wall_wainscoting"]);
 
-var model = Game.tags[|Model]; model = model[|index[0]];
+var size = buffer_get_size(wainscoting[Model].lod[0]);
 
-var wall_segment = buffer_create(buffer_get_size(model), buffer_grow, 1);
+var wall_segment = buffer_create(size, buffer_grow, 1);
 
-buffer_copy(model, 0, buffer_get_size(model), wall_segment, 0);
+buffer_copy(wainscoting[Model].lod[0], 0, size, wall_segment, 0);
 
-index = create_identity(["Level Building/wall_deco/high.dat"]);
+var wallpaper = create_identity(["Level Building/wall_deco/high"]);
 
-model = Game.tags[|Model]; model = model[|index[0]];
+add_buffer_to_buffer(wall_segment, wallpaper[Model].lod[0], [0,0,4.5]);
 
-add_buffer_to_buffer(wall_segment, model, [0,0,4.5]);
+var bumper = create_identity(["Level Building/wall_bumper"]);
 
-index = create_identity(["Level Building/wall_bumper.dat"]);
+add_buffer_to_buffer(wall_segment, bumper[Model].lod[0], [0,0,0]);
 
-model = Game.tags[|Model]; model = model[|index[0]];
+size = buffer_get_size(wall_segment);
 
-add_buffer_to_buffer(wall_segment, model, [0,0,0]);
+var wall = buffer_create(size, buffer_grow, 1);
 
-var wall = buffer_create(buffer_get_size(wall_segment), buffer_grow, 1);
-
-buffer_copy(wall_segment, 0, buffer_get_size(wall_segment), wall, 0);
+buffer_copy(wall_segment, 0, size, wall, 0);
 
 for(var i = 1; i < 3; i++)
 	add_buffer_to_buffer(wall, wall_segment, [3.0*i, 0,0]);
 
 buffer_delete(wall_segment);
 
-var query = [VBO, Position, Rotation, Color, Grayscale];
+var query = [VBO, Position, Rotation, Color, Grayscale, Delete_Protected];
 
-index = create_identity(query);
+var identity = create_identity(query);
 
 wall = vertex_create_buffer_from_buffer(wall, Game.format);
 
-var identity = Game.tags[|query[0]]; identity[|index[0]] = wall;
+identity[VBO].lod[0] = wall;
 
-identity = Game.tags[|query[3]]; identity = identity[|index[3]];
-identity.R = 0.2;
-identity.G = 0.4;
-identity.B = 0.2;
+change_color(identity, CHANGE_SET, [0.2, 0.4, 0.2]);
 
-identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
-
-ADD_IDENTITY_TO_VISIBLES(index[5])
-turn_dynamic_to_static(index[5]);
+ADD_IDENTITY_TO_VISIBLES(identity)
 
 //
-index = create_identity(query);
+identity = create_identity(query);
 
-identity = Game.tags[|query[0]]; identity[|index[0]] = wall;
+identity[VBO].lod[0] = wall;
 
-identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.X = 3*3;
+change_position(identity, CHANGE_SET, [3*3, 0, 0]);
 
-identity = Game.tags[|query[3]]; identity = identity[|index[3]];
-identity.R = 0.2;
-identity.G = 0.4;
-identity.B = 0.2;
+change_color(identity, CHANGE_SET, [0.2, 0.4, 0.2]);
 
-identity = Game.tags[|query[4]]; identity[|index[4]] = 0.5;
+change_grayscale(identity, CHANGE_SET, 0.5);
 
-ADD_IDENTITY_TO_VISIBLES(index[5])
-turn_dynamic_to_static(index[5]);
+ADD_IDENTITY_TO_VISIBLES(identity)
 
 //
-index = create_identity(query);
+identity = create_identity(query);
 
-identity = Game.tags[|query[0]]; identity[|index[0]] = wall;
+identity[VBO].lod[0] = wall;
 
-identity = Game.tags[|query[1]]; identity = identity[|index[1]];
-identity.X = -3/2;
-identity.Y = -3*3 + 3/2;
+change_position(identity, CHANGE_SET, [-3/2, -3*3 + 3/2, 0]);
 
-identity = Game.tags[|query[2]]; identity = identity[|index[2]]; identity.yaw = pi/2;
+change_angle(identity, CHANGE_SET, [0, 0, pi/2]);
 
-identity = Game.tags[|query[3]]; identity = identity[|index[3]];
-identity.R = 0.2;
-identity.G = 0.4;
-identity.B = 0.2;
+change_color(identity, CHANGE_SET, [0.2, 0.4, 0.2]);
 
-identity = Game.tags[|query[4]]; identity[|index[4]] = 0.0;
+change_grayscale(identity, CHANGE_SET, 0.0);
 
-ADD_IDENTITY_TO_VISIBLES(index[5])
-turn_dynamic_to_static(index[5]);
-#undef COUNT_STATIC
-#define COUNT_STATIC
+ADD_IDENTITY_TO_VISIBLES(identity)
 
 	//floor
-index = create_identity(["Level Building/floor.dat"]);
+identity = create_identity(["Level Building/floor"]);
 
-model = Game.tags[|Model]; model = model[|index[0]];
+size = buffer_get_size(identity[Model].lod[0]);
 
-var Floor = buffer_create(buffer_get_size(model), buffer_grow, 1);
+var Floor = buffer_create(size, buffer_grow, 1);
 
-buffer_copy(model, 0, buffer_get_size(model), Floor, 0);
+buffer_copy(identity[Model].lod[0], 0, size, Floor, 0);
 
 for(var i = 1; i < 3; i++)
 {
-	add_buffer_to_buffer(Floor, model, [i*3,0,0]);
+	add_buffer_to_buffer(Floor, identity[Model].lod[0], [i*3,0,0]);
 }
 
-var temp = buffer_create(buffer_get_size(Floor), buffer_fixed, 1);
-buffer_copy(Floor, 0, buffer_get_size(Floor), temp, 0);
+size = buffer_get_size(Floor);
+
+var temp = buffer_create(size, buffer_fixed, 1);
+buffer_copy(Floor, 0, size, temp, 0);
 
 for(var i = 0; i < 3; i++)
 {
 	add_buffer_to_buffer(Floor, temp, [0, -i*3, 0]);
 }
 
-index = create_identity(query);
+identity = create_identity(query);
 
-identity = Game.tags[|query[0]]; identity[|index[0]] = vertex_create_buffer_from_buffer(Floor, Game.format);
+var floor_vbo = vertex_create_buffer_from_buffer(Floor, Game.format);
 
-identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Y = -1.5;
+identity[VBO].lod[0] = floor_vbo;
 
-identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
+change_position(identity, CHANGE_SET, [0, -3/2, 0])
 
-ADD_IDENTITY_TO_VISIBLES(index[5])
+ADD_IDENTITY_TO_VISIBLES(identity)
 
-index = create_identity(query);
+identity = create_identity(query);
 
-identity = Game.tags[|query[0]]; identity[|index[0]] = identity[|index[0]-1];
+identity[VBO].lod[0] = floor_vbo;
 
-identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.X = 9;
-identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Y = -1.5;
+change_position(identity, CHANGE_SET, [3*3, -3/2, 0]);
 
-identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
-
-ADD_IDENTITY_TO_VISIBLES(index[5])
+ADD_IDENTITY_TO_VISIBLES(identity)
 
 	//ceiling
 //var ceiling = buffer_create(1, buffer_grow, 1);
@@ -146,43 +122,31 @@ ADD_IDENTITY_TO_VISIBLES(index[5])
 
 //index = create_identity(["Objects/vinyl_highlights.dat", VBO]);
 
-index = create_identity(["Objects/desk_med_class.dat"]);
+identity = create_identity(["Objects/desk_med_class"]);
 
-model = Game.tags[|Model]; model = model[|index[0]];
+var desk = identity[Model].lod[0];
 
-index = create_identity(query);
+identity = create_identity(query);
 
-identity = Game.tags[|query[0]]; identity[|index[0]] = vertex_create_buffer_from_buffer(model, Game.format);
+identity[VBO].lod[0] = vertex_create_buffer_from_buffer(desk, Game.format);
 
-identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.X = 3;
-identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Y = -1.5;
+change_position(identity, CHANGE_SET, [3, -3/2, 0]);
 
-identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
-
-ADD_IDENTITY_TO_VISIBLES(index[5])
+ADD_IDENTITY_TO_VISIBLES(identity)
 
 //
 
-index = create_identity(["Objects/office_lamp.dat"]);
+identity = create_identity(["Objects/office_lamp"]);
 
-model = Game.tags[|Model]; model = model[|index[0]];
+var lamp = identity[Model].lod[0];
 
-index = create_identity(query);
+identity = create_identity(query);
 
-identity = Game.tags[|query[0]]; identity[|index[0]] = vertex_create_buffer_from_buffer(model, Game.format);
+identity[VBO].lod[0] = vertex_create_buffer_from_buffer(lamp, Game.format);
 
-identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.X = 2.5;
-identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Y = -1.5;
-identity = Game.tags[|query[1]]; identity = identity[|index[1]]; identity.Z = 3;
+change_position(identity, CHANGE_SET, [2.5, -3/2, 3]);
 
-identity = Game.tags[|query[2]]; identity = identity[|index[2]]; identity.yaw = 0;
-
-identity = Game.tags[|query[4]]; identity[|index[4]] = 1.0;
-
-ADD_IDENTITY_TO_VISIBLES(index[5])
-
-#undef COUNT_STATIC
-#define COUNT_STATIC
+ADD_IDENTITY_TO_VISIBLES(identity)
 
 //load occlusion groups
 
@@ -196,3 +160,7 @@ ADD_IDENTITY_TO_VISIBLES(index[5])
 //setup animation loop
 
 //index = create_identity([Path]);
+
+#ifdef SHOW_USE
+//uses_identities, uses_position_tag, uses_color_tag, uses_grayscale_tag, uses_vbo_tag, uses_model_tag
+#endif

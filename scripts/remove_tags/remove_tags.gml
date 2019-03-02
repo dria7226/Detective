@@ -1,33 +1,34 @@
-//remove_tags(identity, tags, method)
-
+//remove_tags(identity, [tags], method)
 #macro REMOVE_REFERENCE 0
 #macro REMOVE_REFERENCE_AND_TAG 1
 
-for(var tag = 0; tag < array_length_1d(argument1); tag++)
-{
-	for(var i = 0; i < ds_list_size(argument0.tag_list); i++)
-	{
-		var tag_combo = argument0.tag_list[|i];
-		if(tag_combo[0] == argument1[tag])
-		{
-			if(argument2 == REMOVE_REFERENCE_AND_TAG)
-			{
-				if(Game.tag_types[argument1[tag]] == STANDARD_TYPE)
-				{
-					var list = Game.tags[|tag_combo[0]];
-					ds_list_delete(list, tag_combo[1]);
-					continue;
-				}
-			
-				if(Game.tag_types[argument1[tag]] == OBJECT_TYPE)
-				{
-					var list = Game.tags[|tag_combo[0]];
-					ds_list_delete(list, tag_combo[1]);
-					instance_destroy(list[|tag_combo[1]]);
-				}
-			}
+var number_of_tags = array_length_1d(argument1);
 
-			ds_list_delete(argument0.tag_list, i);
+for(var tag = 0; tag < number_of_tags; tag++)
+{
+	var type = argument1[tag];
+
+	if(argument2 == REMOVE_REFERENCE_AND_TAG)
+	{
+		//remove tag on the Game.tags side
+		instance_destroy(argument0[type]);
+
+		var total = ds_list_size(Game.tags[type])
+		for(var i = 0; i < total; i++)
+		{
+			var tag_list = Game.tags[type];
+			if(tag_list[|i] == argument0[type])
+			{
+				ds_list_delete(tag_list, i);
+				break;
+			}
 		}
 	}
+
+	//remove reference on the identity side
+	argument0[@type] = -1;
 }
+
+#ifdef SHOW_USE
+//uses_identities
+#endif

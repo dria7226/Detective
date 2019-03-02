@@ -1,28 +1,29 @@
 
-var position = tags[|Position]; position = position[|0];
-var yaw = tags[|Rotation]; yaw = yaw[|0]; yaw = yaw.yaw;
+//find camera
+var camera = tags[Camera]; camera = camera[|0].back_reference;
+var position = camera[Position];
+
+var yaw = camera[Rotation]; yaw = yaw.angle[YAW];
+
+var change = delta_time/1000000*speed;
 if keyboard_check(ord("W"))
 {
- position.X += delta_time/1000000*speed*cos(yaw);
- position.Y += delta_time/1000000*speed*sin(yaw);
+    change_position(camera, 1, [change*cos(yaw), change*sin(yaw), 0]);
 }
 
 if keyboard_check(ord("S"))
 {
- position.X -= delta_time/1000000*speed*cos(yaw);
- position.Y -= delta_time/1000000*speed*sin(yaw);
+    change_position(camera, 1, [-change*cos(yaw), -change*sin(yaw), 0]);
 }
 
 if keyboard_check(ord("A"))
 {
- position.X += delta_time/1000000*speed*cos(yaw + 3.1415926535897932384626433832795/2);
- position.Y += delta_time/1000000*speed*sin(yaw + 3.1415926535897932384626433832795/2);
+ change_position(camera, 1, [change*cos(yaw + 3.1415926535897932384626433832795/2), change*sin(yaw + 3.1415926535897932384626433832795/2), 0]);
 }
 
 if keyboard_check(ord("D"))
 {
- position.X += delta_time/1000000*speed*cos(yaw - 3.1415926535897932384626433832795/2);
- position.Y += delta_time/1000000*speed*sin(yaw - 3.1415926535897932384626433832795/2);
+ change_position(camera, 1, [change*cos(yaw - 3.1415926535897932384626433832795/2), change*sin(yaw - 3.1415926535897932384626433832795/2), 0]);
 }
 
 if keyboard_check(ord("M"))
@@ -37,10 +38,10 @@ if keyboard_check(ord("U"))
 
 if keyboard_check(vk_space)
 {
- position.Z += delta_time/1000000*speed/2;
+ position.coordinates[Z] += change/2;
 }
 
 if keyboard_check(ord("C"))
 {
- position.Z -= delta_time/1000000*speed/2;
+ position.coordinates[Z] -= change/2;
 }

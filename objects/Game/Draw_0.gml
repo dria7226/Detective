@@ -1,85 +1,39 @@
 
-var position = tags[|Position]; position = position[|0];
-shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.X, position.Y, position.Z);
-var rotation = tags[|Rotation]; rotation = rotation[|0];
-shader_set_uniform_f(shader_get_uniform(standard, "camera_angle"), rotation.roll, rotation.pitch, rotation.yaw);
+var camera = Game.tags[Camera]; camera = camera[|0].back_reference;
+var position = camera[Position];
+shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.coordinates[X], position.coordinates[Y], position.coordinates[Z]);
+var rotation = camera[Rotation];
+shader_set_uniform_f(shader_get_uniform(standard, "camera_angle"), rotation.angle[ROLL], rotation.angle[PITCH], rotation.angle[YAW]);
 
-//#include "visibility_culling.txt"
-//#include "mirrors.txt"
+
+//#include "visibility_culling.c"
+//#include "mirrors.c"
 surface_set_target(surfaces[1]);
 shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 0);
 shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 0);
 texture_set_stage(uniform_sampler, surface_texture_pointers[0]);
-for(var i = 0; i < visibles_static_count; i++)
-{
- shader_set_uniform_f(shader_get_uniform(standard, "id"), i%256/255, floor(i/256)%256/255, floor(i/(256*256))/255);
-var query = [VBO];
-var index = search_tags(visibles[i], query);
-//#include "pick_and_render_lod.txt"
-if(index[0] != -1)
-{
-  id_tag = tags[|query[0]];
-  vertex_submit(id_tag[|index[0]], pr_trianglelist, 0);
-}
-}
-shader_set_uniform_f(shader_get_uniform(standard, "id"), 10.0*10.0%256/255, floor(10.0*10.0/256)%256/255, floor(10.0*10.0/(256*256))/255);
-for(var i = visibles_static_count; i < array_length_1d(visibles); i++)
+var no_of_visibles = array_length_1d(visibles); for(var i = 0; i < no_of_visibles; i++)
 {
 //NOTES
-//account for animation as well
-//account for mirrors
-var query = [Position, Rotation, Scale, Color, Grayscale, VBO];
-var index = search_tags(visibles[i], query);
-if(index[0] != -1)
+//- account for mirrors
+//- account for animations
+var identity = visibles[i];
+shader_set_uniform_f(shader_get_uniform(standard, "id"), identity[INDEX]%256/255, floor(identity[INDEX]/256)%256/255, floor(identity[INDEX]/(256*256))/255);
+if(identity[VBO] != -1)
 {
-  var id_tag = tags[|query[0]]; id_tag = id_tag[|index[0]];
-  shader_set_uniform_f(shader_get_uniform(standard, "offset"), id_tag.X, id_tag.Y, id_tag.Z);
-}
-else
-  shader_set_uniform_f(shader_get_uniform(standard, "offset"), 0,0,0);
-if(index[1] != -1)
-{
-  id_tag = tags[|query[1]]; id_tag = id_tag[|index[1]];
-  shader_set_uniform_f(shader_get_uniform(standard, "angle"), id_tag.roll, id_tag.pitch, id_tag.yaw);
-}
-else
-  shader_set_uniform_f(shader_get_uniform(standard, "angle"), 0,0,0);
-if(index[2] != -1)
-{
-  id_tag = tags[|query[2]]; id_tag = id_tag[|index[2]];
-  shader_set_uniform_f(shader_get_uniform(standard, "scale"), id_tag.X, id_tag.Y, id_tag.Z);
-}
-else
-  shader_set_uniform_f(shader_get_uniform(standard, "scale"), 1,1,1);
-if(index[3] != -1)
-{
-  id_tag = tags[|query[3]]; id_tag = id_tag[|index[3]];
-  shader_set_uniform_f(shader_get_uniform(standard, "color"), id_tag.R, id_tag.G, id_tag.B);
-}
-else
-  shader_set_uniform_f(shader_get_uniform(standard, "color"), 0,0,0);
-if(index[4] != -1)
-{
-    id_tag = tags[|query[4]];
-    shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), id_tag[|index[4]]);
-}
-else
-    shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
-//#include "pick_and_render_lod.txt"
-if(index[5] != -1)
-{
-  id_tag = tags[|query[5]];
-  vertex_submit(id_tag[|index[5]], pr_trianglelist, 0);
+    var lod_index = 0;
+    //lod_index = (visibles.distance[i] + Options.lod_offset)/MAX_DISTANCE*2);
+    vertex_submit(identity[VBO].lod[lod_index], pr_trianglelist, 0);
 }
 }
 surface_reset_target();
-//#include "edge.txt"
-//#include "collect_lights.txt"
+//#include "edge.c"
+//#include "collect_lights.c"
 //non-shadow lights (deferred omni-lights)
-//#include "lighting.txt"
+//#include "lighting.c"
 //shadow lights (shadow mapped spotlights)
-//#include "shadowing.txt"
-//#include "post_processing.txt"
+//#include "shadowing.c"
+//#include "post_processing.c"
 shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
 shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
 surface_set_target(surfaces[5]);
@@ -89,9 +43,9 @@ surface_reset_target();
 //if(IS_SPLITSCREEN)
 //{
 //  #define FINAL_SURFACE surfaces[PLAYER_TWO]
-  //#include "visibility_culling.txt"
-  //#include "mirrors.txt"
-  //#include "render_scene.txt"
+  //#include "visibility_culling.c"
+  //#include "mirrors.c"
+  //#include "render_scene.c"
 //}
 shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
 shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 6);

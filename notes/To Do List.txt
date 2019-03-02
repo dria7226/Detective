@@ -1,5 +1,14 @@
-- add statics to load_intro
-- change primitive to plane in update_static()
+- review code
+	- add code tags
+		- based on data structure
+			- uses_identities
+			- uses_tags
+			- uses_uniform_buffer
+			- uses_normal_compression
+			- uses_[object_tag]
+		- based on data usage
+			- uses_object_tags
+			- uses_back_reffered_tags
 - implement task system and finish occlussion system
 	- finish arranging the scene
 	- decide what the occlusion tree will look like
@@ -11,8 +20,6 @@
 	- rewrite load_intro as sub-task ds_list
 - implement occlusion generation as part of load_intro
 	-
-- implement back-referenced tags ???
-- create_identity() with tag reference OR new tag (add another argument: an array of reffered tag indices, -1 meaning to create a new tag) (4 different object types: regular, omni_lights, spot_lights and mirrors)
 - add timestamp to log() script
 
 -----------------------------------------------

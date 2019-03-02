@@ -113,46 +113,6 @@ if(fragment_mode == 6)
         gl_FragColor = float_to_vec4((pass_offset.y - (-10560.0/2.0))/10560.0);
         return;
     }
-    //scale
-    if(target_type == 3.0)
-    {
-        if(pass_scale.x > 127.0)
-        {
-            gl_FragColor = float_to_vec4(1.0); return;
-        }
-        if(pass_scale.x < -128.0)
-        {
-            gl_FragColor = float_to_vec4(0.0); return;
-        }
-        gl_FragColor = float_to_vec4((pass_scale.x - (-128.0))/255.0);
-        return;
-    }
-    if(target_type == 4.0)
-    {
-        if(pass_scale.y > 127.0)
-        {
-            gl_FragColor = float_to_vec4(1.0); return;
-        }
-        if(pass_scale.y < -128.0)
-        {
-            gl_FragColor = float_to_vec4(0.0); return;
-        }
-        gl_FragColor = float_to_vec4((pass_scale.y - (-128.0))/255.0);
-        return;
-    }
-    if(target_type == 5.0)
-    {
-        if(pass_scale.z > 127.0)
-        {
-            gl_FragColor = float_to_vec4(1.0); return;
-        }
-        if(pass_scale.z < -128.0)
-        {
-            gl_FragColor = float_to_vec4(0.0); return;
-        }
-        gl_FragColor = float_to_vec4((pass_scale.z - (-128.0))/255.0);
-        return;
-    }
     //color and grayscale
     if(target_type == 6.0)
     {

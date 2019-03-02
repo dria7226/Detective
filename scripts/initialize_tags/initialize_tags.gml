@@ -1,25 +1,10 @@
-#macro STANDARD_TYPE 0
-#macro OBJECT_TYPE 1
+#macro NO_OF_TAGS 30
+#macro INDEX NO_OF_TAGS
 
-var object_types = [Camera,
-					Path,
-					Position,
-					Rotation,
-					Color,
-					Character,
-					Item,
-					Memory];
+//create tag list
+Game.tags = array_create(NO_OF_TAGS);
 
-Game.tag_types = array_create(30, 0);
-
-for(var i = 0; i < array_length_1d(object_types); i++)
+for(var i = 0; i < NO_OF_TAGS; i++)
 {
-	Game.tag_types[object_types[i]] = OBJECT_TYPE;
-}
-
-Game.tags = ds_list_create();
-
-for(var i = 0; i < array_length_1d(Game.tag_types); i++)
-{
-	Game.tags[|i] = ds_list_create();
+	Game.tags[i] = ds_list_create();
 }

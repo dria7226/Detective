@@ -42,3 +42,7 @@ repeat(no_of_vertices)
 	buffer_write(argument0, buffer_f32, buffer_read(argument1, buffer_f32));
 	buffer_write(argument0, buffer_f32, buffer_read(argument1, buffer_f32));
 }
+
+#ifdef SHOW_USE
+//uses_compressed_normal
+#endif

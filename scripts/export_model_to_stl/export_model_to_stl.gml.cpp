@@ -74,3 +74,7 @@ buffer_save(stl_buffer, argument1);
 buffer_delete(stl_buffer);
 
 show_debug_message(argument1 + " exported.");
+
+#ifdef SHOW_USE
+//uses_compressed_normal
+#endif

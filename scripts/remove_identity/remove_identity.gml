@@ -1,15 +1,22 @@
 //remove_identity(identity_index, method)
+#macro REMOVE_IDENTITY 0
+#macro REMOVE_IDENTITY_AND_TAGS 1
 
 var identity = Game.identites[|argument0];
 
 //remove tags
-var tag_list = array_create(1, identity.tag_list[|0]);
-for(var i = 1; i < ds_list_size(identity.tag_list); i++)
+if(argument1 == REMOVE_IDENTITY_AND_TAGS)
 {
-	tag_list[i] = identity.tag_list[|i];
+	var tag_list = array_create(NO_OF_TAGS);
+	for(var i = 0; i < NO_OF_TAGS; i++)
+		tag_list[i] = i;
+
+	remove_tags(identity, tag_list, REMOVE_IDENTITY_AND_TAGS);
 }
 
-remove_tags(identity, tag_list, argument1);
-
 //remove identity
-ds_list_delete(Game.identities, argument0);
+Game.identities[|argument0] = 0;
+
+#ifdef SHOW_USE
+//uses_identities
+#endif

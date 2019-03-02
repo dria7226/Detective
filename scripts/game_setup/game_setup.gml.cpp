@@ -2,20 +2,16 @@ initialize_tags();
 
 identities = ds_list_create();
 
+changed_identities = ds_list_create(); //changed uniforms
+
 //
-var cube = create_identity(["cube.dat", VBO]);
+var cube = create_identity(["cube", VBO]);
 
-var model = tags[|Model];
-
-var vbo = tags[|VBO];
-
-vbo[|cube[1]] = vertex_create_buffer_from_buffer(model[|cube[0]] , Game.format);
+cube[VBO].lod[0] = vertex_create_buffer_from_buffer(cube[Model].lod[0] , Game.format);
 //
-var plane = create_identity(["plane.dat", VBO]);
+var plane = create_identity(["plane", VBO]);
 
-vbo = tags[|VBO];
-
-vbo[|plane[1]] = vertex_create_buffer_from_buffer(model[|plane[0]] , Game.format);
+plane[VBO].lod[0] = vertex_create_buffer_from_buffer(plane[Model].lod[0] , Game.format);
 //
 
 alpha = 0;
@@ -23,6 +19,8 @@ alpha = 0;
 load_main_camera();
 
 load_intro();
+
+previous_x = 0; previous_y = 0; speed = 3;
 
 // #include "simple_test_scene.txt"
 
