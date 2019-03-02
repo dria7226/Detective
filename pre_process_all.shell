@@ -21,7 +21,7 @@ do
 
   if [ $cpp_mtime -gt $original_mtime ]
   then
-    cpp $file -imacros ../GMS_Tech/cpp_definitions.txt -I $includes ./ -C -D $definitions -P > ${file%.*cpp}
+    cpp $file -imacros ../GMS_Tech/cpp_definitions.txt -nostdinc -I $includes ./ -C -D $definitions -P > ${file%.*cpp}
     total=$(($total + 1))
   fi
 done
