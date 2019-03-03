@@ -14,16 +14,8 @@ total=0
 
 for file in $(find $(dirname $0) -name '*.cpp');
 do
-  cpp_mtime=$(date +%s -r $file)
-  original_mtime=$(date +%s -r ${file%.*cpp})
-
-  #echo $(($cpp_mtime - $original_mtime)) $file
-
-  if [ $cpp_mtime -gt $original_mtime ]
-  then
-    cpp $file -imacros ../GMS_Tech/cpp_definitions.txt -nostdinc -I $includes ./ -C -D $definitions -P > ${file%.*cpp}
-    total=$(($total + 1))
-  fi
+cpp $file -imacros ../GMS_Tech/cpp_definitions.txt -nostdinc -I $includes ./ -C -D $definitions -P > ${file%.*cpp}
+total=$(($total + 1))
 done
 
 echo $total total files processed.
