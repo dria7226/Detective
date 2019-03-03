@@ -10,15 +10,17 @@ var is_added = (argument1 == 1);
 for(var i = 0; i < 3; i++)
 {
     //change tag
-    position.coordinates[i] = position.coordinates[i]*is_added + argument2[i];
+    position.coordinates[@i] = position.coordinates[i]*is_added + argument2[i];
     //encode in uniform buffer
-    if(position.coordinates[i] > 10560.0/2.0)
-    {
-        write_normal_value_to_uniform_buffer(buffer_index + i, 1, 4); continue;
-    }
-    if(position.coordinates[i] < -10560.0/2.0)
-    {
-        write_normal_value_to_uniform_buffer(buffer_index + i, 0, 4); continue;
-    }
-    write_normal_value_to_uniform_buffer(buffer_index + i, (position.coordinates[i] - (-10560.0/2.0))/10560.0, 4);
+var normalized_value = 0.0;
+if(position.coordinates[i] > 10560.0/2.0)
+{
+    normalized_value = 1.0;
+}
+if(position.coordinates[i] < -10560.0/2.0)
+{
+    normalized_value = 0.0;
+}
+normalized_value = (position.coordinates[i] - (-10560.0/2.0))/(10560.0/2.0 - (-10560.0/2.0));
+    write_normal_value_to_uniform_buffer(buffer_index + 4*i, normalized_value, 4);
 }
