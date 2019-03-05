@@ -13,7 +13,7 @@ for(var i = 0; i < number_of_tags; i++)
 	{
 		if(query[i] == banned_tags[ban])
         {
-            log(WARNING, "Attempting to create " + object_get_name(banned_tags[ban]) + " tag using create_identity(). Please use appropriate script.");
+            log(WARNING, "Attempting to create " + object_get_name(banned_tags[ban]) + " tag using create_identity(). Please use appropriate script.", 0);
             i++; ban = 0;
         }
 	}

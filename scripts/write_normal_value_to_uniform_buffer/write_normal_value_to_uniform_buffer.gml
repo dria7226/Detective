@@ -1,6 +1,6 @@
 
 //write_normal_value_to_uniform_buffer(offset, value, precision)
-if(argument1 < 0){ log(WARNING, "Value (" + string(argument1) + ") needs to be normalized for write_normal_value_to_uniform_buffer.", debug_get_callstack()) return;}
+if(argument1 < 0){ log(WARNING, "Value (" + string(argument1) + ") needs to be normalized for write_normal_value_to_uniform_buffer.", debug_get_callstack()); return;}
 if(argument2 <= 0){ log(WARNING, "Invalid precision (" + string(argument2) + ") used in write_normal_value_to_uniform_buffer.", debug_get_callstack()); return;}
 buffer_seek(uniform_buffer, buffer_seek_start, argument0);
 var max_value = 255.0/(255.0 + (argument2 != 1));
