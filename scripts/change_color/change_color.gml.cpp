@@ -19,7 +19,7 @@ for(var i = 0; i < 3; i++)
     col.channels[@i] = col.channels[i]*is_added + argument2[i];
 
     //encode in uniform_buffer
-    buffer_write(uniform_buffer, buffer_u8, col.channels[i]);
+    buffer_write(uniform_buffer, buffer_u8, floor(col.channels[i]*byte));
 }
 
 #ifdef SHOW_USE

@@ -14,7 +14,7 @@ gs.value = gs.value*is_added + argument2;
 //derive buffer index from identity index
 var buffer_index = identity[INDEX]*6*4 + 4*3 + 2*3 + 3;
 
-buffer_poke(uniform_buffer, buffer_index, buffer_u8, gs.value);
+buffer_poke(uniform_buffer, buffer_index, buffer_u8, floor(gs.value*byte));
 
 #ifdef SHOW_USE
 //uses_identities, uses_grayscale_tag, uses_uniform_buffer
