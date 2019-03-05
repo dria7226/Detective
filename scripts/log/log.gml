@@ -1,41 +1,53 @@
-//log(type, string)
+//log(type, string, callstack)
 #macro TEXT 0
 #macro ERROR 1
 #macro WARNING 2
 #macro SEPARATOR 3
 #macro TITLE 4
 
-if(argument0 == TEXT)
+switch(argument0)
 {
-	file_text_write_string(Game.Log, argument1);
-	file_text_writeln(Game.Log);
-	return;
+  case TEXT:
+  {
+    file_text_write_string(Game.Log, argument1);
+	  file_text_writeln(Game.Log); break;
+  }
+    
+  case ERROR:
+  {
+    file_text_write_string(Game.Log, "ERROR: " + argument1);
+	  file_text_writeln(Game.Log); break;
+  }
+    
+  case WARNING:
+  {
+    file_text_write_string(Game.Log, "///!\\\ " + argument1);
+	  file_text_writeln(Game.Log); break;
+  }
+    
+  case SEPARATOR:
+  {
+    file_text_write_string(Game.Log, "--------------------------------------------");
+	  file_text_writeln(Game.Log); break;
+  }
+    
+  case TITLE:
+  {
+    file_text_write_string(Game.Log, "{---------------- " + argument1 + " ----------------}");
+	  file_text_writeln(Game.Log); break;
+  }
 }
 
-if(argument0 == ERROR)
+if(argument2 != 0)
 {
-	file_text_write_string(Game.Log, "ERROR: " + argument1);
-	file_text_writeln(Game.Log);
-	return;
-}
-
-if(argument0 == WARNING)
-{
-	file_text_write_string(Game.Log, "///!\\\ " + argument1);
-	file_text_writeln(Game.Log);
-	return;
-}
-
-if(argument0 == SEPARATOR)
-{
-	file_text_write_string(Game.Log, /* argument1 */"--------------------------------------------");
-	file_text_writeln(Game.Log);
-	return;
-}
-
-if(argument0 == TITLE)
-{
-	file_text_write_string(Game.Log, "{---------------- " + argument1 + " ----------------}");
-	file_text_writeln(Game.Log);
-	return;
+  file_text_write_string(Game.log, ">>>>>>>>>>>>>Call Stack<<<<<<<<<<<<<"); file_text_writeln(Game.log);
+  
+  var stack_depth = array_length_1d(argument2);
+  for(var i = stack_depth - 1; i >= 0; i--)
+  {
+    file_text_write_string(Game.log, argument2[i]);
+    file_text_writeln(Game.log);
+  }
+  
+  file_text_write_string(Game.log, ">>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<"); file_text_writeln(Game.log);
 }
