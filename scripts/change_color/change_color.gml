@@ -5,7 +5,7 @@ var col = identity[Color];
 //track changed identities
 set_tags(identity, [Changed_Uniform]);
 //derive buffer index from identity index
-var buffer_index = identity[INDEX]*6*4 + 4*3 + 2;
+var buffer_index = identity[INDEX]*6*4 + 4*3 + 2*3;
 //change tag and encode in uniform buffer
 buffer_seek(uniform_buffer, buffer_seek_start, buffer_index);
 var is_added = (argument1 == 1);

@@ -16,3 +16,7 @@ uniform_buffer = buffer_create(UNIFORM_BUFFER_WIDTH*UNIFORM_BUFFER_WIDTH*6*4 ,bu
 
 //load common texture
 //common_texture = sprite_get_texture(spr_common, 0);
+
+#ifdef SHOW_USE
+//uses_uniform_buffer
+#endif
