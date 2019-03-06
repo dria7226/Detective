@@ -155,12 +155,12 @@ if(fragment_mode == 6)
         return;
     }
 }
-  //#include "edge_detection.txt"
-  // #include "occlusion_first_pass.txt"
+  //#include "edge_detection.c"
+  // #include "occlusion_first_pass.c"
   //
-  // #include "occlusion_second_pass.txt"
+  // #include "occlusion_second_pass.c"
   //
-  // #include "post_processing_fragment.txt"
+  // #include "post_processing_fragment.c"
 }
 void rotate(inout vec2 point, float angle)
 {

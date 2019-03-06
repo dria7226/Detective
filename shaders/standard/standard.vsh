@@ -42,10 +42,10 @@ vec3 final_angle = angle;
 float packed_id = dot(id, vec3(255.0, 255.0*256.0, 255.0*256.0*256.0));
 if(packed_id < 10.0*10.0)
 {
-    vec2 a_pixel = vec2(1.0/10.0/3.0);
+    vec2 a_pixel = vec2(1.0/10.0/6.0, 1.0/10.0);
     vec2 coordinates = vec2(mod(packed_id, 10.0), 0.0);
     coordinates.y = packed_id/10.0 - coordinates.x;
-    coordinates *= 3.0/10.0;
+    coordinates.x *= 6.0*10.0;
     //offset
     vec4 reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(0.0,0.0));
     final_offset.x = vec4_to_float(reading)*10560.0 + (-10560.0/2.0);
@@ -54,16 +54,16 @@ if(packed_id < 10.0*10.0)
     reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(2.0,0.0));
     final_offset.z = vec4_to_float(reading)*10560.0 + (-10560.0/2.0);
     final_offset = vec3(0.0);
-    //color and grayscale
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(0.0,2.0));
-    col.rgb = reading.rgb;
-    gs = reading.a;
     //angle
     reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(1.0,2.0));
     final_angle.x = vec4_to_float(vec4(reading.rg, 0.0, 0.0))*2.0*3.1415926535897932384626433832795 + (-3.1415926535897932384626433832795);
     final_angle.y = vec4_to_float(vec4(reading.ba, 0.0, 0.0))*2.0*3.1415926535897932384626433832795 + (-3.1415926535897932384626433832795);
     reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(2.0,2.0));
     final_angle.z = vec4_to_float(vec4(reading.rg, 0.0, 0.0))*2.0*3.1415926535897932384626433832795 + (-3.1415926535897932384626433832795);
+    //color and grayscale
+    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(0.0,2.0));
+    col.rgb = reading.rgb;
+    gs = reading.a;
 }
 //local - extract normal and then proceed
 vec3 local = abs(in_Position);
