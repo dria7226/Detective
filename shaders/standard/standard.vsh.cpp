@@ -1,19 +1,19 @@
-#include "vertex_definitions.txt"
+#include "vertex_definitions.c"
 
-#include "vertex_declarations.txt"
+#include "vertex_declarations.c"
 
 void main()
 {
 	if(vertex_mode == VERTEX_FLAT)
 	{
-		#include "flat_projection.txt"
+		#include "flat_projection.c"
 	}
 	else
 	{
-		#include "perspective_projection.txt"
+		#include "perspective_projection.c"
 	}
 
-	#include "vertex_coloring_and_texturing.txt"
+	#include "vertex_coloring_and_texturing.c"
 }
 
-#include "implementations.txt"
+#include "implementations.c"

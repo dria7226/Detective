@@ -1,22 +1,22 @@
-#include "fragment_definitions.txt"
+#include "fragment_definitions.c"
 
-#include "fragment_declarations.txt"
+#include "fragment_declarations.c"
 
 void main()
 {
-  #include "flat_fragment.txt"
+  #include "flat_fragment.c"
 
-  #include "mrt_fragment.txt"
+  #include "mrt_fragment.c"
 
-  #include "uniform_encoding.txt"
+  #include "uniform_encoding.c"
 
-  //#include "edge_detection.txt"
+  //#include "edge_detection.c"
 
-  // #include "occlusion_first_pass.txt"
+  // #include "occlusion_first_pass.c"
   //
-  // #include "occlusion_second_pass.txt"
+  // #include "occlusion_second_pass.c"
   //
-  // #include "post_processing_fragment.txt"
+  // #include "post_processing_fragment.c"
 }
 
-#include "implementations.txt"
+#include "implementations.c"
