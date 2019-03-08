@@ -16,7 +16,7 @@ for(var i = 0; i < NO_OF_SURFACES; i++)
 			surfaces[i] = surface_create(floor(scale[0]*window_get_width()), floor(scale[1]*window_get_height()));
 		}
 
-	  	//cache texture pointers for the surfaces
+	  //cache texture pointers for the surfaces
 		surface_texture_pointers[i] = surface_get_texture(surfaces[i]);
 	}
 
