@@ -6,11 +6,15 @@ varying vec2 out_TexCoord;
 uniform vec3 pass_offset;
 uniform vec3 pass_angle;
 uniform vec3 pass_scale;
+
 uniform vec2 a_pixel;
 uniform sampler2D uniform_buffer;
+
 varying float gs;
 varying vec3 col;
+
 uniform int fragment_mode;
+
 float packColor(vec4 color);
 vec4 unpackColor(float f);
 void rotate(inout vec2 point, float angle);
@@ -61,7 +65,7 @@ if(fragment_mode == 0)
       vec3 normal = normalize(out_Normal)/2.0 + vec3(0.5);
       vec3 litup = out_Color.rgb*dot(out_Normal,vec3(0.5,-0.25,0.25));
       gl_FragColor = vec4(litup, 1.0);
-      // gl_FragColor = unpackColor(depth);
+      gl_FragColor = vec4(depth, depth, depth, 1.0);
   }
   return;
 }

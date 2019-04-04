@@ -10,20 +10,18 @@ set_tags(identity, [Changed_Uniform]);
 //derive buffer index from identity index
 var buffer_index = identity[INDEX]*6*4;
 
-var is_added = (argument1 == CHANGE_ADD);
-
 for(var i = 0; i < 3; i++)
 {
     //change tag
-    position.coordinates[@i] = position.coordinates[i]*is_added + argument2[i];
+    position.coordinates[@i] = position.coordinates[i]*argument1 + argument2[i];
 
     //encode in uniform buffer
     #define NORMAL_MAX MAX_OFFSET
     #define NORMAL_MIN MIN_OFFSET
     #define TO_NORMALIZE position.coordinates[i]
-  
+
     #include "normalize_against_minmax.c"
-  
+
     write_normal_value_to_uniform_buffer(buffer_index + 4*i, normalized_value, 4);
     #undef NORMAL_MIN
     #undef NORMAL_MAX

@@ -8,8 +8,7 @@ var gs = identity[Grayscale];
 set_tags(identity, [Changed_Uniform]);
 
 //change tag and encode in uniform buffer
-var is_added = (argument1 == CHANGE_ADD);
-gs.value = gs.value*is_added + argument2;
+gs.value = gs.value*argument1 + argument2;
 
 //derive buffer index from identity index
 var buffer_index = identity[INDEX]*6*4 + 4*3 + 2*3 + 3;

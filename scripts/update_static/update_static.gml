@@ -1,8 +1,11 @@
 
 //updated_static(index)
 var statics = tags[|Static];
+
 var query = [Position, Rotation, Scale, Color, Grayscale, VBO];
+
 var index = search_tags(statics[|argument0], query);
+
 if(index[0] != -1)
 {
   var id_tag = tags[|query[0]]; id_tag = id_tag[|index[0]];
@@ -10,6 +13,7 @@ if(index[0] != -1)
 }
 else
   shader_set_uniform_f(shader_get_uniform(standard, "pass_offset"), 0,0,0);
+
 if(index[1] != -1)
 {
   id_tag = tags[|query[1]]; id_tag = id_tag[|index[1]];
@@ -17,6 +21,7 @@ if(index[1] != -1)
 }
 else
   shader_set_uniform_f(shader_get_uniform(standard, "pass_angle"), 0,0,0);
+
 if(index[2] != -1)
 {
   id_tag = tags[|query[2]]; id_tag = id_tag[|index[2]];
@@ -24,6 +29,7 @@ if(index[2] != -1)
 }
 else
   shader_set_uniform_f(shader_get_uniform(standard, "pass_scale"), 1,1,1);
+
 if(index[3] != -1)
 {
   id_tag = tags[|query[3]]; id_tag = id_tag[|index[3]];
@@ -31,6 +37,8 @@ if(index[3] != -1)
 }
 else
   shader_set_uniform_f(shader_get_uniform(standard, "color"), 0,0,0);
+
+
 if(index[4] != -1)
 {
     id_tag = tags[|query[4]];
@@ -38,9 +46,12 @@ if(index[4] != -1)
 }
 else
     shader_set_uniform_f(shader_get_uniform(standard, "grayscale"), 1.0);
+
 //draw to uniform buffer
+
 var X = argument0%10.0;
 var Y = (argument0 - X)/10.0;
 X *= 3; Y *= 3;
+
 //in pixels
 draw_rectangle(X, Y, X+2, Y+2, false);

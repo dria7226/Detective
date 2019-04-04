@@ -24,7 +24,7 @@ for(var i = 0; i < NO_OF_SURFACES; i++)
 		continue;
 
 	surface_set_target(surfaces[i]);
-	draw_clear(c_white);
+	draw_clear(c_black);
 	surface_reset_target();
 }
 

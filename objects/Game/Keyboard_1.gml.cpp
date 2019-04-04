@@ -38,12 +38,12 @@ if keyboard_check(ord("U"))
 
 if keyboard_check(vk_space)
 {
-	position.coordinates[Z] += change/2;
+	position.coordinates[@Z] += change/2;
 }
 
 if keyboard_check(ord("C"))
 {
-	position.coordinates[Z] -= change/2;
+	position.coordinates[@Z] -= change/2;
 }
 
 #ifdef SHOW_USE

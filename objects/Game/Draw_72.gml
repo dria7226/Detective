@@ -15,13 +15,16 @@ for(var i = 0; i < 9; i++)
    var scale = surface_info[i];
    surfaces[i] = surface_create(floor(scale[0]*window_get_width()), floor(scale[1]*window_get_height()));
   }
-    //cache texture pointers for the surfaces
+
+   //cache texture pointers for the surfaces
   surface_texture_pointers[i] = surface_get_texture(surfaces[i]);
  }
+
  if(i == 0)
   continue;
+
  surface_set_target(surfaces[i]);
- draw_clear(c_white);
+ draw_clear(c_black);
  surface_reset_target();
 }
 buffer_set_surface(uniform_buffer, surfaces[0], 0,0,0);

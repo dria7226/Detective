@@ -18,11 +18,11 @@ alpha = 0;
 
 load_main_camera();
 
-load_intro();
+//load_intro();
 
 previous_x = 0; previous_y = 0; speed = 3;
 
-// #include "simple_test_scene.txt"
+#include "simple_test_scene.c"
 
 //completely load hub
 //load_hub();

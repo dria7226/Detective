@@ -4,22 +4,28 @@ attribute vec4 in_Color; // (r,g,b)
 attribute vec2 in_TexCoord; // (u,v)
 uniform vec3 id;
 uniform sampler2D uniform_buffer;
+
 uniform int vertex_mode;
+
 varying highp float depth;
 varying vec3 out_Normal;
 varying vec4 out_Color;
 varying vec2 out_TexCoord;
+
 uniform vec3 camera_position;
 uniform vec3 camera_angle;
 uniform float near_clip;
 uniform float far_clip;
 uniform float screen_ratio;
+
 uniform vec3 offset;
 uniform vec3 angle;
+
 uniform float grayscale;
 uniform vec3 color;
 varying float gs;
 varying vec3 col;
+
 float packColor(vec4 color);
 vec4 unpackColor(float f);
 void rotate(inout vec2 point, float angle);
@@ -38,41 +44,18 @@ return;
  {
 vec3 final_offset = offset;
 vec3 final_angle = angle;
-//optimize uniforms with textures
-float packed_id = dot(id, vec3(255.0, 255.0*256.0, 255.0*256.0*256.0));
-if(packed_id < 10.0*10.0)
-{
-    vec2 a_pixel = vec2(1.0/10.0/6.0, 1.0/10.0);
-    vec2 coordinates = vec2(mod(packed_id, 10.0), 0.0);
-    coordinates.y = packed_id/10.0 - coordinates.x;
-    coordinates.x *= 6.0*10.0;
-    //offset
-    vec4 reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(0.0,0.0));
-    final_offset.x = vec4_to_float(reading)*10560.0 + (-10560.0/2.0);
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(1.0,0.0));
-    final_offset.y = vec4_to_float(reading)*10560.0 + (-10560.0/2.0);
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(2.0,0.0));
-    final_offset.z = vec4_to_float(reading)*10560.0 + (-10560.0/2.0);
-    final_offset = vec3(0.0);
-    //angle
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(1.0,2.0));
-    final_angle.x = vec4_to_float(vec4(reading.rg, 0.0, 0.0))*2.0*3.1415926535897932384626433832795 + (-3.1415926535897932384626433832795);
-    final_angle.y = vec4_to_float(vec4(reading.ba, 0.0, 0.0))*2.0*3.1415926535897932384626433832795 + (-3.1415926535897932384626433832795);
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(2.0,2.0));
-    final_angle.z = vec4_to_float(vec4(reading.rg, 0.0, 0.0))*2.0*3.1415926535897932384626433832795 + (-3.1415926535897932384626433832795);
-    //color and grayscale
-    reading = texture2D(uniform_buffer, coordinates + a_pixel*vec2(0.0,2.0));
-    col.rgb = reading.rgb;
-    gs = reading.a;
-}
+//#include "uniform_decoding.c"
 //local - extract normal and then proceed
 vec3 local = abs(in_Position);
 vec3 sign = in_Position/local;
 sign += vec3(1.0) - abs(sign);
 out_Normal = floor(local/10.0);
-local = (local - 10.0*out_Normal)*sign;
+local = (local - 10.0*out_Normal);
 out_Normal = out_Normal/128.0 - vec3(1.0);
 //snap vertices
+local = floor(local/0.0005)*0.0005;
+//reapply sign
+local *= sign;
 rotate(local.xy, final_angle.z);
 rotate(local.xz, final_angle.y);
 rotate(local.yz, final_angle.x);
@@ -85,7 +68,7 @@ rotate(local.xy, -camera_angle.z);
 rotate(local.xz, -camera_angle.y);
 rotate(local.yz, -camera_angle.x);
 //project
-depth = length(local.xyz);
+depth = local.x;//length(local.xyz);
 gl_Position.z = depth/far_clip*local.x;
 gl_Position.xy = local.yz*near_clip;
 gl_Position.x *= -screen_ratio;
