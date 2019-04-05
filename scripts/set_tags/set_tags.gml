@@ -12,7 +12,7 @@ for(var i = 0; i < number_of_tags; i++)
 	var type = 0;
 	var value = 0;
 
-	if(reading > 100000 && !is_model)
+	if(!is_model && reading > 100000)
 	{
 		type = reading.object_id;
 		value = reading;

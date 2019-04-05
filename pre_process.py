@@ -1,6 +1,6 @@
 import os
 
-verbose = True
+verbose = False
 
 #get definitions and includes first
 definitions = ["NOTHING","OTHER"]
@@ -39,18 +39,16 @@ for subdir, dirs, files in os.walk('E:\Detective_Morrison'):
 
         if not os.access(equivalent_path, os.F_OK):
             needs_update = True
-            if verbose:
-                print("Needs update due to inexistent copy")
+            print("Needs update due to inexistent copy")
         else:
             equivalent_mtime = os.path.getmtime(equivalent_path)
 
         if equivalent_mtime < definitions_mtime:
             needs_update = True
-            if verbose:
-                print("Needs update due to definitions file update")
+            print("Needs update due to definitions file update")
 
         if not needs_update:
-            command = "cpp " + original_path + " -M > dependencies.txt"
+            command = "cpp " + original_path + includes + " -M > dependencies.txt"
             os.system(command)
 
             dependency_file = open("dependencies.txt", 'r')
@@ -60,17 +58,20 @@ for subdir, dirs, files in os.walk('E:\Detective_Morrison'):
 
             #check original_mtime against file mtime
             for subfile in subfiles:
-                if verbose:
-                    print(subfile)
-                mtime = os.path.getmtime(subfile)
-                if equivalent_mtime < mtime:
+                to_replace = file.replace('.cpp','.o: ')
+                subfile = subfile.replace(to_replace, '').replace('\\\n','').replace('\n','').replace('/','\\')
+                for part in subfile.split():
                     if verbose:
+                        print(part)
+                    mtime = os.path.getmtime(part)
+                    if equivalent_mtime < mtime:
                         print("Needs update due to subfile updates")
-                    needs_update = True
-                    break
+                        needs_update = True
+                        break
 
         if needs_update:
             #preprocess
+            print("Updating " + file)
             command = "cpp " + original_path + " -imacros E:/GMS_Tech/cpp_definitions.txt -nostdinc -C -P " + includes + definitions + " > " + equivalent_path
 
             os.system(command)
