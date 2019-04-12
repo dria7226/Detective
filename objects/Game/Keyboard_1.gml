@@ -1,8 +1,6 @@
 
 //find camera
 var camera = tags[Camera]; camera = camera[|0].back_reference;
-var position = camera[Position];
-
 var yaw = camera[Rotation].angle[YAW];
 
 var change = delta_time/1000000*speed;
@@ -38,10 +36,10 @@ if keyboard_check(ord("U"))
 
 if keyboard_check(vk_space)
 {
- position.coordinates[@Z] += change/2;
+ change_position(camera, 1, [0,0,change/2]);
 }
 
 if keyboard_check(ord("C"))
 {
- position.coordinates[@Z] -= change/2;
+ change_position(camera, 1, [0,0,-change/2]);
 }

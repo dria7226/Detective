@@ -1,9 +1,10 @@
 
 var camera = Game.tags[Camera]; camera = camera[|0].back_reference;
 var position = camera[Position];
-shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.coordinates[X], position.coordinates[Y], position.coordinates[Z]);
+shader_set_uniform_f(shader_get_uniform(standard, "camera_position"), position.coordinates[0], position.coordinates[1], position.coordinates[2]);
 var rotation = camera[Rotation];
 shader_set_uniform_f(shader_get_uniform(standard, "camera_angle"), rotation.angle[ROLL], rotation.angle[PITCH], rotation.angle[YAW]);
+shader_set_uniform_f(shader_get_uniform(standard, "zoom"), camera[Camera].zoom);
 
 
 //#include "visibility_culling.c"

@@ -215,14 +215,6 @@
             }
         },
         {
-            "Key": "2a468c5c-0b5a-45d4-86aa-61911d70f56c",
-            "Value": {
-                "id": "b1464ad7-f8a0-4e83-b963-0ea0c36c0c87",
-                "resourcePath": "datafiles_yy\\for_mom.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
             "Key": "2ec3c327-0dac-4863-bf7a-916169f16780",
             "Value": {
                 "id": "dc209c7e-e3d7-4e20-93e8-b5f65ee7634b",
