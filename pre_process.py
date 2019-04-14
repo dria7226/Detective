@@ -3,7 +3,7 @@ import os
 verbose = False
 
 #get definitions and includes first
-definitions = ["NOTHING","OTHER"]
+definitions = []
 temp = ""
 for definition in definitions:
     temp = temp + " -D " + definition
@@ -16,14 +16,33 @@ for subdir, dirs, files in os.walk('E:\GMS_Tech'):
     includes = includes + " -I " + subdir
 includes = includes + " -I ./"
 
-definitions_mtime = os.path.getmtime('E:\GMS_Tech\cpp_definitions.txt')
+def get_subfiles(path, file):
+    command = "cpp " + os.path.join(path,file) + includes + " -M > dependencies.txt"
+    os.system(command)
+
+    dependency_file = open("dependencies.txt", 'r')
+
+    subfiles = []
+
+    for part in dependency_file.readlines():
+        part = part.replace(file.replace('.c','.o: '), '').replace('\\\n','').replace('\n','').replace('/','\\')
+        for subfile in part.split():
+            subfiles.append(subfile)
+
+    dependency_file.close()
+    os.remove("dependencies.txt")
+    return subfiles
+
+definitions_mtime = 0
+for subfile in get_subfiles("E:\GMS_Tech","cpp_definitions.c"):
+    definitions_mtime = max(definitions_mtime, os.path.getmtime(subfile))
 
 total = 0
 
 for subdir, dirs, files in os.walk('E:\Detective_Morrison'):
     #come up with all dependent files, including .cpp file
     for file in files:
-        if not file.endswith('.cpp'):
+        if not file.endswith('.c'):
             continue
         if verbose:
             print(">>>>>>>>>>>>>>><<<<<<<<<<<<<")
@@ -35,7 +54,7 @@ for subdir, dirs, files in os.walk('E:\Detective_Morrison'):
         original_path = os.path.join(subdir, file)
 
         equivalent_mtime = 0
-        equivalent_path = original_path.replace('.cpp','')
+        equivalent_path = original_path.replace('.c','')
 
         if not os.access(equivalent_path, os.F_OK):
             needs_update = True
@@ -48,31 +67,21 @@ for subdir, dirs, files in os.walk('E:\Detective_Morrison'):
             print("Needs update due to definitions file update")
 
         if not needs_update:
-            command = "cpp " + original_path + includes + " -M > dependencies.txt"
-            os.system(command)
-
-            dependency_file = open("dependencies.txt", 'r')
-            subfiles = dependency_file.readlines()
-            dependency_file.close()
-            os.remove("dependencies.txt")
-
             #check original_mtime against file mtime
-            for subfile in subfiles:
-                to_replace = file.replace('.cpp','.o: ')
-                subfile = subfile.replace(to_replace, '').replace('\\\n','').replace('\n','').replace('/','\\')
-                for part in subfile.split():
+            for subfile in get_subfiles(subdir, file):
+                mtime = os.path.getmtime(subfile)
+                if equivalent_mtime < mtime:
                     if verbose:
-                        print(part)
-                    mtime = os.path.getmtime(part)
-                    if equivalent_mtime < mtime:
-                        print("Needs update due to subfile updates")
-                        needs_update = True
-                        break
+                        print("Needs update due to updated " + subfile)
+                    else:
+                        print("Needs update due to updated subfile.")
+                    needs_update = True
+                    break
 
         if needs_update:
             #preprocess
             print("Updating " + file)
-            command = "cpp " + original_path + " -imacros E:/GMS_Tech/cpp_definitions.txt -nostdinc -C -P " + includes + definitions + " > " + equivalent_path
+            command = "cpp " + original_path + " -imacros E:/GMS_Tech/cpp_definitions.c -nostdinc -C -P " + includes + definitions + " > " + equivalent_path
 
             os.system(command)
 

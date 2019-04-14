@@ -2,6 +2,5 @@ Crashes
 - nonexisting segment at end of path (upon reaching end of path) get_point_on_path()
 
 Bugs
-- have to snap vertices to avoid aliasing artifacts
-- depth encoding is wrong
-- depth past camera artifacts
+- some normals get messed up at model export
+- 

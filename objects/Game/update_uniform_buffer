@@ -1,0 +1,2 @@
+
+buffer_set_surface(uniform_buffer, surfaces[0], 0,0,0);

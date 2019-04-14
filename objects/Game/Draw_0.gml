@@ -19,7 +19,7 @@ var no_of_visibles = array_length_1d(visibles); for(var i = 0; i < no_of_visible
 //account for animation as well
 //account for mirrors
 var identity = visibles[i];
-shader_set_uniform_f(shader_get_uniform(standard, "id"), 10.0*10.0%256/255, floor(10.0*10.0/256)%256/255, floor(10.0*10.0/(256*256))/255);
+shader_set_uniform_f(shader_get_uniform(standard, "id"), identity[INDEX]%256/255, floor(identity[INDEX]/256)%256/255, floor(identity[INDEX]/(256*256))/255);
 if(identity[Position] != -1)
 {
   var position = identity[Position];

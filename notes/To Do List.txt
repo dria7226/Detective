@@ -25,10 +25,10 @@
 -----------------------------------------------
 Pre-Production
   Renderer----------------------------ETA June 2019
+  	-uniform buffers
 	-create test scene
     -frustrum culling
 	-lod
-    -uniform buffers
     -animation
 	-mirrors
 
@@ -44,7 +44,7 @@ Pre-Production
   Level Generator w/ Designer AI-----ETA
   	-task system
 	  -spatial hierarchy (contains locations, content groups and objects) (locations can contain content groups and objects, content groups can contain objects)
-	  
+
   Simulator
   Gameplay
   Design Check Program ???
