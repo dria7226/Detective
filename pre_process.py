@@ -25,7 +25,7 @@ def get_subfiles(path, file):
     subfiles = []
 
     for part in dependency_file.readlines():
-        part = part.replace(file.replace('.c','.o: '), '').replace('\\\n','').replace('\n','').replace('/','\\')
+        part = part.replace(file.replace('.cpp','.o: '), '').replace('\\\n','').replace('\n','').replace('/','\\')
         for subfile in part.split():
             subfiles.append(subfile)
 
@@ -34,7 +34,7 @@ def get_subfiles(path, file):
     return subfiles
 
 definitions_mtime = 0
-for subfile in get_subfiles("E:\GMS_Tech","cpp_definitions.c"):
+for subfile in get_subfiles("E:\GMS_Tech","cpp_definitions.cpp"):
     definitions_mtime = max(definitions_mtime, os.path.getmtime(subfile))
 
 total = 0
@@ -42,7 +42,7 @@ total = 0
 for subdir, dirs, files in os.walk('E:\Detective_Morrison'):
     #come up with all dependent files, including .cpp file
     for file in files:
-        if not file.endswith('.c'):
+        if not file.endswith('.cpp'):
             continue
         if verbose:
             print(">>>>>>>>>>>>>>><<<<<<<<<<<<<")
@@ -54,7 +54,7 @@ for subdir, dirs, files in os.walk('E:\Detective_Morrison'):
         original_path = os.path.join(subdir, file)
 
         equivalent_mtime = 0
-        equivalent_path = original_path.replace('.c','')
+        equivalent_path = original_path.replace('.cpp','')
 
         if not os.access(equivalent_path, os.F_OK):
             needs_update = True

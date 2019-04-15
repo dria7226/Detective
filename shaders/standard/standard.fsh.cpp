@@ -8,7 +8,7 @@ void main()
 
   #include "mrt_fragment.c"
 
-  #include "uniform_encoding.c"
+  //#include "uniform_encoding.c"
 
   //#include "edge_detection.c"
 
