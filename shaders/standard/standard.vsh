@@ -98,7 +98,7 @@ rotate(local.xy, -camera_angle.z);
 rotate(local.xz, -camera_angle.y);
 rotate(local.yz, -camera_angle.x);
 //project
-depth = local.x - 0.35;
+depth = local.x - 0.4;
 gl_Position.z = depth;
 depth /= local.x + 0.0;
 gl_Position.xy = local.yz*zoom;

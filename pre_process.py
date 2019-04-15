@@ -81,7 +81,7 @@ for subdir, dirs, files in os.walk('E:\Detective_Morrison'):
         if needs_update:
             #preprocess
             print("Updating " + file)
-            command = "cpp " + original_path + " -imacros E:/GMS_Tech/cpp_definitions.c -nostdinc -C -P " + includes + definitions + " > " + equivalent_path
+            command = "cpp " + original_path + " -imacros E:/GMS_Tech/cpp_definitions.cpp -nostdinc -C -P " + includes + definitions + " > " + equivalent_path
 
             os.system(command)
 

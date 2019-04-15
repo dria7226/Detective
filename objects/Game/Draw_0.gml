@@ -76,11 +76,10 @@ surface_reset_target();
   //#include "render_scene.c"
 //}
 shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
-shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 6);
-surface_set_target(surfaces[5]);
-draw_rectangle(0,0, 10.0*6,10.0,false);
-surface_reset_target();
 shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
+surface_set_target(surfaces[5]);
+draw_surface_stretched(surfaces[0],0,0, 10.0*6*10,10.0*10);
+surface_reset_target();
 //if(IS_SPLITSCREEN)
 //{
 //  draw_surface_part(surfaces[PLAYER_ONE],0,0,window_width*SPLITSCREEN_HORIZONTAL_RATIO, window_height/2, window_width*(1-SPLITSCREEN_HORIZONTAL_RATIO), 0);
