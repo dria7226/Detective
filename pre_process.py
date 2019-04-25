@@ -3,10 +3,11 @@ import os
 verbose = False
 
 #get definitions and includes first
-definitions = []
+pre_process_definitions = open("pre_process_definitions.txt", 'r')
 temp = ""
-for definition in definitions:
+for definition in pre_process_definitions.read().splitlines():
     temp = temp + " -D " + definition
+pre_process_definitions.close()
 definitions = temp
 
 includes = ""
@@ -36,6 +37,7 @@ def get_subfiles(path, file):
 definitions_mtime = 0
 for subfile in get_subfiles("E:\GMS_Tech","cpp_definitions.cpp"):
     definitions_mtime = max(definitions_mtime, os.path.getmtime(subfile))
+definitions_mtime = max(definitions_mtime, os.path.getmtime("pre_process_definitions.txt"))
 
 total = 0
 

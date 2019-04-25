@@ -28,17 +28,10 @@ if keyboard_check(ord("M"))
 {
  surface_save(surfaces[1], "MRT.png");
 }
-
-if keyboard_check(ord("U"))
-{
- surface_save(surfaces[0], "uniform_buffer.png");
-}
-
 if keyboard_check(vk_space)
 {
  change_position(camera, 1, [0,0,change/2]);
 }
-
 if keyboard_check(ord("C"))
 {
  change_position(camera, 1, [0,0,-change/2]);

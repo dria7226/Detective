@@ -1,8 +1,6 @@
+setup_tags();
 
-initialize_tags();
 identities = ds_list_create();
-
-changed_identities = ds_list_create(); //changed uniforms
 
 //
 var cube = create_identity(["cube", VBO]);
@@ -18,9 +16,9 @@ alpha = 0;
 
 load_main_camera();
 
-load_intro();
+//load_intro();
 
-//#include "simple_test_scene.c"
+#include "simple_test_scene.c"
 
 previous_x = 0; previous_y = 0; speed = 3;
 

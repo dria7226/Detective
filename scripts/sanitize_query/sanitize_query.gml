@@ -1,5 +1,5 @@
 //sanitize_query(query)
-var banned_tags = [Static];
+var banned_tags = [];
 var number_of_banned_tags = array_length_1d(banned_tags);
 
 var query = argument0;

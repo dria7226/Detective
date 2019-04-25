@@ -1,8 +1,8 @@
 {
-    "id": "75858ae6-e8e6-4cec-9253-b535dcfc50d7",
+    "id": "275d084d-47b3-40c6-bf36-070fc6d46e32",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "game_setup",
+    "name": "change_rotation",
     "IsCompatibility": false,
     "IsDnD": false
 }

@@ -210,7 +210,7 @@
             "Key": "275d084d-47b3-40c6-bf36-070fc6d46e32",
             "Value": {
                 "id": "f9dbbddc-052c-40e4-b7c8-9dcfe85276c3",
-                "resourcePath": "scripts\\change_angle\\change_angle.yy",
+                "resourcePath": "scripts\\change_rotation\\change_rotation.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -332,6 +332,14 @@
                 "id": "f6afe262-4375-4912-9830-c0bf4ad740fc",
                 "resourcePath": "datafiles_yy\\Level Building\\wall_deco\\med.yy",
                 "resourceType": "GMIncludedFile"
+            }
+        },
+        {
+            "Key": "45c030f1-9a6c-4044-a13d-4559a2d54044",
+            "Value": {
+                "id": "8323f354-9d4f-4fb1-80ef-cac32a11e631",
+                "resourcePath": "scripts\\change_zoom\\change_zoom.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -506,7 +514,7 @@
             "Key": "75858ae6-e8e6-4cec-9253-b535dcfc50d7",
             "Value": {
                 "id": "f5092166-d341-41f2-995b-79d640f8e0d8",
-                "resourcePath": "scripts\\game_setup\\game_setup.yy",
+                "resourcePath": "scripts\\setup_game\\setup_game.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -559,6 +567,14 @@
             }
         },
         {
+            "Key": "86a70e2b-7f97-4db4-baef-47d00998b615",
+            "Value": {
+                "id": "c4520039-4bf4-4043-a4d6-3a6e96f02a81",
+                "resourcePath": "objects\\Cached_ID\\Cached_ID.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "8999b813-0cfb-4210-a6a2-a2a8ee925765",
             "Value": {
                 "id": "2198904a-2745-417b-8466-290cba7a0b83",
@@ -594,7 +610,7 @@
             "Key": "916fca90-9587-43ed-addb-f0bbfa30aa9f",
             "Value": {
                 "id": "1d7395a9-c71a-4649-93f4-c2a1a868a206",
-                "resourcePath": "scripts\\renderer_setup\\renderer_setup.yy",
+                "resourcePath": "scripts\\setup_renderer\\setup_renderer.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -682,7 +698,7 @@
             "Key": "9ca4c4c6-7fe0-4478-ba3a-55a5226e8b38",
             "Value": {
                 "id": "c8086526-1308-4030-a451-67b28201ac2e",
-                "resourcePath": "scripts\\initialize_tags\\initialize_tags.yy",
+                "resourcePath": "scripts\\setup_tags\\setup_tags.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -1078,7 +1094,8 @@
         "275d084d-47b3-40c6-bf36-070fc6d46e32",
         "3f9daf10-2341-4694-b06d-b40d9dc0a3fc",
         "a306be87-b4eb-4555-828e-60fb83a7dcb1",
-        "0abcfac6-b9f6-4eb9-b0ca-a1292888835b"
+        "0abcfac6-b9f6-4eb9-b0ca-a1292888835b",
+        "45c030f1-9a6c-4044-a13d-4559a2d54044"
     ],
     "tutorial": ""
 }

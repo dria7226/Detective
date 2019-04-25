@@ -25,7 +25,7 @@
 -----------------------------------------------
 Pre-Production
   Renderer----------------------------ETA June 2019
-  	-uniform buffers
+  	-uniform compression
 	-create test scene
     -frustrum culling
 	-lod

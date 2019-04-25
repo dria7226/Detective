@@ -16,7 +16,3 @@ if(argument1 == REMOVE_IDENTITY_AND_TAGS)
 
 //remove identity
 Game.identities[|argument0] = 0;
-
-#ifdef SHOW_USE
-//uses_identities
-#endif

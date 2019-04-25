@@ -8,7 +8,8 @@
         "275d084d-47b3-40c6-bf36-070fc6d46e32",
         "3f9daf10-2341-4694-b06d-b40d9dc0a3fc",
         "a306be87-b4eb-4555-828e-60fb83a7dcb1",
-        "0abcfac6-b9f6-4eb9-b0ca-a1292888835b"
+        "0abcfac6-b9f6-4eb9-b0ca-a1292888835b",
+        "45c030f1-9a6c-4044-a13d-4559a2d54044"
     ],
     "filterType": "GMScript",
     "folderName": "Uniform Buffers",

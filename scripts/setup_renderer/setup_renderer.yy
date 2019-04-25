@@ -1,8 +1,8 @@
 {
-    "id": "275d084d-47b3-40c6-bf36-070fc6d46e32",
+    "id": "916fca90-9587-43ed-addb-f0bbfa30aa9f",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "change_angle",
+    "name": "setup_renderer",
     "IsCompatibility": false,
     "IsDnD": false
 }

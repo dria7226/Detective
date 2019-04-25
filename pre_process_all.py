@@ -3,10 +3,11 @@ import os
 total = 0
 
 #get definitions and includes first
-definitions = ["NOTHING","OTHER"]
+pre_process_definitions = open("pre_process_definitions.txt", 'r')
 temp = ""
-for definition in definitions:
+for definition in pre_process_definitions.read().splitlines():
     temp = temp + " -D " + definition
+pre_process_definitions.close()
 definitions = temp
 
 includes = ""
@@ -23,7 +24,7 @@ for subdir, dirs, files in os.walk('E:\Detective_Morrison'):
             continue
 
         #preprocess
-        command = "cpp " + os.path.join(subdir, file) + " -imacros E:/GMS_Tech/cpp_definitions.txt -nostdinc -C -P " + includes + definitions + " > " + os.path.join(subdir, file.replace(".cpp",""))
+        command = "cpp " + os.path.join(subdir, file) + " -imacros E:/GMS_Tech/cpp_definitions.cpp -nostdinc -C -P " + includes + definitions + " > " + os.path.join(subdir, file.replace(".cpp",""))
 
         output = os.system(command)
 

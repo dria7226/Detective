@@ -1,5 +1,5 @@
-
 //create_identity(tags)
+
 var array = argument0;
 
 var identity = array_create(NO_OF_TAGS + 1, -1);
@@ -20,5 +20,15 @@ if(i >= total_identities)
 identity[@INDEX] = i;
 
 set_tags(identity, array);
+
+#ifdef UNIFORM_BUFFER
+var id_to_set = [i/UNIFORM_BUFFER_WIDTH, 0];
+id_to_set[1] = floor(id_to_set[0]);
+
+identity[@Cached_ID].cache[0] = id_to_set[0] - id_to_set[1];
+identity[@Cached_ID].cache[1] = id_to_set[1]/UNIFORM_BUFFER_WIDTH;
+#endif
+
 return identity;
+
 //uses_identities

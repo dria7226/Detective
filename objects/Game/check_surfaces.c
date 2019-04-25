@@ -4,6 +4,7 @@ for(var i = 0; i < NO_OF_SURFACES; i++)
 {
 	if(!surface_exists(surfaces[i]))
 	{
+		#ifdef UNIFORM_BUFFER
 		if(i == UNIFORM_BUFFER)
 		{
 			surfaces[i] = surface_create(UNIFORM_BUFFER_WIDTH*6, UNIFORM_BUFFER_WIDTH);
@@ -12,16 +13,21 @@ for(var i = 0; i < NO_OF_SURFACES; i++)
 		}
 		else
 		{
+		#endif
 			var scale = surface_info[i];
 			surfaces[i] = surface_create(floor(scale[0]*window_get_width()), floor(scale[1]*window_get_height()));
+		#ifdef UNIFORM_BUFFER
 		}
+		#endif
 
-	  //cache texture pointers for the surfaces
+	  	//cache texture pointers for the surfaces
 		surface_texture_pointers[i] = surface_get_texture(surfaces[i]);
 	}
 
+	#ifdef UNIFORM_BUFFER
 	if(i == UNIFORM_BUFFER)
 		continue;
+	#endif
 
 	surface_set_target(surfaces[i]);
 	draw_clear(c_black);

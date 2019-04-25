@@ -2,23 +2,36 @@
 attribute vec3 in_Position; // (x,y,z)
 attribute vec4 in_Color; // (r,g,b)
 attribute vec2 in_TexCoord; // (u,v)
-uniform sampler2D uniform_buffer;
+
+
+
 
 uniform int vertex_mode;
 
-uniform vec3 camera_position;
-uniform vec3 camera_angle;
+uniform vec4 camera_id;
+uniform vec4 id;
+
+
+
+
 uniform float zoom;
+
+
 uniform float screen_ratio;
 
-uniform vec3 id;
-uniform vec3 offset;
-uniform vec3 angle;
 
-uniform float grayscale;
-uniform vec3 color;
-varying float gs;
-varying vec3 col;
+
+uniform vec3 in_camera_position;
+uniform vec3 in_camera_angle;
+
+uniform vec3 in_offset;
+uniform vec3 in_angle;
+uniform vec3 in_color;
+uniform float in_grayscale;
+
+
+varying float grayscale;
+varying vec3 color;
 
 varying float depth;
 varying vec3 out_Normal;
@@ -41,59 +54,31 @@ return;
  }
  else
  {
-vec3 final_offset = offset;
-vec3 final_angle = angle;
-//optimize uniforms with textures
-float packed_id = dot(id, vec3(255.0, 255.0*256.0, 255.0*256.0*256.0));
-if(packed_id < 10.0*10.0)
-{
-    vec2 coordinates = vec2(0.0, floor(packed_id/ 10.0));
-    coordinates.x = packed_id - coordinates.y*10.0;
-    coordinates /= 10.0;
-    coordinates.x /= 6.0;
-    //offset
-    vec4 reading = texture2D(uniform_buffer, coordinates);
-    final_offset.x = vec4_to_float(reading)*10560.0 + (-10560.0/2.0);
-    coordinates.x += 1.0/(10.0*6.0);
-    reading = texture2D(uniform_buffer, coordinates);
-    final_offset.y = vec4_to_float(reading)*10560.0 + (-10560.0/2.0);
-    coordinates.x += 1.0/(10.0*6.0);
-    reading = texture2D(uniform_buffer, coordinates);
-    final_offset.z = vec4_to_float(reading)*10560.0 + (-10560.0/2.0);
-    final_offset = vec3(0.0);
-    //angle
-    coordinates.x += 1.0/(10.0*6.0);
-    reading = texture2D(uniform_buffer, coordinates);
-    final_angle.x = vec4_to_float(vec4(reading.rg, 0.0, 0.0))*2.0*3.1415926535897932384626433832795 + (-3.1415926535897932384626433832795);
-    final_angle.y = vec4_to_float(vec4(reading.ba, 0.0, 0.0))*2.0*3.1415926535897932384626433832795 + (-3.1415926535897932384626433832795);
-    coordinates.x += 1.0/(10.0*6.0);
-    reading = texture2D(uniform_buffer, coordinates);
-    final_angle.z = vec4_to_float(vec4(reading.rg, 0.0, 0.0))*2.0*3.1415926535897932384626433832795 + (-3.1415926535897932384626433832795);
-    //color and grayscale
-    coordinates.x += 1.0/(10.0*6.0);
-    reading = texture2D(uniform_buffer, coordinates);
-    col.rgb = reading.rgb;
-    gs = reading.a;
-}
+vec3 s = vec3(1.0);
+vec3 offset = in_offset;
+vec3 angle = in_angle;
+vec3 camera_position = in_camera_position;
+vec3 camera_angle = in_camera_angle;
+vec3 local = in_Position;
 //local - extract normal and then proceed
-vec3 local = abs(in_Position);
-vec3 sign = in_Position/local;
-sign += vec3(1.0) - abs(sign);
+local = abs(local);
+s = sign(in_Position);
+s += vec3(1.0) - abs(s);
 out_Normal = floor(local/10.0);
-local = (local - 10.0*out_Normal);
+local = local - 10.0*out_Normal;
 out_Normal = out_Normal/128.0 - vec3(1.0);
 //snap vertices
 local = floor(local/0.0005)*0.0005;
 //reapply sign
-local *= sign;
-rotate(local.xy, final_angle.z);
-rotate(local.xz, final_angle.y);
-rotate(local.yz, final_angle.x);
-rotate(out_Normal.xy, final_angle.z);
-rotate(out_Normal.xz, final_angle.y);
-rotate(out_Normal.yz, final_angle.x);
+local *= s;
+rotate(local.xy, angle.z);
+rotate(local.xz, angle.y);
+rotate(local.yz, angle.x);
+rotate(out_Normal.xy, angle.z);
+rotate(out_Normal.xz, angle.y);
+rotate(out_Normal.yz, angle.x);
 //local to relative
-local += final_offset - camera_position;
+local += offset - camera_position;
 rotate(local.xy, -camera_angle.z);
 rotate(local.xz, -camera_angle.y);
 rotate(local.yz, -camera_angle.x);
@@ -107,28 +92,26 @@ gl_Position.w = local.x + 0.0;
  }
 if(vertex_mode == 2)
 {
- out_Color = vec4(id, 1.0);
- out_TexCoord = vec2(0.0);
+out_Color = vec4(id.rgb/255.0, 1.0);
+out_TexCoord = vec2(0.0);
 }
 else
 {
- out_Color = in_Color;
- if(dot(id, vec3(255.0, 255.0*256.0, 255.0*256.0*256.0)) >= 10.0*10.0)
- {
-  gs = grayscale;
-  col = color;
- }
- if(in_TexCoord == vec2(0.0))
- {
-  if(out_Color == vec4(1.0))
-   out_Color = vec4(col, 1.0);
-  if(grayscale != 1.0)
-  {
-   vec4 intensity = (out_Color.rgba + out_Color.gbra + out_Color.brga)/3.0;
-   out_Color = mix(intensity, out_Color, gs);
-  }
- }
- out_TexCoord = in_TexCoord;
+out_Color = in_Color;
+//no texture
+if(in_TexCoord == vec2(0.0))
+{
+    //perform vertex color setting
+    if(out_Color == vec4(1.0))
+        out_Color = vec4(color, 1.0);
+    //and apply grayscale
+    if(grayscale != 1.0)
+    {
+        vec4 intensity = (out_Color.rgba + out_Color.gbra + out_Color.brga)/3.0;
+        out_Color = mix(intensity, out_Color, grayscale);
+    }
+}
+out_TexCoord = in_TexCoord;
 }
 }
 void rotate(inout vec2 point, float angle)

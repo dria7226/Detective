@@ -58,7 +58,7 @@ identity[VBO].lod[0] = wall;
 
 change_position(identity, CHANGE_SET, [-3/2, -3*3 + 3/2, 0]);
 
-change_angle(identity, CHANGE_SET, [0, 0, pi/2]);
+change_rotation(identity, CHANGE_SET, [0, 0, pi/2]);
 
 change_color(identity, CHANGE_SET, [0.2, 0.4, 0.2]);
 

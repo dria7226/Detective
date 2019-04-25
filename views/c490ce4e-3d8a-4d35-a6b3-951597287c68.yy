@@ -24,7 +24,8 @@
         "a3f8cf39-4587-48eb-aaf1-2afa25780540",
         "cb840edc-3d44-41a9-8545-c47d87355233",
         "110f4c2d-528e-400c-97d7-fee3c23eb501",
-        "7328906a-9b37-4566-889f-3a6eb9f836b5"
+        "7328906a-9b37-4566-889f-3a6eb9f836b5",
+        "86a70e2b-7f97-4db4-baef-47d00998b615"
     ],
     "filterType": "GMObject",
     "folderName": "Tags",

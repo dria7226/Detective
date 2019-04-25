@@ -49,8 +49,8 @@ else
 
 //draw to uniform buffer
 
-var X = argument0%10.0;
-var Y = (argument0 - X)/10.0;
+var X = argument0%UNIFORM_BUFFER_WIDTH;
+var Y = (argument0 - X)/UNIFORM_BUFFER_WIDTH;
 X *= 3; Y *= 3;
 
 //in pixels

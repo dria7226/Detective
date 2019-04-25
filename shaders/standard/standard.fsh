@@ -3,15 +3,10 @@ varying float depth;
 varying vec3 out_Normal;
 varying vec4 out_Color;
 varying vec2 out_TexCoord;
-uniform vec3 pass_offset;
-uniform vec3 pass_angle;
-uniform vec3 pass_scale;
-
 uniform vec2 a_pixel;
-uniform sampler2D uniform_buffer;
 
-varying float gs;
-varying vec3 col;
+varying float grayscale;
+varying vec3 color;
 
 uniform int fragment_mode;
 
@@ -39,12 +34,12 @@ if(fragment_mode == 0)
       c = texture2D(gm_BaseTexture, out_TexCoord);
       //color
       if(c == vec4(1.0))
-        c = vec4(col, 1.0);
+        c = vec4(color, 1.0);
       //grayscale
-      if(gs != 1.0)
+      if(grayscale != 1.0)
       {
         vec4 intensity = (c.rgba + c.gbra + c.brga)/3.0;
-        c = mix(intensity, c, gs);
+        c = mix(intensity, c, grayscale);
       }
     }
     gl_FragColor = c;

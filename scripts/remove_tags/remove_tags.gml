@@ -29,6 +29,4 @@ for(var tag = 0; tag < number_of_tags; tag++)
 	argument0[@type] = -1;
 }
 
-#ifdef SHOW_USE
 //uses_identities
-#endif

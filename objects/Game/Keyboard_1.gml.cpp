@@ -29,10 +29,12 @@ if keyboard_check(ord("M"))
 	surface_save(surfaces[MRT], "MRT.png");
 }
 
+#ifdef UNIFORM_BUFFER
 if keyboard_check(ord("U"))
 {
 	surface_save(surfaces[UNIFORM_BUFFER], "uniform_buffer.png");
 }
+#endif
 
 if keyboard_check(vk_space)
 {
