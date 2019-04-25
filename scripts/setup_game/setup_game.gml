@@ -25,7 +25,7 @@ for(var i = 0; i < 10; i++)
     {
         var identity = create_identity([VBO, Position]);
         identity[VBO].lod[0] = test[VBO].lod[0];
-        change_position(identity, 0, [i,j,0]);
+        change_position(identity, 0, [i,j,6]);
         visibles[array_length_1d(visibles)] = identity;
     }
 }

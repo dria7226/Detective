@@ -14,30 +14,16 @@ uniform vec4 id;
 
 
 
-uniform float zoom;
+
 
 
 uniform float screen_ratio;
-
-
-
-uniform vec3 in_camera_position;
-uniform vec3 in_camera_angle;
-
-uniform vec3 in_offset;
-uniform vec3 in_angle;
-uniform vec3 in_color;
-uniform float in_grayscale;
-
-
 varying float grayscale;
 varying vec3 color;
-
 varying float depth;
 varying vec3 out_Normal;
 varying vec4 out_Color;
 varying vec2 out_TexCoord;
-
 float packColor(vec4 color);
 vec4 unpackColor(float f);
 void rotate(inout vec2 point, float angle);
@@ -55,17 +41,25 @@ return;
  else
  {
 vec3 s = vec3(1.0);
-vec3 offset = in_offset;
-vec3 angle = in_angle;
-vec3 camera_position = in_camera_position;
-vec3 camera_angle = in_camera_angle;
+vec3 offset = vec3(0.0);
+vec3 angle = vec3(0.0);
+vec3 camera_position = vec3(0.0);
+vec3 camera_angle = vec3(0.0);
+//get object uniforms
+offset = abs(id.xyz);
+s = sign(id.xyz);
+s += vec3(1.0) - abs(s);
+angle = floor(offset/100000.0);
+offset = offset - angle*100000.0;
+angle *= 2.0*3.1415926535897932384626433832795/999.0;
+offset *= s;
 vec3 local = in_Position;
 //local - extract normal and then proceed
-local = abs(local);
-s = sign(in_Position);
+local = abs(in_Position.xyz);
+s = sign(in_Position.xyz);
 s += vec3(1.0) - abs(s);
 out_Normal = floor(local/10.0);
-local = local - 10.0*out_Normal;
+local = local - out_Normal*10.0;
 out_Normal = out_Normal/128.0 - vec3(1.0);
 //snap vertices
 local = floor(local/0.0005)*0.0005;
@@ -77,6 +71,14 @@ rotate(local.yz, angle.x);
 rotate(out_Normal.xy, angle.z);
 rotate(out_Normal.xz, angle.y);
 rotate(out_Normal.yz, angle.x);
+//get camera uniforms
+camera_position = abs(camera_id.xyz);
+s = sign(camera_id.xyz);
+s += vec3(1.0) - abs(s);
+camera_angle = floor(camera_position/100000.0);
+camera_position = camera_position - camera_angle*100000.0;
+camera_angle *= 2.0*3.1415926535897932384626433832795/999.0;
+camera_position *= s;
 //local to relative
 local += offset - camera_position;
 rotate(local.xy, -camera_angle.z);
@@ -86,7 +88,7 @@ rotate(local.yz, -camera_angle.x);
 depth = local.x - 0.4;
 gl_Position.z = depth;
 depth /= local.x + 0.0;
-gl_Position.xy = local.yz*zoom;
+gl_Position.xy = local.yz*camera_id.w;
 gl_Position.x *= -screen_ratio;
 gl_Position.w = local.x + 0.0;
  }

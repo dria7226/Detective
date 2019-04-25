@@ -10,7 +10,7 @@ for(var i = 0; i < 10; i++)
 
         identity[VBO].lod[0] = test[VBO].lod[0];
 
-        change_position(identity, CHANGE_SET, [i,j,0]);
+        change_position(identity, CHANGE_SET, [i,j,6]);
 
         ADD_IDENTITY_TO_VISIBLES(identity)
     }

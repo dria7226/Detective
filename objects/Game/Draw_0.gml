@@ -1,10 +1,9 @@
 
 var identity = Game.tags[Camera]; identity = identity[|0].back_reference;
-var position = identity[Position];
-shader_set_uniform_f(shader_get_uniform(standard, "in_camera_position"), position.coordinates[X], position.coordinates[Y], position.coordinates[Z]);
-var rotation = identity[Rotation];
-shader_set_uniform_f(shader_get_uniform(standard, "in_camera_angle"), rotation.angle[ROLL], rotation.angle[PITCH], rotation.angle[YAW]);
-shader_set_uniform_f(shader_get_uniform(standard, "zoom"), identity[Camera].zoom);
+shader_set_uniform_f(shader_get_uniform(standard, "camera_id"), identity[Cached_ID].cache[0], identity[Cached_ID].cache[1], identity[Cached_ID].cache[2], identity[Cached_ID].cache[3]);
+
+
+
 //#include "visibility_culling.c"
 //#include "mirrors.c"
 surface_set_target(surfaces[1]);
@@ -16,33 +15,8 @@ var no_of_visibles = array_length_1d(visibles); for(var i = 0; i < no_of_visible
 //- account for mirrors
 //- account for animations
 identity = visibles[i];
-if(identity[Position] != -1)
-{
-  var position = identity[Position];
-  shader_set_uniform_f(shader_get_uniform(standard, "in_offset"), position.coordinates[X], position.coordinates[Y], position.coordinates[Z]);
-}
-else
-  shader_set_uniform_f(shader_get_uniform(standard, "in_offset"), 0,0,0);
-if(identity[Rotation] != -1)
-{
-  var rotation = identity[Rotation];
-  shader_set_uniform_f(shader_get_uniform(standard, "in_angle"), rotation.angle[ROLL], rotation.angle[PITCH], rotation.angle[YAW]);
-}
-else
-  shader_set_uniform_f(shader_get_uniform(standard, "in_angle"), 0,0,0);
-if(identity[Color] != -1)
-{
-  var color = identity[Color];
-  shader_set_uniform_f(shader_get_uniform(standard, "in_color"), color.channels[R], color.channels[G], color.channels[B]);
-}
-else
-  shader_set_uniform_f(shader_get_uniform(standard, "in_color"), 0,0,0);
-if(identity[Grayscale] != -1)
-{
-    shader_set_uniform_f(shader_get_uniform(standard, "in_grayscale"), identity[Grayscale].value);
-}
-else
-    shader_set_uniform_f(shader_get_uniform(standard, "in_grayscale"), 1.0);
+if(identity[Cached_ID] == -1) continue;
+shader_set_uniform_f(shader_get_uniform(standard, "id"), identity[Cached_ID].cache[0], identity[Cached_ID].cache[1], identity[Cached_ID].cache[2], identity[Cached_ID].cache[3]);
 if(identity[VBO] != -1)
 {
     var lod_index = 0;
