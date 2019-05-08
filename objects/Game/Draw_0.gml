@@ -1,9 +1,9 @@
 
 var identity = Game.tags[Camera]; identity = identity[|0].back_reference;
-shader_set_uniform_f(shader_get_uniform(standard, "camera_id"), identity[Cached_ID].cache[0], identity[Cached_ID].cache[1], identity[Cached_ID].cache[2], identity[Cached_ID].cache[3]);
-
-
-
+var position = identity[Position];
+shader_set_uniform_f(shader_get_uniform(standard, "in_camera_position"), position.coordinates[X], position.coordinates[Y], position.coordinates[Z]);
+var rotation = identity[Rotation];
+shader_set_uniform_f(shader_get_uniform(standard, "in_camera_angle"), rotation.angle[ROLL], rotation.angle[PITCH], rotation.angle[YAW]);
 //#include "visibility_culling.c"
 //#include "mirrors.c"
 surface_set_target(surfaces[1]);

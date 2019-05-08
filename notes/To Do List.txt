@@ -25,15 +25,18 @@
 -----------------------------------------------
 Pre-Production
   Renderer----------------------------ETA June 2019
-  	-uniform compression
 	-create test scene
     -frustrum culling
 	-lod
     -animation
+		-skeletal
+		-simple transformations
+		-vertex shader animation (trees, bushes, vines)
 	-mirrors
 
-	-omni lights
-	-shadow casting spot lights
+	-shading (hard shadows, no diffuse lighting)
+		-omni lights
+		-shadow casting spot lights
 
 	-post process
 		-edge detection
