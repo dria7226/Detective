@@ -26,6 +26,8 @@ if(identity[Cached_ID] == -1)
 identity[Cached_ID].cache[@3] = camera.zoom;
 #endif
 
+SET_UNIFORM_F("zoom", 1)
+
 #ifdef SHOW_USE
 //uses_identities, uses_camera_tag, uses_uniform_buffer, uses_uniform_compression
 #endif

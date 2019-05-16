@@ -62,7 +62,7 @@ out_Normal = floor(local/10.0);
 local = local - out_Normal*10.0;
 out_Normal = out_Normal/128.0 - vec3(1.0);
 //snap vertices
-local = floor(local/0.0005)*0.0005;
+local = floor(local/0.00075)*0.00075;
 //reapply sign
 local *= s;
 rotate(local.xy, angle.z);
@@ -77,7 +77,7 @@ rotate(local.xy, -camera_angle.z);
 rotate(local.xz, -camera_angle.y);
 rotate(local.yz, -camera_angle.x);
 //project
-depth = local.x - 0.4;
+depth = local.x - 0.16;
 gl_Position.z = depth;
 depth /= local.x + 0.0;
 gl_Position.xy = local.yz*zoom;
@@ -92,6 +92,15 @@ out_TexCoord = vec2(0.0);
 else
 {
 out_Color = in_Color;
+float color_and_gs = id.a;
+color.r = floor(color_and_gs);
+color_and_gs = (color_and_gs - color.r)*1000.0;
+color.g = floor(color_and_gs);
+color_and_gs = (color_and_gs - color.g)*1000.0;
+color.b = floor(color_and_gs);
+color_and_gs = (color_and_gs - color.b)*1000.0;
+color /= 255.0;
+grayscale = floor(color_and_gs)/255.0;
 //no texture
 if(in_TexCoord == vec2(0.0))
 {

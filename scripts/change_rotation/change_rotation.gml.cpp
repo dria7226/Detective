@@ -28,8 +28,6 @@ for(var i = 0; i < 3; i++)
     var is_negative = (no_of_circles < 0);
 
     no_of_circles += (is_negative*2 - 1)*floor(no_of_circles*(1 - is_negative*2)) + is_negative;
-
-    rotation.angle[@i] = no_of_circles*2*pi;
     #endif
 
     #ifdef UNIFORM_BUFFER

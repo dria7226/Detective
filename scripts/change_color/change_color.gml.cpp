@@ -22,9 +22,7 @@ buffer_seek(uniform_buffer, buffer_seek_start, buffer_index);
 if(identity[Cached_ID] == -1)
     set_tags(identity, [Cached_ID]);
 
-identity[Cached_ID].cache[@3] -= identity[Cached_ID].cache[3]%255;
-
-var position = 1000*1000*1000;
+identity[Cached_ID].cache[@3] = (identity[Cached_ID].cache[3]*1000*1000*1000)%1000;
 #endif
 
 for(var i = 0; i < 3; i++)
@@ -38,8 +36,8 @@ for(var i = 0; i < 3; i++)
     #endif
 
     #ifdef UNIFORM_COMPRESSION
-    identity[Cached_ID].cache[@3] += floor(col.channels[i]*byte)*position;
-    position /= 1000;
+    identity[Cached_ID].cache[@3] /= 1000;
+    identity[Cached_ID].cache[@3] += floor(col.channels[i]*byte);
     #endif
 }
 

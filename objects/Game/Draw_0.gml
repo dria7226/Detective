@@ -7,6 +7,7 @@ shader_set_uniform_f(shader_get_uniform(standard, "in_camera_angle"), rotation.a
 //#include "visibility_culling.c"
 //#include "mirrors.c"
 surface_set_target(surfaces[1]);
+gpu_set_tex_filter(true);
 shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 0);
 shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 0);
 var no_of_visibles = array_length_1d(visibles); for(var i = 0; i < no_of_visibles; i++)
@@ -24,6 +25,7 @@ if(identity[VBO] != -1)
     vertex_submit(identity[VBO].lod[lod_index], pr_trianglelist, 0);
 }
 }
+gpu_set_tex_filter(false);
 surface_reset_target();
 //#include "edge.c"
 //#include "collect_lights.c"

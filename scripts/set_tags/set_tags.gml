@@ -29,14 +29,15 @@ for(var i = 0; i < number_of_tags; i++)
 		if(is_model)
 		for(var j = 0; j < 3; j++)
 		{
-			if(!file_exists(reading))
+			if(file_exists(reading))
+				value.lod[j] = load_model(reading);
+			else
 			{
 				value.lod[j] = 0;
 				log(ERROR, "Inexistent model: " + reading, debug_get_callstack());
 			}
-			value.lod[j] = load_model(reading);
 		}
-		
+
 		ds_list_add(Game.tags[type], value);
 	}
 

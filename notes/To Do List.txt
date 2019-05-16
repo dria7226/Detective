@@ -25,21 +25,24 @@
 -----------------------------------------------
 Pre-Production
   Renderer----------------------------ETA June 2019
+	-fix color and gs uniform compression
 	-create test scene
+		- add mirror
+		- add window
+		- add door
     -frustrum culling
 	-lod
+	-mirrors
+	-shading (hard shadows, no diffuse lighting)
+		-omni lights
+		-shadow casting spot lights
+	-post process
+			-edge detection
     -animation
 		-skeletal
 		-simple transformations
 		-vertex shader animation (trees, bushes, vines)
-	-mirrors
 
-	-shading (hard shadows, no diffuse lighting)
-		-omni lights
-		-shadow casting spot lights
-
-	-post process
-		-edge detection
 ---------------------
     -software renderer?
     -splitscreen

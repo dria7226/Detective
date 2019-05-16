@@ -2,5 +2,4 @@ Crashes
 - nonexisting segment at end of path (upon reaching end of path) get_point_on_path()
 
 Bugs
-- some normals get messed up at model export
 - 

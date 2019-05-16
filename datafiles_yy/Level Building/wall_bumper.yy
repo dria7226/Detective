@@ -1,5 +1,5 @@
 {
-    "id": "668535ea-8a13-49d2-aef8-90c099f3de29",
+    "id": "49ecaf1a-bdef-4699-ad9e-49caaf4714f8",
     "modelName": "GMIncludedFile",
     "mvc": "1.0",
     "name": "wall_bumper",

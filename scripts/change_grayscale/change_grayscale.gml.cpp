@@ -24,9 +24,10 @@ buffer_poke(uniform_buffer, buffer_index, buffer_u8, floor(gs.value*byte));
 if(identity[Cached_ID] == -1)
     set_tags(identity, [Cached_ID]);
 
-identity[Cached_ID].cache[@3] = floor(identity[Cached_ID].cache[3]/1000)*1000;
+identity[Cached_ID].cache[@3] = floor(identity[Cached_ID].cache[3]*1000*1000);
 
-identity[Cached_ID].cache[@3] += floor(gs.value*byte);
+identity[Cached_ID].cache[@3] += floor(gs.value*byte)/1000;
+identity[Cached_ID].cache[@3] /= 1000*1000;
 #endif
 
 #ifdef SHOW_USE
