@@ -631,6 +631,14 @@
             }
         },
         {
+            "Key": "93566aad-c3b3-48a9-8fa7-9c5ee19f74ac",
+            "Value": {
+                "id": "1d8fc2de-a029-43b2-9685-95eb5944ca7f",
+                "resourcePath": "options\\tvos\\options_tvos.yy",
+                "resourceType": "GMtvOSOptions"
+            }
+        },
+        {
             "Key": "961b2f7f-2cc6-43eb-b47e-0047c2e0dc55",
             "Value": {
                 "id": "c0bc0da1-b437-4205-91b1-9fba7e98aeca",
@@ -751,6 +759,14 @@
             }
         },
         {
+            "Key": "afd2e82a-a903-4243-b60d-269c3301bb3c",
+            "Value": {
+                "id": "5aa8efc4-2026-4c90-9712-5a93e6bad45d",
+                "resourcePath": "datafiles_yy\\Objects\\desk_med_class.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "b2519cfc-bf7d-452a-bbc2-934f51f58ed4",
             "Value": {
                 "id": "60740be7-b806-449b-8c5b-a8441993253b",
@@ -772,14 +788,6 @@
                 "id": "acc238cb-c1e2-4a44-b78c-349e9855335b",
                 "resourcePath": "objects\\Grayscale\\Grayscale.yy",
                 "resourceType": "GMObject"
-            }
-        },
-        {
-            "Key": "bde631d4-0cda-462f-898e-cb5b8dc74cf2",
-            "Value": {
-                "id": "a45fd8c3-1c15-4e86-abc7-19f4bb17dc0f",
-                "resourcePath": "datafiles_yy\\Objects\\desk_med_class.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {

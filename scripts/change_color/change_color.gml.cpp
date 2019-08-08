@@ -25,7 +25,7 @@ if(identity[Cached_ID] == -1)
 identity[Cached_ID].cache[@3] = (identity[Cached_ID].cache[3]*1000*1000*1000)%1000;
 #endif
 
-for(var i = 0; i < 3; i++)
+for(var i = 2; i >= 0; i--)
 {
     //change tag
     col.channels[@i] = col.channels[i]*argument1 + argument2[i];

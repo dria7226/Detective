@@ -100,7 +100,7 @@ color_and_gs = (color_and_gs - color.g)*1000.0;
 color.b = floor(color_and_gs);
 color_and_gs = (color_and_gs - color.b)*1000.0;
 color /= 255.0;
-grayscale = floor(color_and_gs)/255.0;
+grayscale = color_and_gs/255.0;
 //no texture
 if(in_TexCoord == vec2(0.0))
 {

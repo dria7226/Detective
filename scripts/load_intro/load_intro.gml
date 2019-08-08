@@ -47,7 +47,7 @@ change_position(identity, 0, [3*3, 0, 0]);
 
 change_color(identity, 0, [0.2, 0.4, 0.2]);
 
-change_grayscale(identity, 0, 0.5);
+change_grayscale(identity, 0, 0.1);
 
 visibles[array_length_1d(visibles)] = identity;
 
@@ -145,6 +145,7 @@ identity = create_identity(query);
 identity[VBO].lod[0] = vertex_create_buffer_from_buffer(lamp, Game.format);
 
 change_position(identity, 0, [2.5, -3/2, 3]);
+change_grayscale(identity, 0, 1.0);
 
 visibles[array_length_1d(visibles)] = identity;
 
