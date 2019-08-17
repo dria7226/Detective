@@ -60,9 +60,11 @@ change_position(identity, CHANGE_SET, [-3/2, -3*3 + 3/2, 0]);
 
 change_rotation(identity, CHANGE_SET, [0, 0, pi/2]);
 
-change_color(identity, CHANGE_SET, [0.2, 0.4, 0.2]);
+change_color(identity, CHANGE_SET, [1.0, 1.0, 0.9]);
 
 change_grayscale(identity, CHANGE_SET, 0.0);
+
+test_var = identity;
 
 ADD_IDENTITY_TO_VISIBLES(identity)
 
@@ -163,5 +165,5 @@ ADD_IDENTITY_TO_VISIBLES(identity)
 //index = create_identity([Path]);
 
 #ifdef SHOW_USE
-//uses_identities, uses_position_tag, uses_color_tag, uses_grayscale_tag, uses_vbo_tag, uses_model_tag
+//uses_identities, uses_position_tag, uses_rotation_tag, uses_color_tag, uses_grayscale_tag, uses_vbo_tag, uses_model_tag
 #endif

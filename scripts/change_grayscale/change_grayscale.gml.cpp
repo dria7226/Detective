@@ -2,34 +2,34 @@
 
 var identity = argument0;
 
-var gs = identity[Grayscale];
+var color = identity[Color];
 
-if(gs == -1)
+if(color == -1)
 {
-    log(WARNING, "Inexistent Grayscale tag.", debug_get_callstack());
+    log(WARNING, "Inexistent Color tag.", debug_get_callstack());
     return;
 }
 
 //change tag and encode in uniform buffer
-gs.value = gs.value*argument1 + argument2;
+color.channels[GS] = color.channels[GS]*argument1 + argument2;
 
 #ifdef UNIFORM_BUFFER
 //derive buffer index from identity index
 var buffer_index = identity[INDEX]*6*4 + 4*3 + 2*3 + 3;
 
-buffer_poke(uniform_buffer, buffer_index, buffer_u8, floor(gs.value*byte));
+buffer_poke(uniform_buffer, buffer_index, buffer_u8, floor(color.channels[GS]*MAX_COLOR_AND_GS));
 #endif
 
 #ifdef UNIFORM_COMPRESSION
 if(identity[Cached_ID] == -1)
     set_tags(identity, [Cached_ID]);
 
-identity[Cached_ID].cache[@3] =  floor(identity[Cached_ID].cache[3]*1000*1000);
+identity[Cached_ID].cache[@3] =  floor(identity[Cached_ID].cache[3]*100*100);
 
-identity[Cached_ID].cache[@3] += floor(gs.value*byte)/1000;
-identity[Cached_ID].cache[@3] /= 1000*1000;
+identity[Cached_ID].cache[@3] += floor(color.channels[GS]*MAX_COLOR_AND_GS)/100;
+identity[Cached_ID].cache[@3] /= 100*100;
 #endif
 
 #ifdef SHOW_USE
-//uses_identities, uses_grayscale_tag, uses_uniform_buffer, uses_uniform_compression
+//uses_identities, uses_color_tag, uses_uniform_buffer, uses_uniform_compression
 #endif

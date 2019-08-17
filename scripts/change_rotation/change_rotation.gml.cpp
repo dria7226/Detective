@@ -22,9 +22,9 @@ var buffer_index = identity[INDEX]*6*4 + 4*3;
 for(var i = 0; i < 3; i++)
 {
     //change tag
-    rotation.angle[@i] = rotation.angle[i]*argument1 + argument2[i];
+    rotation.axes[@i] = rotation.axes[i]*argument1 + argument2[i];
     #ifdef UNIFORM_COMPRESSION
-    var no_of_circles = rotation.angle[i]/2/pi;
+    var no_of_circles = rotation.axes[i]/2/pi;
     var is_negative = (no_of_circles < 0);
 
     no_of_circles += (is_negative*2 - 1)*floor(no_of_circles*(1 - is_negative*2)) + is_negative;
@@ -33,7 +33,7 @@ for(var i = 0; i < 3; i++)
     #ifdef UNIFORM_BUFFER
     #define NORMAL_MAX MAX_ANGLE
     #define NORMAL_MIN MIN_ANGLE
-    #define TO_NORMALIZE rotation.angle[i]
+    #define TO_NORMALIZE rotation.axes[i]
 
     #include "normalize_against_minmax.c"
 

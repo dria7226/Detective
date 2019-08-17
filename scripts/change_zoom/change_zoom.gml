@@ -11,7 +11,4 @@ if(camera == -1)
 
 //change tag and encode in uniform buffer
 camera.zoom = camera.zoom*argument1 + argument2;
-if(identity[Cached_ID] == -1)
-    set_tags(identity, [Cached_ID]);
-identity[Cached_ID].cache[@3] = camera.zoom;
-shader_set_uniform_f(shader_get_uniform(standard, "zoom"), 1);
+shader_set_uniform_f(zoom, camera.zoom);

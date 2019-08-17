@@ -1,6 +1,6 @@
 
-shader_set_uniform_i(shader_get_uniform(standard, "vertex_mode"), 1);
-shader_set_uniform_i(shader_get_uniform(standard, "fragment_mode"), 1);
+shader_set_uniform_i(vertex_mode, 1);
+shader_set_uniform_i(fragment_mode, 1);
 for(var i = 0; i < 9; i++)
 {
  if(!surface_exists(surfaces[i]))

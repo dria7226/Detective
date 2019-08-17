@@ -22,22 +22,22 @@ buffer_seek(uniform_buffer, buffer_seek_start, buffer_index);
 if(identity[Cached_ID] == -1)
     set_tags(identity, [Cached_ID]);
 
-identity[Cached_ID].cache[@3] = (identity[Cached_ID].cache[3]*1000*1000*1000)%1000;
+identity[Cached_ID].cache[@3] = (identity[Cached_ID].cache[3]*100*100*100)%100;
 #endif
 
-for(var i = 2; i >= 0; i--)
+for(var i = B; i >= R; i--)
 {
     //change tag
     col.channels[@i] = col.channels[i]*argument1 + argument2[i];
 
     #ifdef UNIFORM_BUFFER
     //encode in uniform_buffer
-    buffer_write(uniform_buffer, buffer_u8, floor(col.channels[i]*byte));
+    buffer_write(uniform_buffer, buffer_u8, floor(col.channels[i]*MAX_COLOR_AND_GS));
     #endif
 
     #ifdef UNIFORM_COMPRESSION
-    identity[Cached_ID].cache[@3] /= 1000;
-    identity[Cached_ID].cache[@3] += floor(col.channels[i]*byte);
+    identity[Cached_ID].cache[@3] /= 100;
+    identity[Cached_ID].cache[@3] += floor(col.channels[i]*MAX_COLOR_AND_GS);
     #endif
 }
 

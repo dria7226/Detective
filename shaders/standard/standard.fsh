@@ -5,8 +5,7 @@ varying vec4 out_Color;
 varying vec2 out_TexCoord;
 uniform vec2 a_pixel;
 
-varying float grayscale;
-varying vec3 color;
+varying vec4 color;
 
 uniform int fragment_mode;
 
@@ -29,17 +28,18 @@ if(fragment_mode == 0)
   if(target_type == 0.0)
   {
     //DIFFUSE
+    //textured
     if(out_TexCoord != vec2(0.0))
     {
       c = texture2D(gm_BaseTexture, out_TexCoord);
       //color
       if(c == vec4(1.0))
-        c = vec4(color, 1.0);
+        c = vec4(color.rgb, 1.0);
       //grayscale
-      if(grayscale != 1.0)
+      if(color.a != 1.0)
       {
         vec4 intensity = (c.rgba + c.gbra + c.brga)/3.0;
-        c = mix(intensity, c, grayscale);
+        c = mix(intensity, c, color.a);
       }
     }
     gl_FragColor = c;
@@ -58,8 +58,22 @@ if(fragment_mode == 0)
   {
       //EXTRA - LIGHT ACCUMULATION
       vec3 normal = normalize(out_Normal)/2.0 + vec3(0.5);
-      vec3 litup = out_Color.rgb*dot(out_Normal,vec3(0.5,-0.25,0.25));
-      gl_FragColor = vec4(mix(litup, out_Color.rgb, 0.3), 1.0);
+      //textured
+      if(out_TexCoord != vec2(0.0))
+      {
+        c = texture2D(gm_BaseTexture, out_TexCoord);
+        //color
+        if(c == vec4(1.0))
+          c = vec4(color.rgb, 1.0);
+        //grayscale
+        if(color.a != 1.0)
+        {
+          vec4 intensity = (c.rgba + c.gbra + c.brga)/3.0;
+          c = mix(intensity, c, color.a);
+        }
+      }
+      vec3 litup = c.rgb*dot(out_Normal,vec3(0.5,-0.25,0.25));
+      gl_FragColor = vec4(mix(litup, c.rgb, 0.3), 1.0);
       //gl_FragColor = vec4(vec3(depth), 1.0);
       //gl_FragColor = vec4(normal, 1.0);
   }
@@ -91,7 +105,7 @@ vec4 unpackColor(float f)
   enc.rgb -= enc.gba/vec3(255.0);
   return enc;
 }
-//pack_id() dot(id, vec3(byte, byte*256.0, byte*256.0*256.0))
+//pack_id() dot(object_id, vec3(byte, byte*256.0, byte*256.0*256.0))
 //percentage to partial percentages
 vec4 float_to_vec4(float f)
 {

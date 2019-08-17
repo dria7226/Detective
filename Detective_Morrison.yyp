@@ -607,6 +607,14 @@
             }
         },
         {
+            "Key": "8ef8e03d-ef9b-44e5-8649-656d1efdaf67",
+            "Value": {
+                "id": "a711455d-db30-425c-92e2-fd523efe1cb1",
+                "resourcePath": "notes\\To Do List.yy",
+                "resourceType": "GMNotes"
+            }
+        },
+        {
             "Key": "916c37b1-00c4-408e-88da-2f27bd2d8c61",
             "Value": {
                 "id": "64e24dca-2cd6-4190-b1ce-52153f7fd18d",
@@ -780,14 +788,6 @@
                 "id": "d656b128-0a52-4dd4-b729-aa0ed6de31c1",
                 "resourcePath": "views\\b25f9636-e675-474b-adf5-2aa4fefdc642.yy",
                 "resourceType": "GMFolder"
-            }
-        },
-        {
-            "Key": "b375e00b-c6b3-4839-b585-fef935f60205",
-            "Value": {
-                "id": "acc238cb-c1e2-4a44-b78c-349e9855335b",
-                "resourcePath": "objects\\Grayscale\\Grayscale.yy",
-                "resourceType": "GMObject"
             }
         },
         {

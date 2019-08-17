@@ -60,9 +60,11 @@ change_position(identity, 0, [-3/2, -3*3 + 3/2, 0]);
 
 change_rotation(identity, 0, [0, 0, 3.1415926535897932384626433832795/2]);
 
-change_color(identity, 0, [0.2, 0.4, 0.2]);
+change_color(identity, 0, [1.0, 1.0, 0.9]);
 
 change_grayscale(identity, 0, 0.0);
+
+test_var = identity;
 
 visibles[array_length_1d(visibles)] = identity;
 

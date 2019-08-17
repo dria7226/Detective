@@ -1,5 +1,5 @@
-SET_UNIFORM_I("vertex_mode", VERTEX_FLAT)
-SET_UNIFORM_I("fragment_mode", FRAGMENT_FLAT)
+SET_UNIFORM_I(vertex_mode, VERTEX_FLAT)
+SET_UNIFORM_I(fragment_mode, FRAGMENT_FLAT)
 for(var i = 0; i < NO_OF_SURFACES; i++)
 {
 	if(!surface_exists(surfaces[i]))

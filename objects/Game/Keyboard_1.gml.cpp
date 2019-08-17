@@ -1,7 +1,7 @@
 //find camera
 var camera = tags[Camera]; camera = camera[|0].back_reference;
 
-var yaw = camera[Rotation].angle[YAW];
+var yaw = camera[Rotation].axes[YAW];
 
 var change = delta_time/1000000*speed;
 if keyboard_check(ord("W"))

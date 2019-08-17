@@ -9,7 +9,7 @@ attribute vec2 in_TexCoord; // (u,v)
 
 uniform int vertex_mode;
 
-uniform vec4 id;
+uniform vec4 object_id;
 
 
 uniform vec3 in_camera_position;
@@ -18,12 +18,21 @@ uniform float zoom;
 
 
 uniform float screen_ratio;
-varying float grayscale;
-varying vec3 color;
+
+
+
+uniform vec3 in_offset;
+uniform vec3 in_angle;
+uniform vec4 in_color;
+
+
+varying vec4 color;
+
 varying float depth;
 varying vec3 out_Normal;
 varying vec4 out_Color;
 varying vec2 out_TexCoord;
+
 float packColor(vec4 color);
 vec4 unpackColor(float f);
 void rotate(inout vec2 point, float angle);
@@ -41,18 +50,10 @@ return;
  else
  {
 vec3 s = vec3(1.0);
-vec3 offset = vec3(0.0);
-vec3 angle = vec3(0.0);
+vec3 offset = in_offset;
+vec3 angle = in_angle;
 vec3 camera_position = in_camera_position;
 vec3 camera_angle = in_camera_angle;
-//get object uniforms
-offset = abs(id.xyz);
-s = sign(id.xyz);
-s += vec3(1.0) - abs(s);
-angle = floor(offset/100000.0);
-offset = offset - angle*100000.0;
-angle *= 2.0*3.1415926535897932384626433832795/999.0;
-offset *= s;
 vec3 local = in_Position;
 //local - extract normal and then proceed
 local = abs(in_Position.xyz);
@@ -86,32 +87,24 @@ gl_Position.w = local.x + 0.0;
  }
 if(vertex_mode == 2)
 {
-out_Color = vec4(id.rgb/255.0, 1.0);
+out_Color = vec4(object_id.rgb/255.0, 1.0);
 out_TexCoord = vec2(0.0);
 }
 else
 {
 out_Color = in_Color;
-float color_and_gs = id.a;
-color.r = floor(color_and_gs);
-color_and_gs = (color_and_gs - color.r)*1000.0;
-color.g = floor(color_and_gs);
-color_and_gs = (color_and_gs - color.g)*1000.0;
-color.b = floor(color_and_gs);
-color_and_gs = (color_and_gs - color.b)*1000.0;
-color /= 255.0;
-grayscale = color_and_gs/255.0;
+color = in_color;
 //no texture
 if(in_TexCoord == vec2(0.0))
 {
     //perform vertex color setting
     if(out_Color == vec4(1.0))
-        out_Color = vec4(color, 1.0);
+        out_Color = vec4(color.rgb, 1.0);
     //and apply grayscale
-    if(grayscale != 1.0)
+    if(color.a != 1.0)
     {
         vec4 intensity = (out_Color.rgba + out_Color.gbra + out_Color.brga)/3.0;
-        out_Color = mix(intensity, out_Color, grayscale);
+        out_Color = mix(intensity, out_Color, color.a);
     }
 }
 out_TexCoord = in_TexCoord;
@@ -135,7 +128,7 @@ vec4 unpackColor(float f)
   enc.rgb -= enc.gba/vec3(255.0);
   return enc;
 }
-//pack_id() dot(id, vec3(byte, byte*256.0, byte*256.0*256.0))
+//pack_id() dot(object_id, vec3(byte, byte*256.0, byte*256.0*256.0))
 //percentage to partial percentages
 vec4 float_to_vec4(float f)
 {

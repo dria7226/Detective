@@ -23,8 +23,22 @@ for(var i = 0; i < 9; i++)
 var occlusion_buffer = buffer_create(1, buffer_grow, 1);
 visibles = array_create(0);
 shader_set(standard);
-shader_set_uniform_f(shader_get_uniform(standard, "screen_ratio"), window_get_height()/window_get_width());
+in_camera_position = shader_get_uniform(standard, "in_camera_position");
+in_camera_angle = shader_get_uniform(standard, "in_camera_angle");
+zoom = shader_get_uniform(standard, "zoom");
+vertex_mode = shader_get_uniform(standard, "vertex_mode");
+fragment_mode = shader_get_uniform(standard, "fragment_mode");
+a_pixel = shader_get_uniform(standard, "a_pixel");
+screen_ratio = shader_get_uniform(standard, "screen_ratio");
+object_id = shader_get_uniform(standard, "object_id");
+in_offset = shader_get_uniform(standard, "in_offset");
+in_angle = shader_get_uniform(standard, "in_angle");
+in_color = shader_get_uniform(standard, "in_color");
+shader_set_uniform_f(screen_ratio, window_get_height()/window_get_width());
 var occlusion_info = surface_info[7];
-shader_set_uniform_f(shader_get_uniform(standard, "a_pixel"), occlusion_info[0]/window_get_width(), occlusion_info[1]/window_get_height());
+shader_set_uniform_f(a_pixel, occlusion_info[0]/window_get_width(), occlusion_info[1]/window_get_height());
+default_offset = [0,0,0];
+default_angle = [0,0,0];
+default_color = [0.5,0.5,0.5,1.0];
 //load common texture
 //common_texture = sprite_get_texture(spr_common, 0);

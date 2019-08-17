@@ -25,13 +25,13 @@
 -----------------------------------------------
 Pre-Production
   Renderer----------------------------ETA June 2019
-	-fix color and gs uniform compression
 	-create test scene
 		- add mirror
 		- add window
 		- add door
     -frustrum culling
 	-lod
+	-command batching
 	-mirrors
 	-shading (hard shadows, no diffuse lighting)
 		-omni lights
