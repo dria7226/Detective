@@ -2,8 +2,6 @@
 alpha += delta_time/5000000;
 var camera = tags[Camera]; camera = camera[|0].back_reference;
 
-//change_grayscale(test_var,CHANGE_SET,abs(sin(alpha)));
-
 var rotation = camera[Rotation];change_rotation(camera, 1, [0,
 
     (previous_y - mouse_y)/(delta_time/1000000)/4000,

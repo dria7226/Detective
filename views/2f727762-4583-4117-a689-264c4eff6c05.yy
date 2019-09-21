@@ -10,7 +10,8 @@
         "f74d9dfb-e250-4bc2-ae01-72aa31858fc0",
         "28c50755-de0f-42bc-ba41-dd1356057c77",
         "d1a95320-d0f7-4ef0-87d1-9816dac9cd65",
-        "afd2e82a-a903-4243-b60d-269c3301bb3c"
+        "afd2e82a-a903-4243-b60d-269c3301bb3c",
+        "12b56744-45fd-4a4c-8415-c2a54a5262c8"
     ],
     "filterType": "GMIncludedFile",
     "folderName": "Objects",

@@ -11,8 +11,8 @@ gpu_set_ztestenable(true);
 gpu_set_cullmode(cull_counterclockwise);
 surfaces[9 - 1] = -1;
 surface_texture_pointers[9 - 1] = -1;
+surface_info[0] = [2,2];
 surface_info[1] = [2,2];
-surface_info[2] = [2,2];
 surface_info[7] = [0.1,0.1];
 surface_info[9 -1] = 0;
 for(var i = 0; i < 9; i++)

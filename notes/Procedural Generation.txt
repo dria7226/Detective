@@ -1,0 +1,7 @@
+ World measured in feet.
+ 3 feet is a yard.
+ 
+ Buildings:
+	A building component is 3 feet wide.
+	Room height comes in increments of 4.5.
+	Room height is at least 9 feet.

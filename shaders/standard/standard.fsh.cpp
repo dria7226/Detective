@@ -13,9 +13,9 @@ void main()
   //#include "edge_detection.c"
 
   // #include "occlusion_first_pass.c"
-  //
+
   // #include "occlusion_second_pass.c"
-  //
+  
   // #include "post_processing_fragment.c"
 }
 

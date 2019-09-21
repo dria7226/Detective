@@ -39,6 +39,14 @@
             }
         },
         {
+            "Key": "0927a034-5319-4bb1-92dd-2915ffc41c34",
+            "Value": {
+                "id": "a17b4f76-f8fa-477a-a50a-7b4ebbeb2f18",
+                "resourcePath": "datafiles_yy\\Level Building\\doorway.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "0abcfac6-b9f6-4eb9-b0ca-a1292888835b",
             "Value": {
                 "id": "4ed9f416-f533-4ab3-8fe2-2d9801a6ffc3",
@@ -116,6 +124,14 @@
                 "id": "fcf9c733-f654-46ab-952c-1fc89a0e8d54",
                 "resourcePath": "objects\\To_Be_Deleted\\To_Be_Deleted.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "12b56744-45fd-4a4c-8415-c2a54a5262c8",
+            "Value": {
+                "id": "2749b3a2-68d0-4a7b-b1d2-b94d9edf8749",
+                "resourcePath": "datafiles_yy\\Objects\\coat_hanger.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -223,6 +239,22 @@
             }
         },
         {
+            "Key": "2b0877de-5b26-4cd1-8481-59b473e1754c",
+            "Value": {
+                "id": "b6138afa-f009-408f-bc47-d3017ae1d7bc",
+                "resourcePath": "datafiles_yy\\Level Building\\wall_wainscoting.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
+            "Key": "2df096b2-5d62-4df8-9f58-ad582693787e",
+            "Value": {
+                "id": "b78ba8bc-a4fc-4e28-b202-772ffd8e640e",
+                "resourcePath": "notes\\Procedural Generation.yy",
+                "resourceType": "GMNotes"
+            }
+        },
+        {
             "Key": "2ec3c327-0dac-4863-bf7a-916169f16780",
             "Value": {
                 "id": "dc209c7e-e3d7-4e20-93e8-b5f65ee7634b",
@@ -252,6 +284,14 @@
                 "id": "2af60dc9-ee6a-44f9-96e0-acc4bdac9c9f",
                 "resourcePath": "views\\3032c73b-ca7c-4ff6-830f-508ddd6943c5.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "30e7d58e-0396-41b7-84fa-b85be95880fa",
+            "Value": {
+                "id": "298d84ab-7dff-4882-bc90-7868963f9e66",
+                "resourcePath": "datafiles_yy\\Level Building\\wall_bumper.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -340,22 +380,6 @@
                 "id": "fd31988d-828e-4713-be8e-99ee0fb9c0f0",
                 "resourcePath": "objects\\Color\\Color.yy",
                 "resourceType": "GMObject"
-            }
-        },
-        {
-            "Key": "49ecaf1a-bdef-4699-ad9e-49caaf4714f8",
-            "Value": {
-                "id": "7a9a8e3c-5d2a-4536-a075-ca5b1ae50c14",
-                "resourcePath": "datafiles_yy\\Level Building\\wall_bumper.yy",
-                "resourceType": "GMIncludedFile"
-            }
-        },
-        {
-            "Key": "4c985060-1dd6-4497-a73f-823594f6ba55",
-            "Value": {
-                "id": "039a2dd8-13c1-4721-90b4-4089f246c400",
-                "resourcePath": "datafiles_yy\\Level Building\\wall_wainscoting.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -988,6 +1012,14 @@
                 "id": "8ec7ce90-e958-45f2-a112-fd24722c263b",
                 "resourcePath": "scripts\\point_direction_3d\\point_direction_3d.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "e6f923bc-fb74-41f1-81d9-c95a6d9c2d80",
+            "Value": {
+                "id": "b3dd61c8-d5f8-43f7-a883-05aca54190b2",
+                "resourcePath": "objects\\Boolean\\Boolean.yy",
+                "resourceType": "GMObject"
             }
         },
         {

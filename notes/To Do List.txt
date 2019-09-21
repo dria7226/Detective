@@ -18,26 +18,32 @@
 	- implement task system data structure (ds_list of task objects, each object has two ds_lists, one for variables other for scripts)
 	- rewrite load_intro into separate, reusable scripts
 	- rewrite load_intro as sub-task ds_list
-- implement occlusion generation as part of load_intro
 	-
 - add timestamp to log() script
 
 -----------------------------------------------
 Pre-Production
   Renderer----------------------------ETA June 2019
+	-boolean rendering
+		- create submode rendering for ubershader
+		- program non fill
+		- program fill
+		
+		- optional: create non ubershader compile option
 	-create test scene
-		- add mirror
 		- add window
 		- add door
+		- add mirror
     -frustrum culling
 	-lod
-	-command batching
+	-command batching (set_uniforms.c)
 	-mirrors
 	-shading (hard shadows, no diffuse lighting)
 		-omni lights
 		-shadow casting spot lights
 	-post process
-			-edge detection
+		-edge detection
+		-hashing
     -animation
 		-skeletal
 		-simple transformations
@@ -48,6 +54,7 @@ Pre-Production
     -splitscreen
 
   Level Generator w/ Designer AI-----ETA
+	-make helper scripts for level generation (mirror, union, difference,... like openjscad)
   	-task system
 	  -spatial hierarchy (contains locations, content groups and objects) (locations can contain content groups and objects, content groups can contain objects)
 
