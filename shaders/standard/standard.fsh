@@ -8,6 +8,7 @@ uniform vec2 a_pixel;
 varying vec4 color;
 
 uniform int fragment_mode;
+uniform int boolean_phase;
 
 float packColor(vec4 color);
 vec4 unpackColor(float f);
@@ -27,6 +28,23 @@ if(fragment_mode == 0)
   float target_type = mod(gl_FragCoord.x - 0.5, 2.0) + mod(gl_FragCoord.y - 0.5, 2.0)*2.0;
   if(target_type == 0.0)
   {
+    // if(stencil)
+    // {
+    //     if(texture2D(gm_BaseTexture, gl_FragCoord + vec2(0.5)).a == 0.0)
+    //     {
+    //         discard; return;
+    //     }
+    // }
+    // if(boolean_phase == C_1)
+    // {
+    //     float relative_depth = dot(vec4(1.0), unpackColor(depth));
+    //     if( relative_depth > dot(vec4(1.0), texture2D(boolean_sampler, gl_FragCoord))
+    //         &&
+    //         relative_depth < dot(vec4(1.0), texture2D(boolean_sampler, gl_FragCoord)))
+    //     {
+    //         discard; return;
+    //     }
+    // }
     //DIFFUSE
     //textured
     if(out_TexCoord != vec2(0.0))
@@ -42,20 +60,25 @@ if(fragment_mode == 0)
         c = mix(intensity, c, color.a);
       }
     }
-    gl_FragColor = c;
+    gl_FragColor = c; return;
+    discard; return;
   }
   if(target_type == 1.0)
   {
-    //DEPTH
-    gl_FragColor = unpackColor(depth);
+      //DEPTH
+      gl_FragColor = unpackColor(depth); return;
   }
   if(target_type == 2.0)
   {
-    //NORMAL
-    gl_FragColor = vec4(normalize(out_Normal)/2.0+vec3(0.5), 1.0);
+      //NORMAL
+      gl_FragColor = vec4(normalize(out_Normal)/2.0+vec3(0.5), 1.0); return;
   }
   if(target_type == 3.0)
   {
+      //if(boolean_phase == C_1)
+      //{
+          //mark
+      //}
       //EXTRA - LIGHT ACCUMULATION
       vec3 normal = normalize(out_Normal)/2.0 + vec3(0.5);
       //textured
@@ -76,15 +99,18 @@ if(fragment_mode == 0)
       gl_FragColor = vec4(mix(litup, c.rgb, 0.3), 1.0);
       //gl_FragColor = vec4(vec3(depth), 1.0);
       //gl_FragColor = vec4(normal, 1.0);
+      return;
   }
   return;
+}
+if(fragment_mode == 2)
+{
+    gl_FragColor = unpackColor(depth); return;
 }
   //#include "uniform_encoding.c"
   //#include "edge_detection.c"
   // #include "occlusion_first_pass.c"
-  //
   // #include "occlusion_second_pass.c"
-  //
   // #include "post_processing_fragment.c"
 }
 void rotate(inout vec2 point, float angle)

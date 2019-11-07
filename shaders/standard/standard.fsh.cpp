@@ -8,6 +8,8 @@ void main()
 
   #include "mrt_fragment.c"
 
+  #include "depth_fragment.c"
+
   //#include "uniform_encoding.c"
 
   //#include "edge_detection.c"
@@ -15,7 +17,7 @@ void main()
   // #include "occlusion_first_pass.c"
 
   // #include "occlusion_second_pass.c"
-  
+
   // #include "post_processing_fragment.c"
 }
 

@@ -16,12 +16,12 @@ if keyboard_check(ord("S"))
 
 if keyboard_check(ord("A"))
 {
- change_position(camera, 1, [change*cos(yaw + 3.1415926535897932384626433832795/2), change*sin(yaw + 3.1415926535897932384626433832795/2), 0]);
+ change_position(camera, 1, [change*cos(yaw + 3.1415926/2), change*sin(yaw + 3.1415926/2), 0]);
 }
 
 if keyboard_check(ord("D"))
 {
- change_position(camera, 1, [change*cos(yaw - 3.1415926535897932384626433832795/2), change*sin(yaw - 3.1415926535897932384626433832795/2), 0]);
+ change_position(camera, 1, [change*cos(yaw - 3.1415926/2), change*sin(yaw - 3.1415926/2), 0]);
 }
 
 if keyboard_check(ord("M"))

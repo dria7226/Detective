@@ -2,4 +2,5 @@ Crashes
 - nonexisting segment at end of path (upon reaching end of path) get_point_on_path()
 
 Bugs
+- pre_process.py doesnt check subfiles enlosed with #ifdef #endif
 - 

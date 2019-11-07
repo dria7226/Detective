@@ -1,5 +1,4 @@
-//load_model(filepath)
-
+//load_model(filepath, mode)
 if(!file_exists(argument0))
 {
 	show_debug_message("File not Found: " + string(argument0));

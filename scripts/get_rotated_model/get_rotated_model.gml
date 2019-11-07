@@ -25,12 +25,12 @@ repeat(no_of_vertices)
  }
 
  //rotate
- var temp = sin(argument1*3.1415926535897932384626433832795/180)*XY[1] - cos(argument1*3.1415926535897932384626433832795/180)*XY[0];
- XY[1] = cos(argument1*3.1415926535897932384626433832795/180)*XY[1] + sin(argument1*3.1415926535897932384626433832795/180)*XY[0];
+ var temp = sin(argument1*3.1415926/180)*XY[1] - cos(argument1*3.1415926/180)*XY[0];
+ XY[1] = cos(argument1*3.1415926/180)*XY[1] + sin(argument1*3.1415926/180)*XY[0];
  XY[0] = temp;
 
- var Ntemp = sin(argument1*3.1415926535897932384626433832795/180)*NXY[1] - cos(argument1*3.1415926535897932384626433832795/180)*NXY[0];
- NXY[1] = cos(argument1*3.1415926535897932384626433832795/180)*NXY[1] + sin(argument1*3.1415926535897932384626433832795/180)*NXY[0];
+ var Ntemp = sin(argument1*3.1415926/180)*NXY[1] - cos(argument1*3.1415926/180)*NXY[0];
+ NXY[1] = cos(argument1*3.1415926/180)*NXY[1] + sin(argument1*3.1415926/180)*NXY[0];
  NXY[0] = Ntemp;
 
  //write

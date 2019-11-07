@@ -20,10 +20,7 @@ repeat(no_of_vertices)
 	{
 		var position = buffer_read(argument1, buffer_f32);
 		var normal = position/COMPRESSED_NORMAL_POSITION;
-		if(position < 0)
-			normal = ceil(normal)*COMPRESSED_NORMAL_POSITION;
-		else
-			normal = floor(normal)*COMPRESSED_NORMAL_POSITION;
+		normal = (ceil(normal)*(position<0) + floor(normal)*(position>=0))*COMPRESSED_NORMAL_POSITION;
 
 		position = position - normal + argument2[i];
 

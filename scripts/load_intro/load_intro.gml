@@ -30,15 +30,15 @@ wall = vertex_create_buffer_from_buffer(wall, Game.format);
 
 var walls = [0,0,0,0,0,0,0,0,0,0,0];
 walls[0] = [0,0,0];
-walls[1] = [-3/2,-9 + 3/2,3.1415926535897932384626433832795/2];
-walls[2] = [-3/2 + 9,3/2,3.1415926535897932384626433832795/2];
-walls[3] = [-3/2,3/2 + 9,3.1415926535897932384626433832795/2];
-walls[4] = [6,-9,3.1415926535897932384626433832795];
-walls[5] = [15,-9,3.1415926535897932384626433832795];
-walls[6] = [6,9,3.1415926535897932384626433832795];
-walls[7] = [15 + 3/2,0 - 3/2,-3.1415926535897932384626433832795/2];
-walls[8] = [15 + 3/2,9 - 3/2,-3.1415926535897932384626433832795/2];
-walls[9] = [15 + 3/2,18 - 3/2,-3.1415926535897932384626433832795/2];
+walls[1] = [-3/2,-9 + 3/2,3.1415926/2];
+walls[2] = [-3/2 + 9,3/2,3.1415926/2];
+walls[3] = [-3/2,3/2 + 9,3.1415926/2];
+walls[4] = [6,-9,3.1415926];
+walls[5] = [15,-9,3.1415926];
+walls[6] = [6,9,3.1415926];
+walls[7] = [15 + 3/2,0 - 3/2,-3.1415926/2];
+walls[8] = [15 + 3/2,9 - 3/2,-3.1415926/2];
+walls[9] = [15 + 3/2,18 - 3/2,-3.1415926/2];
 walls[10] = [0,18,0];
 
 for(var i = 0; i < array_length_1d(walls); i++)
@@ -60,9 +60,19 @@ for(var i = 0; i < array_length_1d(walls); i++)
 walls = 0;
 
 //doorway
+var boolean_volume = create_identity([Model, VBO, Position]);
+
+change_position(boolean_volume, 0, [9, 18, 0]);
+
+boolean_volume[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_array(create_cylinder(-1, 2, [0,0,0],32,3/4,[1,1],[1,1])), Game.format);
+
 identity = create_identity(query);
 
-identity[VBO].lod[0] = vertex_create_buffer_from_buffer(wall_segment, Game.format);
+set_tags(identity, [Boolean]);
+
+identity[Boolean].models = [boolean_volume];
+
+identity[VBO].lod[0] = wall;
 
 change_position(identity, 0, [9,18,0]);
 
@@ -72,23 +82,8 @@ visibles[array_length_1d(visibles)] = identity;
 
 identity = create_identity(query);
 
-identity[VBO].lod[0] = vertex_create_buffer_from_buffer(wall_segment, Game.format);
-
-change_position(identity, 0, [15,18,0]);
-
-change_color(identity, 0, [0.2, 0.4, 0.2]);
-
-visibles[array_length_1d(visibles)] = identity;
-
-buffer_delete(wall_segment);
-
-identity = create_identity(["Level Building/doorway"]);
-
-var doorway = identity[Model].lod[0];
-
-identity = create_identity(query);
-
-identity[VBO].lod[0] = vertex_create_buffer_from_buffer(doorway, Game.format);
+identity[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_array(create_cube([-1,1,1],[1,1,0])), Game.format);
+//identity[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_array(create_cylinder(-1, 2, [0,0,0],32,3/4,[1,1],[1,1])), Game.format);
 
 change_position(identity, 0, [12, 18, 0]);
 
@@ -166,7 +161,7 @@ identity[VBO].lod[0] = vertex_create_buffer_from_buffer(desk, Game.format);
 
 change_position(identity, 0, [0, -5, 0]);
 
-change_rotation(identity, 0, [0, 0, 3.1415926535897932384626433832795/2]);
+change_rotation(identity, 0, [0, 0, 3.1415926/2]);
 
 visibles[array_length_1d(visibles)] = identity;
 
@@ -182,7 +177,7 @@ identity[VBO].lod[0] = vertex_create_buffer_from_buffer(lamp, Game.format);
 
 change_position(identity, 0, [6.5, 1.5, 3]);
 change_color(identity, 0, [1.0,0.9,0.75]);
-change_rotation(identity, 0, [0,0,-3.1415926535897932384626433832795/4]);
+change_rotation(identity, 0, [0,0,-3.1415926/4]);
 
 visibles[array_length_1d(visibles)] = identity;
 

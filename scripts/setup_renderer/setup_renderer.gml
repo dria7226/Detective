@@ -9,13 +9,13 @@ gpu_set_blendenable(false);
 gpu_set_tex_repeat(true);
 gpu_set_ztestenable(true);
 gpu_set_cullmode(cull_counterclockwise);
-surfaces[9 - 1] = -1;
-surface_texture_pointers[9 - 1] = -1;
+surfaces[11 - 1] = -1;
+surface_texture_pointers[11 - 1] = -1;
 surface_info[0] = [2,2];
 surface_info[1] = [2,2];
-surface_info[7] = [0.1,0.1];
-surface_info[9 -1] = 0;
-for(var i = 0; i < 9; i++)
+surface_info[9] = [0.1,0.1];
+surface_info[11 -1] = 0;
+for(var i = 0; i < 11; i++)
 {
  surfaces[i] = -1;
  if(surface_info[i] == 0) surface_info[i] = [1,1];
@@ -28,6 +28,7 @@ in_camera_angle = shader_get_uniform(standard, "in_camera_angle");
 zoom = shader_get_uniform(standard, "zoom");
 vertex_mode = shader_get_uniform(standard, "vertex_mode");
 fragment_mode = shader_get_uniform(standard, "fragment_mode");
+boolean_phase = shader_get_uniform(standard, "boolean_phase");
 a_pixel = shader_get_uniform(standard, "a_pixel");
 screen_ratio = shader_get_uniform(standard, "screen_ratio");
 object_id = shader_get_uniform(standard, "object_id");
@@ -35,7 +36,7 @@ in_offset = shader_get_uniform(standard, "in_offset");
 in_angle = shader_get_uniform(standard, "in_angle");
 in_color = shader_get_uniform(standard, "in_color");
 shader_set_uniform_f(screen_ratio, window_get_height()/window_get_width());
-var occlusion_info = surface_info[7];
+var occlusion_info = surface_info[9];
 shader_set_uniform_f(a_pixel, occlusion_info[0]/window_get_width(), occlusion_info[1]/window_get_height());
 default_offset = [0,0,0];
 default_angle = [0,0,0];

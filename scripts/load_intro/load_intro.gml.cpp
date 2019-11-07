@@ -60,9 +60,19 @@ for(var i = 0; i < array_length_1d(walls); i++)
 walls = 0;
 
 //doorway
+var boolean_volume = create_identity([Model, VBO, Position]);
+
+change_position(boolean_volume, CHANGE_SET, [9, 18, 0]);
+
+boolean_volume[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_array(create_cylinder(-1, 2, [0,0,0],32,3/4,[1,1],[1,1])), Game.format);
+
 identity = create_identity(query);
 
-identity[VBO].lod[0] = vertex_create_buffer_from_buffer(wall_segment, Game.format);
+set_tags(identity, [Boolean]);
+
+identity[Boolean].models = [boolean_volume];
+
+identity[VBO].lod[0] = wall;
 
 change_position(identity, CHANGE_SET, [9,18,0]);
 
@@ -72,23 +82,8 @@ ADD_IDENTITY_TO_VISIBLES(identity)
 
 identity = create_identity(query);
 
-identity[VBO].lod[0] = vertex_create_buffer_from_buffer(wall_segment, Game.format);
-
-change_position(identity, CHANGE_SET, [15,18,0]);
-
-change_color(identity, CHANGE_SET, [0.2, 0.4, 0.2]);
-
-ADD_IDENTITY_TO_VISIBLES(identity)
-
-buffer_delete(wall_segment);
-
-identity = create_identity(["Level Building/doorway"]);
-
-var doorway = identity[Model].lod[0];
-
-identity = create_identity(query);
-
-identity[VBO].lod[0] = vertex_create_buffer_from_buffer(doorway, Game.format);
+identity[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_array(create_cube([-1,1,1],[1,1,0])), Game.format);
+//identity[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_array(create_cylinder(-1, 2, [0,0,0],32,3/4,[1,1],[1,1])), Game.format);
 
 change_position(identity, CHANGE_SET, [12, 18, 0]);
 
