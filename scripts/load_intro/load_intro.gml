@@ -64,7 +64,7 @@ var boolean_volume = create_identity([Model, VBO, Position]);
 
 change_position(boolean_volume, 0, [9, 18, 0]);
 
-boolean_volume[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_array(create_cylinder(-1, 2, [0,0,0],32,3/4,[1,1],[1,1])), Game.format);
+boolean_volume[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_array(create_cube([-3,2,6],[0.5,0.25,0],[0xBB,0x42,0x11,255])), Game.format);
 
 identity = create_identity(query);
 
@@ -74,7 +74,7 @@ identity[Boolean].models = [boolean_volume];
 
 identity[VBO].lod[0] = wall;
 
-change_position(identity, 0, [9,18,0]);
+change_position(identity, 0, [12,18,0]);
 
 change_color(identity, 0, [0.2, 0.4, 0.2]);
 
@@ -82,8 +82,7 @@ visibles[array_length_1d(visibles)] = identity;
 
 identity = create_identity(query);
 
-identity[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_array(create_cube([-1,1,1],[1,1,0])), Game.format);
-//identity[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_array(create_cylinder(-1, 2, [0,0,0],32,3/4,[1,1],[1,1])), Game.format);
+identity[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_array(create_cube([-3,1,6],[0.5,0.25,0],[0xBB,0x42,0x11,255])), Game.format);
 
 change_position(identity, 0, [12, 18, 0]);
 

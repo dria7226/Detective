@@ -1,5 +1,5 @@
-//create_sphere(radius, detail, slice, centering)
-
+//create_sphere(radius, detail, slice, centering, color)
+#ifdef SANITIZE_PROCEDURAL_INPUT
 //sanitize inputs
 if(array_length_1d(argument3) != 3)
     argument3 = [0,0,0];
@@ -15,12 +15,76 @@ if(argument0 >= COMPRESSED_NORMAL_POSITION) argument0 = COMPRESSED_NORMAL_POSITI
 
 if(argument1 < 3) argument1 = 3;
 
-//for(var coord = 0; coord < 3; coord++)
-//    if(argument0[coord] >= limit) argument0[coord] = limit - 0.01;//slice
-
-//generate buffer
-var buffer = buffer_create(4, buffer_fixed, 4);
-
 argument2 = 0;
 
-return buffer;
+for(var channel = 0; channel < 4; channel++)
+{
+    if(argument4[channel] < 0 || argument4[channel] > 255)
+        argument4[channel] = 0;
+    else
+        argument4[channel] = floor(argument4[channel]);
+}
+#endif
+
+//generate buffer
+var array = array_create((argument1*(argument1-2) + 2)*(Game.format_size + 3));
+var array_index = 0;
+
+var yaw_increment = pi/argument1;
+var pitch_increment = 2*pi/argument1;
+
+var Start = [0,0];
+Start[0] = [1 - argument3[X]*argument0,0 - argument3[Y]*argument0,0];
+var start_angle = [0,0];
+var end_angle = [0,0];
+end_angle[0] = yaw_increment;
+for(;; end_angle[0] += yaw_increment)
+{
+    if(start_angle[0] > 2*pi*argument2[0])
+        start_angle[0] = 2*pi*argument2[0];
+
+    var End = [0,0];
+    End[0] = [cos(end_angle[0]), sin(end_angle[0]), 0];
+
+    // start[1] = ???;
+    start_angle[1] = 0;
+    end_angle[1] = pi/argument1;
+
+    for(;; end_angle[1] += pi/argument1)
+    {
+        if(start_angle[1] > 2*pi*argument2[1])
+            start_angle[1] = 2*pi*argument2[1];
+
+        // end[1] = [cos(end_angle[1]), sin(end_angle[1])];???
+
+        //bottom
+        if(end_angle[1] <= pi/argument1)
+        {
+
+            continue;
+        }
+
+        //top
+        if(end_angle[1] > pi*(1 - 1/argument1))
+        {
+
+            continue;
+        }
+
+        //middle
+
+
+        var pitch_end = End[1];
+        Start[@1] = [pitch_end[0], pitch_end[1]];
+
+        if(end_angle == 2*pi*argument2[1]) break;
+    }
+
+    var yaw_end = End[0];
+    Start[@0] = [yaw_end[0], yaw_end[1]];
+
+    if(end_angle == 2*pi*argument2[0]) break;
+}
+
+
+return array;

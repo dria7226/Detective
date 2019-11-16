@@ -1,13 +1,11 @@
-//create_cube(size, centering)
-
+//create_cube(size, centering, color)
+#ifdef SANITIZE_PROCEDURAL_INPUT
 //sanitize inputs
-if(array_length_1d(argument1) != 3)
+if(array_length_1d(argument0) != 3)
+{
+    argument0 = [1,1,1];
     argument1 = [0,0,0];
-else for(var coord = 0; coord < 3; coord++)
-    if(argument1[coord] != 0 || argument1[coord] != 1)
-        argument1[coord] = 0;
-
-if(array_length_1d(argument0) != 3) argument0 = [1,1,1];
+}
 #ifdef NORMAL_COMPRESSION
 else
 {
@@ -19,14 +17,16 @@ else
 }
 #endif
 
-var white_f32 = buffer_create(4,buffer_fixed,1);
-buffer_write(white_f32, buffer_u8, 255);
-buffer_write(white_f32, buffer_u8, 255);
-buffer_write(white_f32, buffer_u8, 255);
-buffer_write(white_f32, buffer_u8, 255);
-buffer_seek(white_f32, buffer_seek_start,0);
-var encoded_white = buffer_read(white_f32, buffer_f32);
-buffer_delete(white_f32);
+for(var channel = 0; channel < 4; channel++)
+{
+    if(argument2[channel] < 0 || argument2[channel] > 255)
+        argument2[channel] = 0;
+    else
+        argument2[channel] = floor(argument2[channel]);
+}
+#endif
+
+ENCODE_COLOR(encoded_color, argument2[0], argument2[1], argument2[2], argument2[3])
 
 //generate array
 var array = array_create(6*2*3*(Game.format_size + 3));
@@ -47,7 +47,7 @@ for(var i = 0; i < 8; i++)
 {
     var point = points[i];
     for(var axis = X; axis <= Z; axis++)
-    point[axis] -= 0.5*argument0[axis]*argument1[axis];
+    point[@axis] -= argument0[axis]*argument1[axis];
 }
 
 var triangles = array_create(12);
@@ -84,7 +84,7 @@ for(var axis = 0; axis < 3; axis++)
                 array[array_index++ - coord + 2] =  (coord==axis)*(2*side - 1);
             }
 
-            array[array_index++] = encoded_white;//color
+            array[array_index++] = encoded_color;//color
 
             array[array_index++] = 0;//UVX
             array[array_index++] = 0;//UVY

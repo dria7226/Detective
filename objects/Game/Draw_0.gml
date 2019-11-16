@@ -113,11 +113,11 @@ surface_reset_target();
 shader_set_uniform_i(fragment_mode, 0);
 surface_set_target(surfaces[0]);
 //assign boolean surfaces to samplers
-// texture_set_stage(boolean_front_b_sampler, surface_get_texture(surfaces[BOOLEAN_FRONT_B]));
-// texture_set_stage(boolean_back_a_sampler, surface_get_texture(surfaces[BOOLEAN_BACK_A]));
-// texture_set_stage(boolean_back_b_sampler, surface_get_texture(surfaces[BOOLEAN_BACK_B]));
+//texture_set_stage(boolean_front_b_sampler, surface_get_texture(surfaces[BOOLEAN_FRONT_B]));
+//texture_set_stage(boolean_back_a_sampler, surface_get_texture(surfaces[BOOLEAN_BACK_A]));
+//texture_set_stage(boolean_back_b_sampler, surface_get_texture(surfaces[BOOLEAN_BACK_B]));
 // //draw front of A
-// #include "boolean_phase_c_1.c"
+//#include "boolean_phase_c_1.c"
 // if(identity[Boolean].fill_in)
 // {
 //     //fill in

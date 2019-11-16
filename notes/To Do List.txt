@@ -1,6 +1,4 @@
-- All procedural modeling will now be done in decompressed arrays.
 - make sure all input for Procedural_Generation/create_* is sanitized
-- convert centering on Procedural_Generation/create_* to axis based
 
 - review code
 	- add code tags
@@ -41,6 +39,7 @@ Pre-Production
 		- add mirror
     -frustrum culling
 	-lod
+	-texture management
 	-command batching (set_uniforms.c)
 	-mirrors
 	-shading (hard shadows, no diffuse lighting)

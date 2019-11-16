@@ -35,7 +35,7 @@ if(fragment_mode == 0)
     //         discard; return;
     //     }
     // }
-    // if(boolean_phase == C_1)
+    // if(boolean_phase == A)
     // {
     //     float relative_depth = dot(vec4(1.0), unpackColor(depth));
     //     if( relative_depth > dot(vec4(1.0), texture2D(boolean_sampler, gl_FragCoord))
@@ -75,7 +75,7 @@ if(fragment_mode == 0)
   }
   if(target_type == 3.0)
   {
-      //if(boolean_phase == C_1)
+      //if(boolean_phase == A)
       //{
           //mark
       //}
