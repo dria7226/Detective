@@ -2,7 +2,7 @@
     "id": "e6f923bc-fb74-41f1-81d9-c95a6d9c2d80",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "Boolean",
+    "name": "Boolean_Group",
     "eventList": [
         {
             "id": "ca93882b-f062-462e-8a18-fbda8303d64f",

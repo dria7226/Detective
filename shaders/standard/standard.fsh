@@ -10,7 +10,10 @@ varying vec4 color;
 uniform int fragment_mode;
 uniform int boolean_phase;
 
-float packColor(vec4 color);
+uniform sampler2D boolean_front_b_sampler;
+uniform sampler2D boolean_back_b_sampler;
+uniform sampler2D boolean_back_a_sampler;
+
 vec4 unpackColor(float f);
 void rotate(inout vec2 point, float angle);
 vec4 float_to_vec4(float f);
@@ -24,23 +27,23 @@ if(fragment_mode == 1)
 if(fragment_mode == 0)
 {
   vec4 c = out_Color;
+  if(boolean_phase == 1)
+  {
+      vec2 sample_coord = gl_FragCoord.xy*a_pixel*vec2(0.5);
+      if( depth > dot(texture2D(boolean_front_b_sampler, sample_coord), vec4(1.0, 1.0/255.0, 1.0/(255.0*255.0), 1.0/(255.0*255.0*255.0))) * 300.0
+          &&
+          depth < dot(texture2D(boolean_back_b_sampler, sample_coord), vec4(1.0, 1.0/255.0, 1.0/(255.0*255.0), 1.0/(255.0*255.0*255.0))) * 300.0 )
+          {
+              discard; return;
+          }
+  }
   //calculate target type
   float target_type = mod(gl_FragCoord.x - 0.5, 2.0) + mod(gl_FragCoord.y - 0.5, 2.0)*2.0;
   if(target_type == 0.0)
   {
     // if(stencil)
     // {
-    //     if(texture2D(gm_BaseTexture, gl_FragCoord + vec2(0.5)).a == 0.0)
-    //     {
-    //         discard; return;
-    //     }
-    // }
-    // if(boolean_phase == A)
-    // {
-    //     float relative_depth = dot(vec4(1.0), unpackColor(depth));
-    //     if( relative_depth > dot(vec4(1.0), texture2D(boolean_sampler, gl_FragCoord))
-    //         &&
-    //         relative_depth < dot(vec4(1.0), texture2D(boolean_sampler, gl_FragCoord)))
+    //     if(texture2D(gm_BaseTexture, gl_FragCoord.xy + vec2(0.5)).a == 0.0)
     //     {
     //         discard; return;
     //     }
@@ -97,7 +100,7 @@ if(fragment_mode == 0)
       }
       vec3 litup = c.rgb*dot(out_Normal,vec3(0.5,-0.25,0.25));
       gl_FragColor = vec4(mix(litup, c.rgb, 0.3), 1.0);
-      //gl_FragColor = vec4(vec3(depth), 1.0);
+      //gl_FragColor = unpackColor(depth);
       //gl_FragColor = vec4(normal, 1.0);
       return;
   }
@@ -119,10 +122,6 @@ void rotate(inout vec2 point, float angle)
   point.y = cos(angle)*point.y + sin(angle)*point.x;
   point.x = X;
 }
-float packColor(vec4 color)
-{
-    return dot( color, vec4(1.0, 1.0/255.0, 1.0/(255.0*255.0), 1.0/(255.0*255.0*255.0)) );
-}
 vec4 unpackColor(float f)
 {
   f /= 300.0;
@@ -130,7 +129,7 @@ vec4 unpackColor(float f)
   enc = fract(enc);
   enc.rgb -= enc.gba/vec3(255.0);
   return enc;
-}
+ }
 //pack_id() dot(object_id, vec3(byte, byte*256.0, byte*256.0*256.0))
 //percentage to partial percentages
 vec4 float_to_vec4(float f)

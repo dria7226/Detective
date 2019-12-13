@@ -55,12 +55,12 @@ for(var i = 0; i < array_length_1d(walls); i++)
 
  change_color(identity, 0, [0.2, 0.4, 0.2]);
 
- visibles[array_length_1d(visibles)] = identity;
+ visibles[array_length_1d(visibles)] = identity; set_tags(identity, [Visible]); identity[Visible] = identity;
 }
 walls = 0;
 
 //doorway
-var boolean_volume = create_identity([Model, VBO, Position]);
+boolean_volume = create_identity([Model, VBO, Position,Rotation]);
 
 change_position(boolean_volume, 0, [9, 18, 0]);
 
@@ -68,25 +68,17 @@ boolean_volume[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_arr
 
 identity = create_identity(query);
 
-set_tags(identity, [Boolean]);
+set_tags(identity, [Boolean_Group]);
 
-identity[Boolean].models = [boolean_volume];
+identity[Boolean_Group].subtrahends = [boolean_volume];
 
 identity[VBO].lod[0] = wall;
 
-change_position(identity, 0, [12,18,0]);
+change_position(identity, 0, [9,18,0]);
 
 change_color(identity, 0, [0.2, 0.4, 0.2]);
 
-visibles[array_length_1d(visibles)] = identity;
-
-identity = create_identity(query);
-
-identity[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_array(create_cube([-3,1,6],[0.5,0.25,0],[0xBB,0x42,0x11,255])), Game.format);
-
-change_position(identity, 0, [12, 18, 0]);
-
-visibles[array_length_1d(visibles)] = identity;
+visibles[array_length_1d(visibles)] = identity; set_tags(identity, [Visible]); identity[Visible] = identity;
 
  //floor
 identity = create_identity(["Level Building/floor"]);
@@ -131,7 +123,7 @@ for(var i = 0; i < array_length_1d(floors); i++)
 
  change_position(identity, 0, [coords[0], coords[1] - 3/2, 0])
 
- visibles[array_length_1d(visibles)] = identity;
+ visibles[array_length_1d(visibles)] = identity; set_tags(identity, [Visible]); identity[Visible] = identity;
 }
 
 floors = 0;
@@ -162,7 +154,7 @@ change_position(identity, 0, [0, -5, 0]);
 
 change_rotation(identity, 0, [0, 0, 3.1415926/2]);
 
-visibles[array_length_1d(visibles)] = identity;
+visibles[array_length_1d(visibles)] = identity; set_tags(identity, [Visible]); identity[Visible] = identity;
 
 //
 
@@ -178,7 +170,7 @@ change_position(identity, 0, [6.5, 1.5, 3]);
 change_color(identity, 0, [1.0,0.9,0.75]);
 change_rotation(identity, 0, [0,0,-3.1415926/4]);
 
-visibles[array_length_1d(visibles)] = identity;
+visibles[array_length_1d(visibles)] = identity; set_tags(identity, [Visible]); identity[Visible] = identity;
 
 //load occlusion groups
 

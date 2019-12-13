@@ -33,7 +33,6 @@ varying vec3 out_Normal;
 varying vec4 out_Color;
 varying vec2 out_TexCoord;
 
-float packColor(vec4 color);
 vec4 unpackColor(float f);
 void rotate(inout vec2 point, float angle);
 float vec4_to_float(vec4 color);
@@ -78,12 +77,11 @@ rotate(local.xy, -camera_angle.z);
 rotate(local.xz, -camera_angle.y);
 rotate(local.yz, -camera_angle.x);
 //project
-depth = local.x - 0.16;
-gl_Position.z = depth;
-depth /= local.x + 0.0;
+gl_Position.z = local.x - 0.16;
 gl_Position.xy = local.yz*zoom;
 gl_Position.x *= -screen_ratio;
 gl_Position.w = local.x + 0.0;
+depth = gl_Position.z;
  }
 if(vertex_mode == 2)
 {
@@ -116,10 +114,6 @@ void rotate(inout vec2 point, float angle)
   point.y = cos(angle)*point.y + sin(angle)*point.x;
   point.x = X;
 }
-float packColor(vec4 color)
-{
-    return dot( color, vec4(1.0, 1.0/255.0, 1.0/(255.0*255.0), 1.0/(255.0*255.0*255.0)) );
-}
 vec4 unpackColor(float f)
 {
   f /= 300.0;
@@ -127,7 +121,7 @@ vec4 unpackColor(float f)
   enc = fract(enc);
   enc.rgb -= enc.gba/vec3(255.0);
   return enc;
-}
+ }
 //pack_id() dot(object_id, vec3(byte, byte*256.0, byte*256.0*256.0))
 //percentage to partial percentages
 vec4 float_to_vec4(float f)

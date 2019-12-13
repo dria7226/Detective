@@ -1090,7 +1090,7 @@
             "Key": "e6f923bc-fb74-41f1-81d9-c95a6d9c2d80",
             "Value": {
                 "id": "b3dd61c8-d5f8-43f7-a883-05aca54190b2",
-                "resourcePath": "objects\\Boolean\\Boolean.yy",
+                "resourcePath": "objects\\Boolean_Group\\Boolean_Group.yy",
                 "resourceType": "GMObject"
             }
         },

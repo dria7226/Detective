@@ -60,7 +60,7 @@ for(var i = 0; i < array_length_1d(walls); i++)
 walls = 0;
 
 //doorway
-var boolean_volume = create_identity([Model, VBO, Position]);
+boolean_volume = create_identity([Model, VBO, Position,Rotation]);
 
 change_position(boolean_volume, CHANGE_SET, [9, 18, 0]);
 
@@ -68,23 +68,15 @@ boolean_volume[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_arr
 
 identity = create_identity(query);
 
-set_tags(identity, [Boolean]);
+set_tags(identity, [Boolean_Group]);
 
-identity[Boolean].models = [boolean_volume];
+identity[Boolean_Group].subtrahends = [boolean_volume];
 
 identity[VBO].lod[0] = wall;
 
-change_position(identity, CHANGE_SET, [12,18,0]);
+change_position(identity, CHANGE_SET, [9,18,0]);
 
 change_color(identity, CHANGE_SET, [0.2, 0.4, 0.2]);
-
-ADD_IDENTITY_TO_VISIBLES(identity)
-
-identity = create_identity(query);
-
-identity[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_array(create_cube([-3,1,6],[0.5,0.25,0],[0xBB,0x42,0x11,255])), Game.format);
-
-change_position(identity, CHANGE_SET, [12, 18, 0]);
 
 ADD_IDENTITY_TO_VISIBLES(identity)
 
