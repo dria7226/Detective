@@ -26,7 +26,7 @@ if keyboard_check(ord("D"))
 
 if keyboard_check(ord("M"))
 {
-	surface_save(surfaces[MRT], "MRT.png");
+	surface_save(surfaces[BOOLEAN_DEPTH_B], "Boolean_depth_B.png");
 }
 
 #ifdef UNIFORM_BUFFER

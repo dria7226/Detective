@@ -26,7 +26,7 @@ if keyboard_check(ord("D"))
 
 if keyboard_check(ord("M"))
 {
- surface_save(surfaces[0], "MRT.png");
+ surface_save(surfaces[2], "Boolean_depth_B.png");
 }
 if keyboard_check(vk_space)
 {

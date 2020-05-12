@@ -10,4 +10,4 @@ var rotation = camera[Rotation];change_rotation(camera, 1, [0,
 if(rotation.axes[PITCH] > 3.1415926/2) change_rotation(camera, 0, [rotation.axes[ROLL], 3.1415926/2, rotation.axes[YAW]]);
 if(rotation.axes[PITCH] < -3.1415926/2) change_rotation(camera, 0, [rotation.axes[ROLL], -3.1415926/2, rotation.axes[YAW]]);
 
-change_rotation(boolean_volume, 0, [alpha,alpha,alpha]);
+//change_rotation(boolean_volume, CHANGE_SET, [alpha,alpha,alpha]);

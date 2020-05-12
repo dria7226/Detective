@@ -199,6 +199,14 @@
             }
         },
         {
+            "Key": "21b96e31-3b7a-4c95-8ad4-fa2360ac507b",
+            "Value": {
+                "id": "1f5ad76e-ca23-4679-a2ed-03f3c33d0283",
+                "resourcePath": "datafiles_yy\\Objects\\desk_med_class.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "249ed628-e3da-4414-b140-f05d35b82d9f",
             "Value": {
                 "id": "5526877f-0786-42cf-8662-90afdce1bb44",
@@ -828,14 +836,6 @@
                 "id": "4fefb7ad-2e66-4da4-9e21-8f9f0c77c632",
                 "resourcePath": "scripts\\add_buffer_to_vbo\\add_buffer_to_vbo.yy",
                 "resourceType": "GMScript"
-            }
-        },
-        {
-            "Key": "afd2e82a-a903-4243-b60d-269c3301bb3c",
-            "Value": {
-                "id": "5aa8efc4-2026-4c90-9712-5a93e6bad45d",
-                "resourcePath": "datafiles_yy\\Objects\\desk_med_class.yy",
-                "resourceType": "GMIncludedFile"
             }
         },
         {

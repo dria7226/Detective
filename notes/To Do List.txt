@@ -1,4 +1,12 @@
-- make sure all input for Procedural_Generation/create_* is sanitized
+- if start of boolean group and mode is complete
+	- draw front and back of B
+	- set boolean mode
+
+- draw front A
+
+- if end of boolean group and carving out
+	- carve out each B
+	- clear boolean mode
 
 - review code
 	- add code tags
@@ -11,7 +19,7 @@
 		- based on data usage
 			- uses_object_tags
 			- uses_back_reffered_tags
-- implement task system and finish occlussion system
+- implement task system and finish occlusion system
 	- finish arranging the scene
 	- decide what the occlusion tree will look like
 		-
@@ -27,12 +35,8 @@
 Pre-Production
   Renderer----------------------------ETA June 2019
 	-boolean rendering
-			- check depth encoding
-			- create cube with reverse normals
-		- program non fill
 		- program fill
-
-		- optional: create non ubershader compile option
+	-port code to Mac, Mobile, Linux
 	-create test scene
 		- add window
 		- add door

@@ -1,4 +1,5 @@
 
+var to_delete = 0;
  //create room
 var wainscoting = create_identity(["Level Building/wall_wainscoting"]);
 var size = buffer_get_size(wainscoting[Model].lod[0]);
@@ -64,13 +65,17 @@ boolean_volume = create_identity([Model, VBO, Position,Rotation]);
 
 change_position(boolean_volume, 0, [9, 18, 0]);
 
-boolean_volume[VBO].lod[0] = vertex_create_buffer_from_buffer(compress_model_array(create_cube([-3,2,6],[0.5,0.25,0],[0xBB,0x42,0x11,255])), Game.format);
+to_delete = compress_model_array(create_cube([3,2,6],[0.5,0.25,0],[0xBB,0x42,0x11,255]));
+
+boolean_volume[VBO].lod[@0] = vertex_create_buffer_from_buffer(to_delete, Game.format);
+to_delete = 0;
 
 identity = create_identity(query);
 
 set_tags(identity, [Boolean_Group]);
 
 identity[Boolean_Group].subtrahends = [boolean_volume];
+identity[Boolean_Group].boolean_type = BOOLEAN_CUTOUT;
 
 identity[VBO].lod[0] = wall;
 
@@ -119,7 +124,7 @@ for(var i = 0; i < array_length_1d(floors); i++)
 
  identity = create_identity(query);
 
- identity[VBO].lod[0] = floor_vbo;
+ identity[VBO].lod[@0] = floor_vbo;
 
  change_position(identity, 0, [coords[0], coords[1] - 3/2, 0])
 
@@ -148,6 +153,36 @@ var desk = identity[Model].lod[0];
 
 identity = create_identity(query);
 
+// set_tags(identity, [Boolean_Group]);
+// identity[Boolean_Group].boolean_type = 1;
+//
+// identity[Boolean_Group].subtrahends = array_create(6);
+
+var shelf_volume = compress_model_array(create_cube([2.4,1,2/3 - 0.1/3],[0,0,0],[0xBB,0x42,0x11,255]));
+
+to_delete = shelf_volume;
+shelf_volume = vertex_create_buffer_from_buffer(shelf_volume, Game.format);
+to_delete = 0;
+
+var subtrahend = 0;
+for(var side = 0; side < 2; side++)
+for(var z = 0; z < 2; z+=2/3)
+{
+ var shelf = create_identity(query);
+
+ change_position(shelf, 0, [0, -2 + 4.2*side, 0.6 + z]);
+
+ change_position(shelf, 1, [-1.2, -5.6, 0]);
+
+ shelf[VBO].lod[@0] = shelf_volume;
+
+ //var subs = identity[Boolean_Group].subtrahends;
+
+ //subs[@subtrahend] = shelf;
+
+ subtrahend++;
+}
+
 identity[VBO].lod[0] = vertex_create_buffer_from_buffer(desk, Game.format);
 
 change_position(identity, 0, [0, -5, 0]);
@@ -162,13 +197,44 @@ identity = create_identity(["Objects/office_lamp"]);
 
 var lamp = identity[Model].lod[0];
 
+var lamp_cutout_volume = compress_model_array(create_cube([1,1,1],[0,0,0],[1,1,1,255]));
+
+to_delete = lamp_cutout_volume;
+lamp_cutout_volume = vertex_create_buffer_from_buffer(lamp_cutout_volume ,Game.format);
+to_delete = 0;
+
+identity = create_identity(query);
+
+//set_tags(identity, [Boolean_Group]);
+
+var lamp_cutout = create_identity(query);
+
+lamp_cutout[VBO].lod[0] = lamp_cutout_volume;
+
+change_position(lamp_cutout, 1, [-0.5, -6.5, 3]);
+
+//identity[Boolean_Group].subtrahends = [lamp_cutout];
+//identity[Boolean_Group].fill_in = 1;
+
+identity[VBO].lod[0] = vertex_create_buffer_from_buffer(lamp, Game.format);
+
+change_position(identity, 0, [-0.5, -6.5, 3]);
+change_color(identity, 0, [1.0,0.9,0.75]);
+change_rotation(identity, 0, [0,0,3*3.1415926/4]);
+
+visibles[array_length_1d(visibles)] = identity; set_tags(identity, [Visible]); identity[Visible] = identity;
+
+//
+
+identity = create_identity(["Objects/typewriter"]);
+
+var lamp = identity[Model].lod[0];
+
 identity = create_identity(query);
 
 identity[VBO].lod[0] = vertex_create_buffer_from_buffer(lamp, Game.format);
 
-change_position(identity, 0, [6.5, 1.5, 3]);
-change_color(identity, 0, [1.0,0.9,0.75]);
-change_rotation(identity, 0, [0,0,-3.1415926/4]);
+change_position(identity, 0, [5/8, -7.5, .6]);
 
 visibles[array_length_1d(visibles)] = identity; set_tags(identity, [Visible]); identity[Visible] = identity;
 

@@ -10,8 +10,9 @@ shader_set(standard);
 #include "uniform_cache.c"
 #endif
 
-SET_UNIFORM_F(screen_ratio, window_get_height()/window_get_width())
-SET_UNIFORM_F(a_pixel, 1/window_get_width(), 1/window_get_height())
+window_size = [window_get_width(), window_get_height()];
+SET_UNIFORM_F(screen_ratio, window_size[1]/window_size[0])
+SET_UNIFORM_F(a_pixel, 1/window_size[0], 1/window_size[1])
 
 #ifdef UNIFORM_BUFFER
 uniform_buffer = buffer_create(UNIFORM_BUFFER_WIDTH*UNIFORM_BUFFER_WIDTH*6*4 ,buffer_fast, 1);
